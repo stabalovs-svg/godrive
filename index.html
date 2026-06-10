@@ -125,7 +125,8 @@
         }
 
         async function loadStudents() {
-            studentsTableBody.innerHTML = '<tr><td colspan="5">Загрузка данных...</td></tr>';
+            console.log('loadStudents called, supabaseClient:', !!supabaseClient);
+            studentsTableBody.innerHTML = '<tr><td colspan="6">Загрузка данных...</td></tr>';
 
             if (!supabaseClient) {
                 setStatus('Нужно войти для загрузки данных.', true);
@@ -138,15 +139,18 @@
                     .select('id, full_name, phone, contract_number, category, status')
                     .order('created_at', { ascending: false });
 
+                console.log('loadStudents: query result', { dataLength: data?.length, error });
+
                 if (error) {
                     setStatus('Ошибка загрузки данных: ' + error.message, true);
-                    studentsTableBody.innerHTML = `<tr><td colspan="5">Ошибка загрузки: ${error.message}</td></tr>`;
+                    studentsTableBody.innerHTML = `<tr><td colspan="6">Ошибка загрузки: ${error.message}</td></tr>`;
                     return;
                 }
 
                 if (!data || data.length === 0) {
                     setStatus('Данные не найдены.', true);
-                    studentsTableBody.innerHTML = '<tr><td colspan="5">Нет данных</td></tr>';
+                    studentsTableBody.innerHTML = '<tr><td colspan="6">Нет данных</td></tr>';
+                    console.log('loadStudents: no data returned');
                     return;
                 }
 
@@ -161,10 +165,12 @@
                         <td class="s-actions"></td>
                     </tr>
                 `).join('');
+                console.log('loadStudents: rendered', data.length, 'rows. currentRole:', currentRole);
                 renderRowActions();
             } catch (error) {
                 setStatus('Ошибка: ' + error.message, true);
-                studentsTableBody.innerHTML = `<tr><td colspan="5">Ошибка: ${error.message}</td></tr>`;
+                studentsTableBody.innerHTML = `<tr><td colspan="6">Ошибка: ${error.message}</td></tr>`;
+                console.error('loadStudents exception:', error);
             }
         }
 
@@ -173,11 +179,16 @@
             try {
                 const { data: user } = await supabaseClient.auth.getUser();
                 currentUser = user && user.data ? user.data.user : null;
+                console.log('getProfile: currentUser =', currentUser?.email || 'null');
             } catch (e) {
+                console.warn('getUser error', e.message);
                 currentUser = null;
             }
 
-            if (!currentUser) return;
+            if (!currentUser) {
+                console.warn('getProfile: no current user');
+                return;
+            }
 
             try {
                 const { data, error } = await supabaseClient
@@ -185,8 +196,10 @@
                     .select('role')
                     .eq('id', currentUser.id)
                     .single();
+                console.log('getProfile: role query result', { data, error });
                 if (!error && data) {
                     currentRole = data.role;
+                    console.log('getProfile: role set to', currentRole);
                 }
             } catch (e) {
                 console.warn('profile fetch error', e.message);
