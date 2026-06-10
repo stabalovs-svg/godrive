@@ -162,6 +162,40 @@
             setStatus('Демо-режим активирован. Если данные не загружаются, отображаются демонстрационные данные.');
         }
 
+        async function checkSession() {
+            if (isDemoMode()) {
+                showCRM();
+                return;
+            }
+
+            if (!supabaseClient) {
+                showLogin();
+                return;
+            }
+
+            try {
+                const {
+                    data: { session },
+                    error
+                } = await supabaseClient.auth.getSession();
+
+                if (error) {
+                    console.error('Session check error:', error.message);
+                    showLogin();
+                    return;
+                }
+
+                if (session) {
+                    showCRM();
+                } else {
+                    showLogin();
+                }
+            } catch (error) {
+                console.error('Error checking session:', error);
+                showLogin();
+            }
+        }
+
         loginForm.addEventListener('submit', async (event) => {
             event.preventDefault();
             
