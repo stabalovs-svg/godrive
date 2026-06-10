@@ -27,9 +27,8 @@
         <div id="demo-block" style="margin-top:10px;">
             <input type="text" id="demo-code" placeholder="Введите код демодоступа" style="width:250px;">
             <button id="demo-submit" type="button">Открыть данные</button>
-            <p style="font-size:0.9em; color:#666; margin-top:8px;">Код доступа: <strong>godrive-demo</strong></p>
         </div>
-        <p style="font-size:0.9em; color:#666; margin-top:8px;">Если вы владелец, введите указанный код и нажмите «Открыть данные».</p>
+        <p style="font-size:0.9em; color:#666; margin-top:8px;">Если вы владелец, введите свой код доступа и нажмите «Открыть данные».</p>
     </div>
 
     <!-- 2. ИНТЕРФЕЙС CRM (скрыт до авторизации) -->
@@ -174,19 +173,25 @@
         const demoCodeInput = document.getElementById('demo-code');
 
         demoBtn.addEventListener('click', () => {
+            console.log('Demo button clicked');
             demoCodeInput.focus();
         });
 
         demoSubmit.addEventListener('click', () => {
             const key = demoCodeInput.value.trim();
+            console.log('Demo submit clicked, key:', key, 'expected:', DEMO_ACCESS_KEY);
             if (key === DEMO_ACCESS_KEY) {
+                console.log('Access granted!');
                 enableDemoMode();
             } else {
-                alert('Неверный код доступа. Код: godrive-demo');
+                alert('Неверный код доступа.');
             }
         });
 
-        window.addEventListener('load', checkSession);
+        window.addEventListener('load', () => {
+            console.log('Page loaded, checking session...');
+            checkSession();
+        });
     </script>
 </body>
 </html>
