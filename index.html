@@ -108,14 +108,14 @@
         async function loadStudents() {
             studentsTableBody.innerHTML = '<tr><td colspan="5">Загрузка данных...</td></tr>';
 
-            if (!supabase || isDemoMode()) {
+            if (!supabaseClient || isDemoMode()) {
                 setStatus('Демо-режим активен. Отображаются демонстрационные данные.');
                 renderFallbackData();
                 return;
             }
 
             try {
-                const { data, error } = await supabase
+                const { data, error } = await supabaseClient
                     .from('students')
                     .select('id, full_name, phone, contract_number, category, status')
                     .order('created_at', { ascending: false });
@@ -165,7 +165,7 @@
         loginForm.addEventListener('submit', async (event) => {
             event.preventDefault();
             
-            if (!supabase) {
+            if (!supabaseClient) {
                 alert('Ошибка: Supabase не инициализирован');
                 return;
             }
@@ -174,7 +174,7 @@
             const password = document.getElementById('password').value;
 
             try {
-                const { error } = await supabase.auth.signInWithPassword({ email, password });
+                const { error } = await supabaseClient.auth.signInWithPassword({ email, password });
                 if (error) {
                     alert('Ошибка входа: ' + error.message);
                     return;
@@ -192,13 +192,13 @@
                 return;
             }
 
-            if (!supabase) {
+            if (!supabaseClient) {
                 showLogin();
                 return;
             }
 
             try {
-                const { error } = await supabase.auth.signOut();
+                const { error } = await supabaseClient.auth.signOut();
                 if (error) {
                     alert('Ошибка при выходе: ' + error.message);
                     return;
