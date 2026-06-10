@@ -23,11 +23,7 @@
             <input type="password" id="password" placeholder="Пароль" required><br><br>
             <button type="submit">Войти</button>
         </form>
-        <div id="demo-block" style="margin-top:10px;">
-            <input type="text" id="demo-code" placeholder="Введите код демодоступа" style="width:250px;">
-            <button id="demo-submit" type="button">Открыть данные</button>
-        </div>
-        <div id="status" style="font-size:0.9em; color:#666; margin-top:8px;">Введите код доступа и нажмите «Открыть данные».</div>
+        <div id="status" style="font-size:0.9em; color:#666; margin-top:8px;">Войдите под своим аккаунтом для редактирования данных.</div>
     </div>
 
     <!-- 2. ИНТЕРФЕЙС CRM (скрыт до авторизации) -->
@@ -35,6 +31,24 @@
         <h2>Список учеников автошколы</h2>
         <button id="logout-btn">Выйти из системы</button>
         
+        <!-- ФОРМА ДОБАВЛЕНИЯ УЧЕНИКА -->
+        <div id="add-student-container" style="display:none; background: #f9f9f9; padding: 15px; border: 1px solid #ddd; margin: 20px 0;">
+            <h3>Добавить нового ученика</h3>
+            <form id="add-student-form">
+                <input type="text" id="new-name" placeholder="ФИО ученика" required>
+                <input type="text" id="new-phone" placeholder="Телефон">
+                <input type="text" id="new-contract" placeholder="№ Договора">
+                
+                <select id="new-category">
+                    <option value="B">Категория B</option>
+                    <option value="A">Категория A</option>
+                    <option value="C">Категория C</option>
+                </select>
+
+                <button type="submit">Сохранить в базу</button>
+            </form>
+        </div>
+
         <table id="students-table">
             <thead>
                 <tr>
@@ -43,6 +57,7 @@
                     <th>Договор</th>
                     <th>Категория</th>
                     <th>Статус</th>
+                    <th>Действия</th>
                 </tr>
             </thead>
             <tbody>
@@ -54,9 +69,11 @@
     <script>
         const SUPABASE_URL = 'https://xcqrluiqllsnhtyojuhc.supabase.co';
         const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhjcXJsdWlxbGxzbmh0eW9qdWhjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODEwMTI2MjMsImV4cCI6MjA5NjU4ODYyM30.UOQA2kSLI6-lmlbsHCKjbWuNi5gbSGRiJijWbtiqqdQ';
-        const DEMO_ACCESS_KEY = 'godrive-demo';
+        const DEMO_ACCESS_KEY = null;
 
         let supabaseClient = null;
+        let currentUser = null;
+        let currentRole = null; // 'manager' | 'admin' | 'instructor'
         const loginBlock = document.getElementById('login-block');
         const crmBlock = document.getElementById('crm-block');
         const loginForm = document.getElementById('login-form');
@@ -108,9 +125,8 @@
         async function loadStudents() {
             studentsTableBody.innerHTML = '<tr><td colspan="5">Загрузка данных...</td></tr>';
 
-            if (!supabaseClient || isDemoMode()) {
-                setStatus('Демо-режим активен. Отображаются демонстрационные данные.');
-                renderFallbackData();
+            if (!supabaseClient) {
+                setStatus('Нужно войти для загрузки данных.', true);
                 return;
             }
 
@@ -134,17 +150,128 @@
 
                 setStatus('Данные загружены.');
                 studentsTableBody.innerHTML = data.map(student => `
-                    <tr>
-                        <td>${student.full_name || ''}</td>
-                        <td>${student.phone || ''}</td>
-                        <td>${student.contract_number || ''}</td>
-                        <td>${student.category || ''}</td>
-                        <td>${student.status || ''}</td>
+                    <tr data-id="${student.id}">
+                        <td class="s-full_name">${student.full_name || ''}</td>
+                        <td class="s-phone">${student.phone || ''}</td>
+                        <td class="s-contract">${student.contract_number || ''}</td>
+                        <td class="s-category">${student.category || ''}</td>
+                        <td class="s-status">${student.status || ''}</td>
+                        <td class="s-actions"></td>
                     </tr>
                 `).join('');
+                renderRowActions();
             } catch (error) {
                 setStatus('Ошибка: ' + error.message, true);
                 studentsTableBody.innerHTML = `<tr><td colspan="5">Ошибка: ${error.message}</td></tr>`;
+            }
+        }
+
+        // Получаем профиль и роль текущего пользователя из таблицы profiles
+        async function getProfile() {
+            try {
+                const { data: user } = await supabaseClient.auth.getUser();
+                currentUser = user && user.data ? user.data.user : null;
+            } catch (e) {
+                currentUser = null;
+            }
+
+            if (!currentUser) return;
+
+            try {
+                const { data, error } = await supabaseClient
+                    .from('profiles')
+                    .select('role')
+                    .eq('id', currentUser.id)
+                    .single();
+                if (!error && data) {
+                    currentRole = data.role;
+                }
+            } catch (e) {
+                console.warn('profile fetch error', e.message);
+            }
+            setRoleUI();
+        }
+
+        function setRoleUI() {
+            // Показываем форму добавления только менеджеру и админу
+            const addContainer = document.getElementById('add-student-container');
+            if (currentRole === 'manager' || currentRole === 'admin') {
+                addContainer.style.display = 'block';
+            } else {
+                addContainer.style.display = 'none';
+            }
+            renderRowActions();
+        }
+
+        function renderRowActions() {
+            document.querySelectorAll('#students-table tbody tr').forEach(tr => {
+                const id = tr.getAttribute('data-id');
+                const actionsTd = tr.querySelector('.s-actions');
+                if (!actionsTd) return;
+                actionsTd.innerHTML = '';
+                if (currentRole === 'manager' || currentRole === 'admin') {
+                    actionsTd.innerHTML += `<button class="edit-btn">Изменить</button> `;
+                }
+                if (currentRole === 'manager') {
+                    actionsTd.innerHTML += `<button class="delete-btn">Удалить</button>`;
+                }
+            });
+            // attach handlers
+            document.querySelectorAll('.edit-btn').forEach(btn => btn.onclick = onEditRow);
+            document.querySelectorAll('.delete-btn').forEach(btn => btn.onclick = onDeleteRow);
+        }
+
+        async function onEditRow(e) {
+            const tr = e.target.closest('tr');
+            const id = tr.getAttribute('data-id');
+            // swap cells to inputs
+            const nameCell = tr.querySelector('.s-full_name');
+            const phoneCell = tr.querySelector('.s-phone');
+            const contractCell = tr.querySelector('.s-contract');
+            const categoryCell = tr.querySelector('.s-category');
+
+            const name = nameCell.textContent;
+            const phone = phoneCell.textContent;
+            const contract = contractCell.textContent;
+            const category = categoryCell.textContent;
+
+            nameCell.innerHTML = `<input class="edit-name" value="${name}">`;
+            phoneCell.innerHTML = `<input class="edit-phone" value="${phone}">`;
+            contractCell.innerHTML = `<input class="edit-contract" value="${contract}">`;
+            categoryCell.innerHTML = `<input class="edit-category" value="${category}">`;
+
+            const actionsTd = tr.querySelector('.s-actions');
+            actionsTd.innerHTML = `<button class="save-btn">Сохранить</button> <button class="cancel-btn">Отмена</button>`;
+            actionsTd.querySelector('.save-btn').onclick = async () => {
+                const updated = {
+                    full_name: tr.querySelector('.edit-name').value,
+                    phone: tr.querySelector('.edit-phone').value,
+                    contract_number: tr.querySelector('.edit-contract').value,
+                    category: tr.querySelector('.edit-category').value,
+                };
+                try {
+                    const { error } = await supabaseClient.from('students').update(updated).eq('id', id);
+                    if (error) throw error;
+                    setStatus('Сохранено.');
+                    await loadStudents();
+                } catch (err) {
+                    setStatus('Ошибка сохранения: ' + err.message, true);
+                }
+            };
+            actionsTd.querySelector('.cancel-btn').onclick = () => loadStudents();
+        }
+
+        async function onDeleteRow(e) {
+            if (!confirm('Удалить запись?')) return;
+            const tr = e.target.closest('tr');
+            const id = tr.getAttribute('data-id');
+            try {
+                const { error } = await supabaseClient.from('students').delete().eq('id', id);
+                if (error) throw error;
+                setStatus('Удалено.');
+                await loadStudents();
+            } catch (err) {
+                setStatus('Ошибка удаления: ' + err.message, true);
             }
         }
 
