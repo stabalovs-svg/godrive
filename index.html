@@ -23,12 +23,11 @@
             <input type="password" id="password" placeholder="Пароль" required><br><br>
             <button type="submit">Войти</button>
         </form>
-        <button id="demo-btn" type="button">Проверить код демодоступа</button>
         <div id="demo-block" style="margin-top:10px;">
             <input type="text" id="demo-code" placeholder="Введите код демодоступа" style="width:250px;">
             <button id="demo-submit" type="button">Открыть данные</button>
         </div>
-        <p style="font-size:0.9em; color:#666; margin-top:8px;">Если вы владелец, введите свой код доступа и нажмите «Открыть данные».</p>
+        <div id="status" style="font-size:0.9em; color:#666; margin-top:8px;">Введите код доступа и нажмите «Открыть данные».</div>
     </div>
 
     <!-- 2. ИНТЕРФЕЙС CRM (скрыт до авторизации) -->
@@ -151,11 +150,12 @@
         function enableDemoMode() {
             localStorage.setItem('demoMode', '1');
             showCRM();
+            setStatus('Демо-режим активирован. Если данные не загружаются, отображаются демонстрационные данные.');
         }
 
         async function checkSession() {
             if (isDemoMode()) {
-                showCRM();
+                enableDemoMode();
                 return;
             }
 
@@ -235,20 +235,41 @@
         });
 
         // Обработчики для демо-доступа
-        const demoBtn = document.getElementById('demo-btn');
         const demoSubmit = document.getElementById('demo-submit');
         const demoCodeInput = document.getElementById('demo-code');
+        const statusElement = document.getElementById('status');
 
-        demoBtn.addEventListener('click', () => {
-            demoCodeInput.focus();
-        });
+        function setStatus(text, error = false) {
+            statusElement.textContent = text;
+            statusElement.style.color = error ? '#c00' : '#666';
+        }
+
+        function renderFallbackData() {
+            const sample = [{
+                full_name: 'Демо Ученик',
+                phone: '+7 900 000-00-00',
+                contract_number: 'DEMO-001',
+                category: 'B',
+                status: 'Демонстрационный'
+            }];
+            studentsTableBody.innerHTML = sample.map(student => `
+                <tr>
+                    <td>${student.full_name}</td>
+                    <td>${student.phone}</td>
+                    <td>${student.contract_number}</td>
+                    <td>${student.category}</td>
+                    <td>${student.status}</td>
+                </tr>
+            `).join('');
+        }
 
         demoSubmit.addEventListener('click', () => {
             const key = demoCodeInput.value.trim();
             if (key === DEMO_ACCESS_KEY) {
                 enableDemoMode();
+                setStatus('Доступ открыт. Если данные не загружаются, отображаются демонстрационные данные.');
             } else {
-                alert('Неверный код доступа.');
+                setStatus('Неверный код доступа.', true);
                 demoCodeInput.value = '';
                 demoCodeInput.focus();
             }
@@ -260,6 +281,83 @@
                 demoSubmit.click();
             }
         });
+
+        async function loadStudents() {
+            studentsTableBody.innerHTML = '<tr><td colspan="5">Загрузка данных...</td></tr>';
+
+            if (!supabase || isDemoMode()) {
+                setStatus('Демо-режим активен. Отображаются демонстрационные данные.');
+                renderFallbackData();
+                return;
+            }
+
+            try {
+                const { data, error } = await supabase
+                    .from('students')
+                    .select('id, full_name, phone, contract_number, category, status')
+                    .order('created_at', { ascending: false });
+
+                if (error) {
+                    setStatus('Ошибка загрузки данных: ' + error.message, true);
+                    studentsTableBody.innerHTML = `<tr><td colspan="5">Ошибка загрузки: ${error.message}</td></tr>`;
+                    return;
+                }
+
+                if (!data || data.length === 0) {
+                    setStatus('Данные не найдены.', true);
+                    studentsTableBody.innerHTML = '<tr><td colspan="5">Нет данных</td></tr>';
+                    return;
+                }
+
+                setStatus('Данные загружены.');
+                studentsTableBody.innerHTML = data.map(student => `
+                    <tr>
+                        <td>${student.full_name || ''}</td>
+                        <td>${student.phone || ''}</td>
+                        <td>${student.contract_number || ''}</td>
+                        <td>${student.category || ''}</td>
+                        <td>${student.status || ''}</td>
+                    </tr>
+                `).join('');
+            } catch (error) {
+                setStatus('Ошибка: ' + error.message, true);
+                studentsTableBody.innerHTML = `<tr><td colspan="5">Ошибка: ${error.message}</td></tr>`;
+            }
+        }
+
+        async function checkSession() {
+            if (isDemoMode()) {
+                showCRM();
+                return;
+            }
+
+            if (!supabase) {
+                showLogin();
+                return;
+            }
+
+            try {
+                const {
+                    data: { session },
+                    error
+                } = await supabase.auth.getSession();
+
+                if (error) {
+                    console.error('Session check error:', error.message);
+                    showLogin();
+                    return;
+                }
+
+                if (session) {
+                    showCRM();
+                } else {
+                    showLogin();
+                }
+            } catch (error) {
+                console.error('Error checking session:', error);
+                showLogin();
+            }
+        }
 
         // Инициализация при загрузке страницы
         window.addEventListener('load', async () => {
