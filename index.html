@@ -314,6 +314,7 @@
 
                 if (session) {
                     showCRM();
+                    await getProfile();
                 } else {
                     showLogin();
                 }
@@ -416,6 +417,33 @@
             if (event.key === 'Enter') {
                 event.preventDefault();
                 demoSubmit.click();
+            }
+        });
+
+        // Обработка добавления нового ученика
+        const addStudentForm = document.getElementById('add-student-form');
+        addStudentForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            if (!supabaseClient) {
+                setStatus('Нужно войти для добавления.', true);
+                return;
+            }
+            const full_name = document.getElementById('new-name').value.trim();
+            const phone = document.getElementById('new-phone').value.trim();
+            const contract_number = document.getElementById('new-contract').value.trim();
+            const category = document.getElementById('new-category').value;
+
+            try {
+                const { data, error } = await supabaseClient.from('students').insert([{ full_name, phone, contract_number, category }]);
+                if (error) {
+                    setStatus('Ошибка добавления: ' + error.message, true);
+                    return;
+                }
+                setStatus('Ученик добавлен.');
+                addStudentForm.reset();
+                await loadStudents();
+            } catch (err) {
+                setStatus('Ошибка: ' + err.message, true);
             }
         });
 
