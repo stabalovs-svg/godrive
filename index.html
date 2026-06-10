@@ -194,8 +194,8 @@
         // Получаем профиль и роль текущего пользователя из таблицы profiles
         async function getProfile() {
             try {
-                const { data: user } = await supabaseClient.auth.getUser();
-                currentUser = user && user.data ? user.data.user : null;
+                const { data } = await supabaseClient.auth.getUser();
+                currentUser = data?.user ?? null;
                 console.log('getProfile: currentUser =', currentUser?.email || 'null');
             } catch (e) {
                 console.warn('getUser error', e.message);
@@ -327,6 +327,7 @@
                 }
 
                 if (session) {
+                    currentUser = session.user;
                     showCRM();
                     await getProfile();
                 } else {
@@ -382,9 +383,15 @@
                             alert('Ошибка входа: ' + result.error.message);
                             return;
                         }
-                        setStatus('Вход успешен. Загружаю профиль...');
-                        showCRM();
-                        // Профиль будет загружен автоматически через onAuthStateChange
+                        currentUser = result.data?.user ?? null;
+                        if (currentUser) {
+                            setStatus('Вход успешен. Загружаю профиль...');
+                            await getProfile();
+                            showCRM();
+                        } else {
+                            setStatus('Вход успешен. Ждем подтверждения сессии...');
+                            showCRM();
+                        }
                     } catch (error) {
                         setStatus('Ошибка входа: ' + error.message, true);
                         alert('Ошибка входа: ' + error.message);
