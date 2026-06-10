@@ -24,6 +24,11 @@
             <button type="submit">Войти</button>
         </form>
         <button id="demo-btn" type="button">Показать данные без входа</button>
+        <div id="demo-block" class="hidden" style="margin-top:10px;">
+            <input type="text" id="demo-code" placeholder="Введите код демодоступа" style="width:250px;">
+            <button id="demo-submit" type="button">Открыть данные</button>
+            <p style="font-size:0.9em; color:#666; margin-top:8px;">Код доступа: <strong>godrive-demo</strong></p>
+        </div>
         <p style="font-size:0.9em; color:#666; margin-top:8px;">Если вы владелец, нажмите кнопку и введите код демодоступа.</p>
     </div>
 
@@ -165,12 +170,21 @@
         });
 
         const demoBtn = document.getElementById('demo-btn');
+        const demoBlock = document.getElementById('demo-block');
+        const demoSubmit = document.getElementById('demo-submit');
+        const demoCodeInput = document.getElementById('demo-code');
+
         demoBtn.addEventListener('click', () => {
-            const key = prompt('Введите код демодоступа:');
+            demoBlock.classList.toggle('hidden');
+            demoCodeInput.focus();
+        });
+
+        demoSubmit.addEventListener('click', () => {
+            const key = demoCodeInput.value.trim();
             if (key === DEMO_ACCESS_KEY) {
                 enableDemoMode();
-            } else if (key !== null) {
-                alert('Неверный код доступа.');
+            } else {
+                alert('Неверный код доступа. Код: godrive-demo');
             }
         });
 
