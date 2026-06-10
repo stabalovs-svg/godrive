@@ -95,12 +95,14 @@
                         if (session && session.user) {
                             currentUser = session.user;
                             console.log('User logged in:', currentUser.email);
+                            showCRM();
                             await getProfile();
                             await loadStudents();
                         } else {
                             currentUser = null;
                             currentRole = null;
                             console.log('User logged out');
+                            showLogin();
                         }
                     });
                 }
@@ -131,11 +133,13 @@
         }
 
         function showLogin() {
+            console.log('UI: showLogin called');
             loginBlock.classList.remove('hidden');
             crmBlock.classList.add('hidden');
         }
 
         function showCRM() {
+            console.log('UI: showCRM called');
             loginBlock.classList.add('hidden');
             crmBlock.classList.remove('hidden');
             loadStudents();
@@ -330,6 +334,7 @@
                     currentUser = session.user;
                     showCRM();
                     await getProfile();
+                    await loadStudents();
                 } else {
                     showLogin();
                 }
@@ -386,8 +391,9 @@
                         currentUser = result.data?.user ?? null;
                         if (currentUser) {
                             setStatus('Вход успешен. Загружаю профиль...');
-                            await getProfile();
                             showCRM();
+                            await getProfile();
+                            await loadStudents();
                         } else {
                             setStatus('Вход успешен. Ждем подтверждения сессии...');
                             showCRM();
