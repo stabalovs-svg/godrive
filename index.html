@@ -67,7 +67,7 @@
     </div>
 
     <script>
-        // Version: 2026-06-10T20:00Z (cache buster)
+        // Version: 2026-06-10T21:00Z (cache buster - fixed session sync with onAuthStateChange)
         const SUPABASE_URL = 'https://xcqrluiqllsnhtyojuhc.supabase.co';
         const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhjcXJsdWlxbGxzbmh0eW9qdWhjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODEwMTI2MjMsImV4cCI6MjA5NjU4ODYyM30.UOQA2kSLI6-lmlbsHCKjbWuNi5gbSGRiJijWbtiqqdQ';
 
@@ -87,6 +87,23 @@
             if (typeof window.supabase !== 'undefined') {
                 supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
                 console.log('Supabase initialized successfully', { supabaseLoaded: true, supabaseClient: !!supabaseClient });
+                
+                // Слушатель изменений аутентификации
+                if (supabaseClient.auth.onAuthStateChange) {
+                    supabaseClient.auth.onAuthStateChange(async (event, session) => {
+                        console.log('Auth state changed:', event, 'session:', !!session);
+                        if (session && session.user) {
+                            currentUser = session.user;
+                            console.log('User logged in:', currentUser.email);
+                            await getProfile();
+                            await loadStudents();
+                        } else {
+                            currentUser = null;
+                            currentRole = null;
+                            console.log('User logged out');
+                        }
+                    });
+                }
                 return;
             }
 
@@ -367,7 +384,7 @@
                         }
                         setStatus('Вход успешен. Загружаю профиль...');
                         showCRM();
-                        await getProfile();
+                        // Профиль будет загружен автоматически через onAuthStateChange
                     } catch (error) {
                         setStatus('Ошибка входа: ' + error.message, true);
                         alert('Ошибка входа: ' + error.message);
