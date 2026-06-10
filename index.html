@@ -336,13 +336,18 @@
             const password = document.getElementById('password').value;
 
             try {
-                const { error } = await supabaseClient.auth.signInWithPassword({ email, password });
-                if (error) {
-                    alert('Ошибка входа: ' + error.message);
+                const result = await supabaseClient.auth.signInWithPassword({ email, password });
+                console.log('signIn result', result);
+                if (result.error) {
+                    setStatus('Ошибка входа: ' + result.error.message, true);
+                    alert('Ошибка входа: ' + result.error.message);
                     return;
                 }
+                setStatus('Вход успешен. Загружаю профиль...');
                 showCRM();
+                await getProfile();
             } catch (error) {
+                setStatus('Ошибка входа: ' + error.message, true);
                 alert('Ошибка входа: ' + error.message);
             }
         });
