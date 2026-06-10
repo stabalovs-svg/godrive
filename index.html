@@ -21,7 +21,7 @@
         <form id="login-form">
             <input type="email" id="email" placeholder="Email" required><br><br>
             <input type="password" id="password" placeholder="Пароль" required><br><br>
-            <button type="submit">Войти</button>
+            <button type="submit" disabled>Войти</button>
         </form>
         <div id="status" style="font-size:0.9em; color:#666; margin-top:8px;">Войдите под своим аккаунтом для редактирования данных.</div>
     </div>
@@ -67,24 +67,26 @@
     </div>
 
     <script>
+        // Version: 2026-06-10T20:00Z (cache buster)
         const SUPABASE_URL = 'https://xcqrluiqllsnhtyojuhc.supabase.co';
         const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhjcXJsdWlxbGxzbmh0eW9qdWhjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODEwMTI2MjMsImV4cCI6MjA5NjU4ODYyM30.UOQA2kSLI6-lmlbsHCKjbWuNi5gbSGRiJijWbtiqqdQ';
-        const DEMO_ACCESS_KEY = null;
 
         let supabaseClient = null;
         let currentUser = null;
         let currentRole = null; // 'manager' | 'admin' | 'instructor'
-        const loginBlock = document.getElementById('login-block');
-        const crmBlock = document.getElementById('crm-block');
-        const loginForm = document.getElementById('login-form');
-        const logoutBtn = document.getElementById('logout-btn');
-        const studentsTableBody = document.querySelector('#students-table tbody');
+        let loginBlock = null;
+        let crmBlock = null;
+        let loginForm = null;
+        let logoutBtn = null;
+        let statusElement = null;
+        let addStudentForm = null;
+        let studentsTableBody = null;
 
         // Инициализация Supabase с проверкой
         async function initSupabase() {
             if (typeof window.supabase !== 'undefined') {
                 supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-                console.log('Supabase initialized successfully');
+                console.log('Supabase initialized successfully', { supabaseLoaded: true, supabaseClient: !!supabaseClient });
                 return;
             }
 
@@ -107,7 +109,7 @@
 
             if (typeof window.supabase !== 'undefined') {
                 supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-                console.log('Supabase initialized after wait');
+                console.log('Supabase initialized after wait', { supabaseLoaded: true, supabaseClient: !!supabaseClient });
             }
         }
 
@@ -275,26 +277,7 @@
             }
         }
 
-        function getDemoKeyFromUrl() {
-            return new URLSearchParams(window.location.search).get('demo');
-        }
-
-        function isDemoMode() {
-            return localStorage.getItem('demoMode') === '1' || getDemoKeyFromUrl() === DEMO_ACCESS_KEY;
-        }
-
-        function enableDemoMode() {
-            localStorage.setItem('demoMode', '1');
-            showCRM();
-            setStatus('Демо-режим активирован. Если данные не загружаются, отображаются демонстрационные данные.');
-        }
-
         async function checkSession() {
-            if (isDemoMode()) {
-                showCRM();
-                return;
-            }
-
             if (!supabaseClient) {
                 showLogin();
                 return;
@@ -305,6 +288,7 @@
                     data: { session },
                     error
                 } = await supabaseClient.auth.getSession();
+                console.log('Session check result', { session, error });
 
                 if (error) {
                     console.error('Session check error:', error.message);
@@ -324,140 +308,132 @@
             }
         }
 
-        loginForm.addEventListener('submit', async (event) => {
-            event.preventDefault();
-            
-            if (!supabaseClient) {
-                alert('Ошибка: Supabase не инициализирован');
-                return;
-            }
-
-            const email = document.getElementById('email').value;
-            const password = document.getElementById('password').value;
-
-            try {
-                const result = await supabaseClient.auth.signInWithPassword({ email, password });
-                console.log('signIn result', result);
-                if (result.error) {
-                    setStatus('Ошибка входа: ' + result.error.message, true);
-                    alert('Ошибка входа: ' + result.error.message);
-                    return;
-                }
-                setStatus('Вход успешен. Загружаю профиль...');
-                showCRM();
-                await getProfile();
-            } catch (error) {
-                setStatus('Ошибка входа: ' + error.message, true);
-                alert('Ошибка входа: ' + error.message);
-            }
-        });
-
-        logoutBtn.addEventListener('click', async () => {
-            if (isDemoMode()) {
-                localStorage.removeItem('demoMode');
-                showLogin();
-                return;
-            }
-
-            if (!supabaseClient) {
-                showLogin();
-                return;
-            }
-
-            try {
-                const { error } = await supabaseClient.auth.signOut();
-                if (error) {
-                    alert('Ошибка при выходе: ' + error.message);
-                    return;
-                }
-                showLogin();
-            } catch (error) {
-                alert('Ошибка при выходе: ' + error.message);
-            }
-        });
-
-        // Обработчики для демо-доступа
-        const demoSubmit = document.getElementById('demo-submit');
-        const demoCodeInput = document.getElementById('demo-code');
-        const statusElement = document.getElementById('status');
-
         function setStatus(text, error = false) {
+            if (!statusElement) return;
             statusElement.textContent = text;
             statusElement.style.color = error ? '#c00' : '#666';
         }
 
-        function renderFallbackData() {
-            const sample = [{
-                full_name: 'Демо Ученик',
-                phone: '+7 900 000-00-00',
-                contract_number: 'DEMO-001',
-                category: 'B',
-                status: 'Демонстрационный'
-            }];
-            studentsTableBody.innerHTML = sample.map(student => `
-                <tr>
-                    <td>${student.full_name}</td>
-                    <td>${student.phone}</td>
-                    <td>${student.contract_number}</td>
-                    <td>${student.category}</td>
-                    <td>${student.status}</td>
-                </tr>
-            `).join('');
+        function initDomElements() {
+            loginBlock = document.getElementById('login-block');
+            crmBlock = document.getElementById('crm-block');
+            loginForm = document.getElementById('login-form');
+            logoutBtn = document.getElementById('logout-btn');
+            statusElement = document.getElementById('status');
+            addStudentForm = document.getElementById('add-student-form');
+            studentsTableBody = document.querySelector('#students-table tbody');
+            console.log('DOM elements initialized', {
+                loginForm: !!loginForm,
+                logoutBtn: !!logoutBtn,
+                addStudentForm: !!addStudentForm,
+                statusElement: !!statusElement,
+                studentsTableBody: !!studentsTableBody
+            });
         }
 
-        demoSubmit.addEventListener('click', () => {
-            const key = demoCodeInput.value.trim();
-            if (key === DEMO_ACCESS_KEY) {
-                enableDemoMode();
-                setStatus('Доступ открыт. Если данные не загружаются, отображаются демонстрационные данные.');
+        function attachEventHandlers() {
+            if (loginForm) {
+                loginForm.addEventListener('submit', async (event) => {
+                    event.preventDefault();
+
+                    if (!supabaseClient) {
+                        alert('Ошибка: Supabase не инициализирован');
+                        return;
+                    }
+
+                    const email = document.getElementById('email').value;
+                    const password = document.getElementById('password').value;
+
+                    try {
+                        const result = await supabaseClient.auth.signInWithPassword({ email, password });
+                        console.log('signIn result', result);
+                        if (result.error) {
+                            setStatus('Ошибка входа: ' + result.error.message, true);
+                            alert('Ошибка входа: ' + result.error.message);
+                            return;
+                        }
+                        setStatus('Вход успешен. Загружаю профиль...');
+                        showCRM();
+                        await getProfile();
+                    } catch (error) {
+                        setStatus('Ошибка входа: ' + error.message, true);
+                        alert('Ошибка входа: ' + error.message);
+                    }
+                });
             } else {
-                setStatus('Неверный код доступа.', true);
-                demoCodeInput.value = '';
-                demoCodeInput.focus();
+                console.warn('login form element not found');
             }
-        });
 
-        // Позволяем Enter в поле ввода
-        demoCodeInput.addEventListener('keydown', (event) => {
-            if (event.key === 'Enter') {
-                event.preventDefault();
-                demoSubmit.click();
-            }
-        });
+            if (logoutBtn) {
+                logoutBtn.addEventListener('click', async () => {
+                    if (!supabaseClient) {
+                        showLogin();
+                        return;
+                    }
 
-        // Обработка добавления нового ученика
-        const addStudentForm = document.getElementById('add-student-form');
-        addStudentForm.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            if (!supabaseClient) {
-                setStatus('Нужно войти для добавления.', true);
-                return;
+                    try {
+                        const { error } = await supabaseClient.auth.signOut();
+                        if (error) {
+                            alert('Ошибка при выходе: ' + error.message);
+                            return;
+                        }
+                        showLogin();
+                    } catch (error) {
+                        alert('Ошибка при выходе: ' + error.message);
+                    }
+                });
+            } else {
+                console.warn('logout button element not found');
             }
-            const full_name = document.getElementById('new-name').value.trim();
-            const phone = document.getElementById('new-phone').value.trim();
-            const contract_number = document.getElementById('new-contract').value.trim();
-            const category = document.getElementById('new-category').value;
 
-            try {
-                const { data, error } = await supabaseClient.from('students').insert([{ full_name, phone, contract_number, category }]);
-                if (error) {
-                    setStatus('Ошибка добавления: ' + error.message, true);
-                    return;
-                }
-                setStatus('Ученик добавлен.');
-                addStudentForm.reset();
-                await loadStudents();
-            } catch (err) {
-                setStatus('Ошибка: ' + err.message, true);
+            if (addStudentForm) {
+                addStudentForm.addEventListener('submit', async (e) => {
+                    e.preventDefault();
+                    if (!supabaseClient) {
+                        setStatus('Нужно войти для добавления.', true);
+                        return;
+                    }
+                    const full_name = document.getElementById('new-name').value.trim();
+                    const phone = document.getElementById('new-phone').value.trim();
+                    const contract_number = document.getElementById('new-contract').value.trim();
+                    const category = document.getElementById('new-category').value;
+
+                    try {
+                        const { data, error } = await supabaseClient.from('students').insert([{ full_name, phone, contract_number, category }]);
+                        if (error) {
+                            setStatus('Ошибка добавления: ' + error.message, true);
+                            return;
+                        }
+                        setStatus('Ученик добавлен.');
+                        addStudentForm.reset();
+                        await loadStudents();
+                    } catch (err) {
+                        setStatus('Ошибка: ' + err.message, true);
+                    }
+                });
+            } else {
+                console.warn('add student form element not found');
             }
-        });
+        }
 
         // Инициализация при загрузке страницы
-        window.addEventListener('load', async () => {
+        async function startApp() {
             console.log('Page loaded');
             await initSupabase();
+            console.log('Supabase init done, supabaseClient ready:', !!supabaseClient);
+            initDomElements();
+            attachEventHandlers();
+            if (loginForm) {
+                const submitBtn = loginForm.querySelector('button[type=submit]');
+                if (submitBtn) {
+                    submitBtn.disabled = false;
+                    console.log('Login button enabled');
+                }
+            }
             await checkSession();
-        });
+        }
+        
+        window.addEventListener('load', startApp);
     </script>
 </body>
 </html>
