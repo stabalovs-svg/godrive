@@ -134,8 +134,16 @@
 
         function showLogin() {
             console.log('UI: showLogin called');
+            currentUser = null;
+            currentRole = null;
             loginBlock.classList.remove('hidden');
             crmBlock.classList.add('hidden');
+            const addContainer = document.getElementById('add-student-container');
+            if (addContainer) addContainer.style.display = 'none';
+            if (studentsTableBody) {
+                studentsTableBody.innerHTML = '<tr><td colspan="6">Войдите для просмотра данных.</td></tr>';
+            }
+            setStatus('Вы вышли из системы.');
         }
 
         function showCRM() {
@@ -409,6 +417,7 @@
 
             if (logoutBtn) {
                 logoutBtn.addEventListener('click', async () => {
+                    console.log('Logout clicked');
                     if (!supabaseClient) {
                         showLogin();
                         return;
@@ -416,10 +425,13 @@
 
                     try {
                         const { error } = await supabaseClient.auth.signOut();
+                        console.log('signOut result', { error });
                         if (error) {
                             alert('Ошибка при выходе: ' + error.message);
                             return;
                         }
+                        currentUser = null;
+                        currentRole = null;
                         showLogin();
                     } catch (error) {
                         alert('Ошибка при выходе: ' + error.message);
