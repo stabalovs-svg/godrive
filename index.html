@@ -57,23 +57,38 @@
         const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhjcXJsdWlxbGxzbmh0eW9qdWhjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODEwMTI2MjMsImV4cCI6MjA5NjU4ODYyM30.UOQA2kSLI6-lmlbsHCKjbWuNi5gbSGRiJijWbtiqqdQ';
         const DEMO_ACCESS_KEY = 'godrive-demo';
 
-        let supabase;
+        let supabase = null;
         const loginBlock = document.getElementById('login-block');
         const crmBlock = document.getElementById('crm-block');
         const loginForm = document.getElementById('login-form');
         const logoutBtn = document.getElementById('logout-btn');
         const studentsTableBody = document.querySelector('#students-table tbody');
 
-        // Инициализация Supabase
-        function initSupabase() {
-            if (typeof window.supabase === 'undefined') {
-                console.error('Supabase library not loaded');
-                studentsTableBody.innerHTML = '<tr><td colspan="5">Ошибка: библиотека Supabase не загрузилась</td></tr>';
-                return false;
+        // Инициализация Supabase с проверкой
+        async function initSupabase() {
+            try {
+                if (typeof window.supabase === 'undefined') {
+                    console.log('Supabase library loading...');
+                    // Ждём загрузки библиотеки
+                    await new Promise((resolve) => {
+                        const interval = setInterval(() => {
+                            if (typeof window.supabase !== 'undefined') {
+                                clearInterval(interval);
+                                resolve();
+                            }
+                        }, 100);
+                        // Таймаут 5 секунд
+                        setTimeout(() => clearInterval(interval), 5000);
+                    });
+                }
+                
+                if (typeof window.supabase !== 'undefined') {
+                    supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+                    console.log('Supabase initialized successfully');
+                }
+            } catch (error) {
+                console.error('Error initializing Supabase:', error);
             }
-            supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-            console.log('Supabase initialized');
-            return true;
         }
 
         function showLogin() {
@@ -91,34 +106,38 @@
             studentsTableBody.innerHTML = '<tr><td colspan="5">Загрузка данных...</td></tr>';
 
             if (!supabase) {
-                studentsTableBody.innerHTML = '<tr><td colspan="5">Ошибка: Supabase не инициализирован</td></tr>';
+                studentsTableBody.innerHTML = '<tr><td colspan="5">Демо-режим: данные не доступны без Supabase</td></tr>';
                 return;
             }
 
-            const { data, error } = await supabase
-                .from('students')
-                .select('id, full_name, phone, contract_number, category, status')
-                .order('created_at', { ascending: false });
+            try {
+                const { data, error } = await supabase
+                    .from('students')
+                    .select('id, full_name, phone, contract_number, category, status')
+                    .order('created_at', { ascending: false });
 
-            if (error) {
-                studentsTableBody.innerHTML = `<tr><td colspan="5">Ошибка загрузки: ${error.message}</td></tr>`;
-                return;
+                if (error) {
+                    studentsTableBody.innerHTML = `<tr><td colspan="5">Ошибка загрузки: ${error.message}</td></tr>`;
+                    return;
+                }
+
+                if (!data || data.length === 0) {
+                    studentsTableBody.innerHTML = '<tr><td colspan="5">Нет данных</td></tr>';
+                    return;
+                }
+
+                studentsTableBody.innerHTML = data.map(student => `
+                    <tr>
+                        <td>${student.full_name || ''}</td>
+                        <td>${student.phone || ''}</td>
+                        <td>${student.contract_number || ''}</td>
+                        <td>${student.category || ''}</td>
+                        <td>${student.status || ''}</td>
+                    </tr>
+                `).join('');
+            } catch (error) {
+                studentsTableBody.innerHTML = `<tr><td colspan="5">Ошибка: ${error.message}</td></tr>`;
             }
-
-            if (!data || data.length === 0) {
-                studentsTableBody.innerHTML = '<tr><td colspan="5">Нет данных</td></tr>';
-                return;
-            }
-
-            studentsTableBody.innerHTML = data.map(student => `
-                <tr>
-                    <td>${student.full_name || ''}</td>
-                    <td>${student.phone || ''}</td>
-                    <td>${student.contract_number || ''}</td>
-                    <td>${student.category || ''}</td>
-                    <td>${student.status || ''}</td>
-                </tr>
-            `).join('');
         }
 
         function getDemoKeyFromUrl() {
@@ -141,23 +160,29 @@
             }
 
             if (!supabase) {
-                console.error('Supabase not initialized');
                 showLogin();
                 return;
             }
 
-            const {
-                data: { session },
-                error
-            } = await supabase.auth.getSession();
+            try {
+                const {
+                    data: { session },
+                    error
+                } = await supabase.auth.getSession();
 
-            if (error) {
-                console.error('Ошибка проверки сессии', error.message);
-            }
+                if (error) {
+                    console.error('Session check error:', error.message);
+                    showLogin();
+                    return;
+                }
 
-            if (session) {
-                showCRM();
-            } else {
+                if (session) {
+                    showCRM();
+                } else {
+                    showLogin();
+                }
+            } catch (error) {
+                console.error('Error checking session:', error);
                 showLogin();
             }
         }
@@ -173,13 +198,16 @@
             const email = document.getElementById('email').value;
             const password = document.getElementById('password').value;
 
-            const { error } = await supabase.auth.signInWithPassword({ email, password });
-            if (error) {
+            try {
+                const { error } = await supabase.auth.signInWithPassword({ email, password });
+                if (error) {
+                    alert('Ошибка входа: ' + error.message);
+                    return;
+                }
+                showCRM();
+            } catch (error) {
                 alert('Ошибка входа: ' + error.message);
-                return;
             }
-
-            showCRM();
         });
 
         logoutBtn.addEventListener('click', async () => {
@@ -194,39 +222,50 @@
                 return;
             }
 
-            const { error } = await supabase.auth.signOut();
-            if (error) {
+            try {
+                const { error } = await supabase.auth.signOut();
+                if (error) {
+                    alert('Ошибка при выходе: ' + error.message);
+                    return;
+                }
+                showLogin();
+            } catch (error) {
                 alert('Ошибка при выходе: ' + error.message);
-                return;
             }
-            showLogin();
         });
 
+        // Обработчики для демо-доступа
         const demoBtn = document.getElementById('demo-btn');
         const demoSubmit = document.getElementById('demo-submit');
         const demoCodeInput = document.getElementById('demo-code');
 
         demoBtn.addEventListener('click', () => {
-            console.log('Demo button clicked');
             demoCodeInput.focus();
         });
 
         demoSubmit.addEventListener('click', () => {
             const key = demoCodeInput.value.trim();
-            console.log('Demo submit clicked, key:', key, 'expected:', DEMO_ACCESS_KEY);
             if (key === DEMO_ACCESS_KEY) {
-                console.log('Access granted!');
                 enableDemoMode();
             } else {
                 alert('Неверный код доступа.');
+                demoCodeInput.value = '';
+                demoCodeInput.focus();
+            }
+        });
+
+        // Позволяем Enter в поле ввода
+        demoCodeInput.addEventListener('keypress', (event) => {
+            if (event.key === 'Enter') {
+                demoSubmit.click();
             }
         });
 
         // Инициализация при загрузке страницы
-        window.addEventListener('load', () => {
-            console.log('Page loaded, initializing Supabase...');
-            initSupabase();
-            checkSession();
+        window.addEventListener('load', async () => {
+            console.log('Page loaded');
+            await initSupabase();
+            await checkSession();
         });
     </script>
 </body>
