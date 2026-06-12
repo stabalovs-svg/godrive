@@ -229,28 +229,7 @@
                 console.error('loadStudents exception:', error);
             }
         }
-        // Добавьте обработчик события отправки формы
-        document.getElementById('add-student-container').addEventListener('submit', function (event) {
-            event.preventDefault();
-            const formData = new FormData(event.target);
-            // Отправьте данные на сервер для добавления студента
-            fetch('https://xcqrluiqllsnhtyojuhc.supabase.co', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(Object.fromEntries(formData))
-            })
-                .then(response => response.json())
-                .then(data => {
-                    // Обновите таблицу студентов после добавления нового студента
-                    loadStudents();
-                })
-                .catch(error => {
-                    console.error(error);
-                });
-        });
-
+        
         // Получаем профиль и роль текущего пользователя из таблицы profiles
         async function getProfile() {
             try {
