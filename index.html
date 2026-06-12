@@ -1,18 +1,43 @@
 <!DOCTYPE html>
 <html lang="ru">
+
 <head>
     <meta charset="UTF-8">
     <title>CRM Автошкола</title>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <style>
-        body { font-family: Arial, sans-serif; margin: 20px; }
-        .hidden { display: none; }
-        form { margin-bottom: 20px; }
-        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
-        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
-        th { background-color: #f4f4f4; }
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        form {
+            margin-bottom: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th,
+        td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f4f4f4;
+        }
     </style>
 </head>
+
 <body>
 
     <!-- 1. ФОРМА ВХОДА (показывается по умолчанию) -->
@@ -23,22 +48,24 @@
             <input type="password" id="password" placeholder="Пароль" required><br><br>
             <button type="submit" disabled>Войти</button>
         </form>
-        <div id="status" style="font-size:0.9em; color:#666; margin-top:8px;">Войдите под своим аккаунтом для редактирования данных.</div>
+        <div id="status" style="font-size:0.9em; color:#666; margin-top:8px;">Войдите под своим аккаунтом для
+            редактирования данных.</div>
     </div>
 
     <!-- 2. ИНТЕРФЕЙС CRM (скрыт до авторизации) -->
     <div id="crm-block" class="hidden">
         <h2>Список учеников автошколы</h2>
         <button id="logout-btn">Выйти из системы</button>
-        
+
         <!-- ФОРМА ДОБАВЛЕНИЯ УЧЕНИКА -->
-        <div id="add-student-container" style="display:none; background: #f9f9f9; padding: 15px; border: 1px solid #ddd; margin: 20px 0;">
+        <div id="add-student-container"
+            style="display:none; background: #f9f9f9; padding: 15px; border: 1px solid #ddd; margin: 20px 0;">
             <h3>Добавить нового ученика</h3>
             <form id="add-student-form">
                 <input type="text" id="new-name" placeholder="ФИО ученика" required>
                 <input type="text" id="new-phone" placeholder="Телефон">
                 <input type="text" id="new-contract" placeholder="№ Договора">
-                
+
                 <select id="new-category">
                     <option value="B">Категория B</option>
                     <option value="A">Категория A</option>
@@ -87,7 +114,7 @@
             if (typeof window.supabase !== 'undefined') {
                 supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
                 console.log('Supabase initialized successfully', { supabaseLoaded: true, supabaseClient: !!supabaseClient });
-                
+
                 // Слушатель изменений аутентификации
                 if (supabaseClient.auth.onAuthStateChange) {
                     supabaseClient.auth.onAuthStateChange(async (event, session) => {
@@ -202,6 +229,27 @@
                 console.error('loadStudents exception:', error);
             }
         }
+        // Добавьте обработчик события отправки формы
+        document.getElementById('add-student-form').addEventListener('submit', function (event) {
+            event.preventDefault();
+            const formData = new FormData(event.target);
+            // Отправьте данные на сервер для добавления студента
+            fetch('https://your-supabase-url.com/rest-api-endpoint', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(Object.fromEntries(formData))
+            })
+                .then(response => response.json())
+                .then(data => {
+                    // Обновите таблицу студентов после добавления нового студента
+                    loadStudents();
+                })
+                .catch(error => {
+                    console.error(error);
+                });
+        });
 
         // Получаем профиль и роль текущего пользователя из таблицы profiles
         async function getProfile() {
@@ -490,8 +538,9 @@
             }
             await checkSession();
         }
-        
+
         window.addEventListener('load', startApp);
     </script>
 </body>
+
 </html>
