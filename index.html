@@ -94,6 +94,28 @@
     </div>
 
     <script>
+
+     // Адаптивные стили для мобильных устройств
+         @media (max-width: 768px) {
+
+       body {
+       padding: 10px;
+       }
+
+       table {
+       font-size: 14px;
+       }
+
+       input,
+       select,
+       button {
+           width: 100%;
+           margin-bottom: 8px;
+           box-sizing: border-box;
+       }
+
+    }
+
         // Version: 2026-06-10T21:00Z (cache buster - fixed session sync with onAuthStateChange)
         const SUPABASE_URL = 'https://xcqrluiqllsnhtyojuhc.supabase.co';
         const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhjcXJsdWlxbGxzbmh0eW9qdWhjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODEwMTI2MjMsImV4cCI6MjA5NjU4ODYyM30.UOQA2kSLI6-lmlbsHCKjbWuNi5gbSGRiJijWbtiqqdQ';
