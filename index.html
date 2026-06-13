@@ -341,7 +341,44 @@
             document.querySelectorAll('.edit-btn').forEach(btn => btn.onclick = onEditRow);
             document.querySelectorAll('.delete-btn').forEach(btn => btn.onclick = onDeleteRow);
         }
+        function attachCardButtons() {
 
+            document.querySelectorAll('.card-btn').forEach(btn => {
+
+                btn.onclick = function () {
+
+                    const tr = btn.closest('tr');
+
+                    document.getElementById('modal-name').textContent =
+                        tr.querySelector('.s-full_name')?.textContent || '';
+
+                    document.getElementById('modal-phone').textContent =
+                        tr.querySelector('.s-phone')?.textContent || '';
+
+                    document.getElementById('modal-email').textContent =
+                        tr.querySelector('.s-email')?.textContent || '';
+
+                    document.getElementById('modal-contract').textContent =
+                        tr.querySelector('.s-contract')?.textContent || '';
+
+                    document.getElementById('modal-category').textContent =
+                        tr.querySelector('.s-category')?.textContent || '';
+
+                    document.getElementById('modal-birth').textContent =
+                        tr.querySelector('.s-birth_date')?.textContent || '';
+
+                    document.getElementById('modal-status').textContent =
+                        tr.querySelector('.s-status')?.textContent || '';
+
+                    document.getElementById('modal-notes').textContent =
+                        tr.querySelector('.s-notes')?.textContent || '';
+
+                    document.getElementById('student-modal')
+                        .classList.remove('hidden');
+                };
+           });
+
+        }
         async function onEditRow(e) {
             const tr = e.target.closest('tr');
             const id = tr.getAttribute('data-id');
