@@ -81,9 +81,12 @@
                 <tr>
                     <th>ФИО</th>
                     <th>Телефон</th>
+                    <th>email</th>
                     <th>Договор</th>
                     <th>Категория</th>
+                    <th>День рождения</th>
                     <th>Статус</th>
+                    <th>Заметки</th>
                     <th>Действия</th>
                 </tr>
             </thead>
@@ -217,9 +220,12 @@
                     <tr data-id="${student.id}">
                         <td class="s-full_name">${student.full_name || ''}</td>
                         <td class="s-phone">${student.phone || ''}</td>
+                        <td class="s-created_at">${student.email || ''}</td>
                         <td class="s-contract">${student.contract_number || ''}</td>
                         <td class="s-category">${student.category || ''}</td>
+                        <td class="s-birthday">${student.birthday || ''}</td>
                         <td class="s-status">${student.status || ''}</td>
+                        <td class="s-notes">${student.notes || ''}</td>
                         <td class="s-actions"></td>
                     </tr>
                 `).join('');
