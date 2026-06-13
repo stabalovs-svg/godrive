@@ -252,6 +252,7 @@
                 `).join('');
                 console.log('loadStudents: rendered', data.length, 'rows. currentRole:', currentRole);
                 renderRowActions();
+                attachCardButtons();
             } catch (error) {
                 setStatus('Ошибка: ' + error.message, true);
                 studentsTableBody.innerHTML = `<tr><td colspan="6">Ошибка: ${error.message}</td></tr>`;
