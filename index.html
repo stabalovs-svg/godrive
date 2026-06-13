@@ -90,7 +90,6 @@
                     <th>Действия</th>
                 </tr>
             </thead>
-            <button class="card-btn">Карточка</button>
             <tbody>
                 <!-- Сюда JavaScript вставит данные из базы -->
             </tbody>
@@ -226,7 +225,9 @@
                         <td class="s-birthday">${student.birth_date || ''}</td>
                         <td class="s-status">${student.status || ''}</td>
                         <td class="s-notes">${student.notes || ''}</td>
-                        <td class="s-actions"></td>
+                        <td class="s-actions">
+                            <button class="card-btn">Карточка</button>
+                        </td>
                     </tr>
                 `).join('');
                 console.log('loadStudents: rendered', data.length, 'rows. currentRole:', currentRole);
