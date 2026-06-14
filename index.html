@@ -269,13 +269,21 @@
             }
 
             try {
+
+                console.log('START QUERY');
+
                 const { data, error } = await supabaseClient
                     .from('students')
-                    .select('id, full_name, phone, email,contract_number, category, birth_date, status, notes')
+                    .select('id, full_name, phone, email, contract_number, category, birth_date, status, notes')
                     .order('created_at', { ascending: false });
 
-                console.log('loadStudents: query result', { dataLength: data?.length, error });
+                console.log('QUERY FINISHED');
 
+                console.log('loadStudents: query result', {
+                    dataLength: data?.length,
+                    error
+                });
+                
                 if (error) {
                     setStatus('Ошибка загрузки данных: ' + error.message, true);
                     studentsTableBody.innerHTML = `<tr><td colspan="6">Ошибка загрузки: ${error.message}</td></tr>`;
