@@ -133,6 +133,37 @@
                 </tr>
             </thead>
             <tbody>
+                <div id="student-modal" class="hidden">
+            
+                    <div class="modal-content">
+            
+                        <h3>Карточка ученика</h3>
+            
+                        <p><b>ФИО:</b> <span id="modal-name"></span></p>
+            
+                        <p><b>Телефон:</b> <span id="modal-phone"></span></p>
+            
+                        <p><b>Email:</b> <span id="modal-email"></span></p>
+            
+                        <p><b>Договор:</b> <span id="modal-contract"></span></p>
+            
+                        <p><b>Категория:</b> <span id="modal-category"></span></p>
+            
+                        <p><b>Дата рождения:</b> <span id="modal-birth"></span></p>
+            
+                        <p><b>Статус:</b> <span id="modal-status"></span></p>
+            
+                        <p><b>Заметки:</b></p>
+            
+                        <div id="modal-notes"></div>
+            
+                        <button id="close-modal">
+                            Закрыть
+                        </button>
+            
+                    </div>
+            
+                </div>
                 <!-- Сюда JavaScript вставит данные из базы -->
             </tbody>
         </table>
@@ -264,7 +295,7 @@
                         <td class="s-email">${student.email || ''}</td>
                         <td class="s-contract">${student.contract_number || ''}</td>
                         <td class="s-category">${student.category || ''}</td>
-                        <td class="s-birthday">${student.birth_date || ''}</td>
+                        <td class="s-birth_date">${student.birth_date || ''}</td>
                         <td class="s-status">${student.status || ''}</td>
                         <td class="s-notes">${student.notes || ''}</td>
                         <td class="s-actions">
