@@ -732,6 +732,19 @@
                 }
             }
             await checkSession();
+            const closeBtn = document.getElementById('close-modal');
+
+            if (closeBtn) {
+
+                closeBtn.addEventListener('click', () => {
+
+                    document
+                        .getElementById('student-modal')
+                        .classList.add('hidden');
+
+                });
+
+            }
         }
 
         window.addEventListener('load', startApp);
