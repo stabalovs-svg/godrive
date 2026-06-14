@@ -256,10 +256,13 @@
             console.log('UI: showCRM called');
             loginBlock.classList.add('hidden');
             crmBlock.classList.remove('hidden');
-            loadStudents();
         }
 
         async function loadStudents() {
+            
+            window.loadCounter = (window.loadCounter || 0) + 1;
+            console.log('LOAD COUNT =', window.loadCounter);
+            
             console.log('loadStudents called, supabaseClient:', !!supabaseClient);
             studentsTableBody.innerHTML = '<tr><td colspan="6">Загрузка данных...</td></tr>';
 
@@ -283,7 +286,7 @@
                     dataLength: data?.length,
                     error
                 });
-                
+
                 if (error) {
                     setStatus('Ошибка загрузки данных: ' + error.message, true);
                     studentsTableBody.innerHTML = `<tr><td colspan="6">Ошибка загрузки: ${error.message}</td></tr>`;
