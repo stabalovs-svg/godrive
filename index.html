@@ -434,6 +434,47 @@
            });
 
         }
+        
+        function openStudentCard(e) {
+
+            const tr = e.target.closest('tr');
+
+            const name =
+                    tr.querySelector('.s-full_name')?.textContent || '';
+
+            const phone =
+                    tr.querySelector('.s-phone')?.textContent || '';
+
+            const email =
+                    tr.querySelector('.s-email')?.textContent || '';
+
+            const contract =
+                    tr.querySelector('.s-contract')?.textContent || '';
+
+            const category =
+                    tr.querySelector('.s-category')?.textContent || '';
+
+            const birthDate =
+                    tr.querySelector('.s-birth_date')?.textContent || '';
+
+            const status =
+                    tr.querySelector('.s-status')?.textContent || '';
+
+            const notes =
+                    tr.querySelector('.s-notes')?.textContent || '';
+
+            document.getElementById('modal-name').textContent = name;
+            document.getElementById('modal-phone').textContent = phone;
+            document.getElementById('modal-email').textContent = email;
+            document.getElementById('modal-contract').textContent = contract;
+            document.getElementById('modal-category').textContent = category;
+            document.getElementById('modal-birth').textContent = birthDate;
+            document.getElementById('modal-status').textContent = status;
+            document.getElementById('modal-notes').textContent = notes;
+
+            document.getElementById('student-modal')
+                .classList.remove('hidden');
+        }
         async function onEditRow(e) {
             const tr = e.target.closest('tr');
             const id = tr.getAttribute('data-id');
