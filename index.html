@@ -348,22 +348,54 @@
         }
 
         function renderRowActions() {
-            document.querySelectorAll('#students-table tbody tr').forEach(tr => {
-                const id = tr.getAttribute('data-id');
-                const actionsTd = tr.querySelector('.s-actions');
-                if (!actionsTd) return;
-                actionsTd.innerHTML = '';
-                if (currentRole === 'manager' || currentRole === 'admin') {
-                    actionsTd.innerHTML += `<button class="edit-btn">Изменить</button> `;
-                }
-                if (currentRole === 'manager') {
-                    actionsTd.innerHTML += `<button class="delete-btn">Удалить</button>`;
-                }
-            });
-            // attach handlers
-            document.querySelectorAll('.edit-btn').forEach(btn => btn.onclick = onEditRow);
-            document.querySelectorAll('.delete-btn').forEach(btn => btn.onclick = onDeleteRow);
-        }
+
+                document.querySelectorAll('#students-table tbody tr').forEach(tr => {
+
+                    const actionsTd = tr.querySelector('.s-actions');
+
+                    if (!actionsTd) return;
+
+                    actionsTd.innerHTML = '';
+
+                    // Кнопка карточки есть у всех
+                    actionsTd.innerHTML += `
+            <button class="card-btn">
+                Карточка
+            </button>
+        `;
+
+                    // Кнопка редактирования
+                    if (currentRole === 'manager' || currentRole === 'admin') {
+
+                        actionsTd.innerHTML += `
+                <button class="edit-btn">
+                    Изменить
+                </button>
+            `;
+                    }
+
+                    // Кнопка удаления
+                    if (currentRole === 'manager') {
+
+                        actionsTd.innerHTML += `
+                <button class="delete-btn">
+                    Удалить
+                </button>
+            `;
+                    }
+                });
+
+                // обработчики кнопок
+
+                document.querySelectorAll('.card-btn')
+                    .forEach(btn => btn.onclick = openStudentCard);
+
+                document.querySelectorAll('.edit-btn')
+                    .forEach(btn => btn.onclick = onEditRow);
+
+                document.querySelectorAll('.delete-btn')
+                    .forEach(btn => btn.onclick = onDeleteRow);
+            }
         function attachCardButtons() {
 
             document.querySelectorAll('.card-btn').forEach(btn => {
