@@ -276,50 +276,50 @@
         }
 
         async function loadStudents() {
-            
-            alert('LOAD STUDENTS');
-            window.loadCounter = (window.loadCounter || 0) + 1;
-            console.log('LOAD COUNT =', window.loadCounter);
-            
-            console.log('loadStudents called, supabaseClient:', !!supabaseClient);
-            studentsTableBody.innerHTML = '<tr><td colspan="6">Загрузка данных...</td></tr>';
 
-            if (!supabaseClient) {
-                setStatus('Нужно войти для загрузки данных.', true);
-                return;
-            }
+                alert('LOAD STUDENTS');
+                window.loadCounter = (window.loadCounter || 0) + 1;
+                console.log('LOAD COUNT =', window.loadCounter);
 
-            try {
+                console.log('loadStudents called, supabaseClient:', !!supabaseClient);
+                studentsTableBody.innerHTML = '<tr><td colspan="6">Загрузка данных...</td></tr>';
 
-                console.log('START QUERY');
-
-                const { data, error } = await supabaseClient
-                    .from('students')
-                    .select('id, full_name, phone, email, contract_number, category, birth_date, status, notes')
-                    .order('created_at', { ascending: false });
-
-                console.log('QUERY FINISHED');
-
-                console.log('loadStudents: query result', {
-                    dataLength: data?.length,
-                    error
-                });
-
-                if (error) {
-                    setStatus('Ошибка загрузки данных: ' + error.message, true);
-                    studentsTableBody.innerHTML = `<tr><td colspan="6">Ошибка загрузки: ${error.message}</td></tr>`;
+                if (!supabaseClient) {
+                    setStatus('Нужно войти для загрузки данных.', true);
                     return;
                 }
 
-                if (!data || data.length === 0) {
-                    setStatus('Данные не найдены.', true);
-                    studentsTableBody.innerHTML = '<tr><td colspan="6">Нет данных</td></tr>';
-                    console.log('loadStudents: no data returned');
-                    return;
-                }
+                try {
 
-                setStatus('Данные загружены.');
-                studentsTableBody.innerHTML = data.map(student => `
+                    console.log('START QUERY');
+
+                    const { data, error } = await supabaseClient
+                        .from('students')
+                        .select('id, full_name, phone, email, contract_number, category, birth_date, status, notes')
+                        .order('created_at', { ascending: false });
+
+                    console.log('QUERY FINISHED');
+
+                    console.log('loadStudents: query result', {
+                        dataLength: data?.length,
+                        error
+                    });
+
+                    if (error) {
+                        setStatus('Ошибка загрузки данных: ' + error.message, true);
+                        studentsTableBody.innerHTML = `<tr><td colspan="6">Ошибка загрузки: ${error.message}</td></tr>`;
+                        return;
+                    }
+
+                    if (!data || data.length === 0) {
+                        setStatus('Данные не найдены.', true);
+                        studentsTableBody.innerHTML = '<tr><td colspan="6">Нет данных</td></tr>';
+                        console.log('loadStudents: no data returned');
+                        return;
+                    }
+
+                    setStatus('Данные загружены.');
+                    studentsTableBody.innerHTML = data.map(student => `
                     <tr data-id="${student.id}">
                         <td class="s-full_name">${student.full_name || ''}</td>
                         <td class="s-phone">${student.phone || ''}</td>
@@ -334,67 +334,92 @@
                         </td>
                     </tr>
                 `).join('');
-                console.log('loadStudents: rendered', data.length, 'rows. currentRole:', currentRole);
-                renderRowActions();
-                attachCardButtons();
-            } catch (error) {
-                setStatus('Ошибка: ' + error.message, true);
-                studentsTableBody.innerHTML = `<tr><td colspan="6">Ошибка: ${error.message}</td></tr>`;
-                console.error('loadStudents exception:', error);
+                    console.log('loadStudents: rendered', data.length, 'rows. currentRole:', currentRole);
+                    renderRowActions();
+                    attachCardButtons();
+                } catch (error) {
+                    setStatus('Ошибка: ' + error.message, true);
+                    studentsTableBody.innerHTML = `<tr><td colspan="6">Ошибка: ${error.message}</td></tr>`;
+                    console.error('loadStudents exception:', error);
+                }
             }
-        }
-        // Добавьте обработчик события отправки формы
-        document.getElementById('add-student-container').addEventListener('submit', function (event) {
-            event.preventDefault();
-            const formData = new FormData(event.target);
-            // Отправьте данные на сервер для добавления студента
-            fetch('https://xcqrluiqllsnhtyojuhc.supabase.co', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(Object.fromEntries(formData))
-            })
-                .then(response => response.json())
-                .then(data => {
-                    // Обновите таблицу студентов после добавления нового студента
-                    loadStudents();
+            // Добавьте обработчик события отправки формы
+            document.getElementById('add-student-container').addEventListener('submit', function (event) {
+                event.preventDefault();
+                const formData = new FormData(event.target);
+                // Отправьте данные на сервер для добавления студента
+                fetch('https://xcqrluiqllsnhtyojuhc.supabase.co', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(Object.fromEntries(formData))
                 })
-                .catch(error => {
-                    console.error(error);
-                });
-        });
+                    .then(response => response.json())
+                    .then(data => {
+                        // Обновите таблицу студентов после добавления нового студента
+                        loadStudents();
+                    })
+                    .catch(error => {
+                        console.error(error);
+                    });
+            });
 
-        // Получаем профиль и роль текущего пользователя из таблицы profiles
+         // Получаем профиль и роль текущего пользователя из таблицы profiles
         async function getProfile() {
+
+            console.log('PROFILE 1');
+
             try {
                 const { data } = await supabaseClient.auth.getUser();
+
+                console.log('PROFILE 2');
+
                 currentUser = data?.user ?? null;
-                console.log('getProfile: currentUser =', currentUser?.email || 'null');
+
             } catch (e) {
-                console.warn('getUser error', e.message);
+
+                console.log('PROFILE ERROR A');
+
                 currentUser = null;
             }
 
+            console.log('PROFILE 3');
+
             if (!currentUser) {
-                console.warn('getProfile: no current user');
+                console.log('PROFILE 4');
                 return;
             }
 
+            console.log('PROFILE 5');
+
             try {
+
+                console.log('PROFILE 6');
+
                 const { data, error } = await supabaseClient
                     .from('profiles')
                     .select('role')
                     .eq('id', currentUser.id)
                     .single();
-                console.log('getProfile: role query result', { data, error });
+
+                onsole.log('PROFILE 7');
+
+                console.log(data, error);
+
                 if (!error && data) {
                     currentRole = data.role;
-                    console.log('getProfile: role set to', currentRole);
                 }
+
             } catch (e) {
-                console.warn('profile fetch error', e.message);
+
+                console.log('PROFILE ERROR B');
+                console.log(e);
+
             }
+
+            console.log('PROFILE 8');
+
             setRoleUI();
         }
 
