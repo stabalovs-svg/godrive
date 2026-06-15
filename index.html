@@ -403,9 +403,10 @@
                     .eq('id', currentUser.id)
                     .single();
 
-                onsole.log('PROFILE 7');
+                console.log('PROFILE 7');
 
-                console.log(data, error);
+                console.log(data);
+                console.log(error);
 
                 if (!error && data) {
                     currentRole = data.role;
