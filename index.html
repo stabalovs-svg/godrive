@@ -730,32 +730,20 @@
 
         // Инициализация при загрузке страницы
         async function startApp() {
-            console.log('Page loaded');
+            console.log('STEP 1');
+
             await initSupabase();
-            console.log('Supabase init done, supabaseClient ready:', !!supabaseClient);
+            console.log('STEP 2');
+            
             initDomElements();
+            console.log('STEP 3');
+
             attachEventHandlers();
-            if (loginForm) {
-                const submitBtn = loginForm.querySelector('button[type=submit]');
-                if (submitBtn) {
-                    submitBtn.disabled = false;
-                    console.log('Login button enabled');
-                }
-            }
+            console.log('STEP 4');
+          
             await checkSession();
-            const closeBtn = document.getElementById('close-modal');
-
-            if (closeBtn) {
-
-                closeBtn.addEventListener('click', () => {
-
-                    document
-                        .getElementById('student-modal')
-                        .classList.add('hidden');
-
-                });
-
-            }
+            console.log('STEP 5');
+            
         }
 
         window.addEventListener('load', startApp);
