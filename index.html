@@ -767,18 +767,8 @@
             attachEventHandlers();
             console.log('STEP 4');
           
-            await checkSession();
-            console.log('STEP 5');
-
-            document.getElementById('close-modal')
-            ?.addEventListener('click', () => {
-
-                 console.log('MODAL CLOSE CLICK');
-
-                document
-                    .getElementById('student-modal')
-                    .classList.add('hidden');
-            });
+            // await checkSession();
+            console.log('CHECK SESSION DISABLED');
         }
 
         window.addEventListener('load', startApp);
