@@ -365,31 +365,14 @@
                     });
             });
 
-         // Получаем профиль и роль текущего пользователя из таблицы profiles
+            // Получаем профиль и роль текущего пользователя из таблицы profiles
         async function getProfile() {
 
             console.log('PROFILE 1');
-            console.log('SUPABASE =', !!supabaseClient);
-            try {
-                const { data } = await supabaseClient.auth.getUser();
-
-                console.log('PROFILE 2');
-
-                currentUser = data?.user ?? null;
-
-            } catch (e) {
-
-                console.log('PROFILE ERROR A');
-
-                currentUser = null;
-            }
-
-            console.log('PROFILE 3');
 
             if (!currentUser) {
-                console.log('PROFILE 4');
-                return;
-            }
+                console.log('PROFILE NO USER');
+                }
 
             console.log('PROFILE 5');
 
@@ -404,7 +387,6 @@
                     .single();
 
                 console.log('PROFILE 7');
-
                 console.log(data);
                 console.log(error);
 
