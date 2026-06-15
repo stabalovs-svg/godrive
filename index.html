@@ -369,7 +369,7 @@
         async function getProfile() {
 
             console.log('PROFILE 1');
-
+            console.log('SUPABASE =', !!supabaseClient);
             try {
                 const { data } = await supabaseClient.auth.getUser();
 
