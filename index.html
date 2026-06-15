@@ -195,19 +195,36 @@
                 console.log('Supabase initialized successfully', { supabaseLoaded: true, supabaseClient: !!supabaseClient });
 
                 // Слушатель изменений аутентификации
-                if (supabaseClient.auth.onAuthStateChange) {
+               if (supabaseClient.auth.onAuthStateChange) {
                     supabaseClient.auth.onAuthStateChange(async (event, session) => {
+
                         console.log('Auth state changed:', event, 'session:', !!session);
+
                         if (session && session.user) {
+
                             currentUser = session.user;
-                            console.log('User logged in:', currentUser.email);
+
+                            console.log('POINT A');
+
                             showCRM();
+
+                            console.log('POINT B');
+
                             await getProfile();
+
+                            console.log('POINT C');
+
                             await loadStudents();
+
+                            console.log('POINT D');
+
                         } else {
+
                             currentUser = null;
                             currentRole = null;
+
                             console.log('User logged out');
+
                             showLogin();
                         }
                     });
