@@ -277,9 +277,6 @@
 
         async function loadStudents() {
 
-                alert('LOAD STUDENTS');
-                window.loadCounter = (window.loadCounter || 0) + 1;
-                console.log('LOAD COUNT =', window.loadCounter);
 
                 console.log('loadStudents called, supabaseClient:', !!supabaseClient);
                 studentsTableBody.innerHTML = '<tr><td colspan="6">Загрузка данных...</td></tr>';
@@ -372,6 +369,7 @@
 
             if (!currentUser) {
                 console.log('PROFILE NO USER');
+                return;
                 }
 
             console.log('PROFILE 5');
@@ -684,9 +682,7 @@
                         currentUser = result.data?.user ?? null;
                         if (currentUser) {
                             setStatus('Вход успешен. Загружаю профиль...');
-                            showCRM();
-                            await getProfile();
-                            await loadStudents();
+
                         } else {
                             setStatus('Вход успешен. Ждем подтверждения сессии...');
                             showCRM();
