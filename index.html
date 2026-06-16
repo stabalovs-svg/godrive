@@ -195,16 +195,13 @@
                 console.log('Supabase initialized successfully', { supabaseLoaded: true, supabaseClient: !!supabaseClient });
 
                 // Слушатель изменений аутентификации
-               if (supabaseClient.auth.onAuthStateChange) {
+                if (supabaseClient.auth.onAuthStateChange) {
+
                     supabaseClient.auth.onAuthStateChange(async (event, session) => {
 
                         console.log('Auth state changed:', event, 'session:', !!session);
 
-                        if (
-                            session &&
-                            session.user &&
-                            event === 'INITIAL_SESSION'
-                        ) {
+                        if (session && session.user) {
 
                             currentUser = session.user;
 
@@ -231,11 +228,10 @@
 
                             showLogin();
                         }
-                    });
-                }
-                return;
-            }
 
+                    });
+
+                }
             console.log('Ожидаем загрузки Supabase...');
             await new Promise((resolve) => {
                 const interval = setInterval(() => {
