@@ -380,11 +380,16 @@
 
                 console.log('PROFILE 6');
 
-                const { data, error } = await supabaseClient
+                const result = await supabaseClient
                     .from('profiles')
                     .select('role')
-                    .eq('id', currentUser.id)
-                    .single();
+                    .eq('id', currentUser.id);
+
+                console.log('PROFILE RAW RESULT');
+                console.log(result);
+
+                const data = result.data?.[0];
+                const error = result.error;
 
                 console.log('PROFILE 7');
                 console.log(data);
@@ -400,7 +405,7 @@
                 console.log(e);
 
             }
-
+            
             console.log('PROFILE 8');
 
             setRoleUI();
