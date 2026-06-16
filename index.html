@@ -290,8 +290,7 @@
 
                     console.log('START QUERY');
 
-                    console.log('START QUERY');
-
+                
                     const result = await Promise.race([
 
                         supabaseClient
@@ -305,11 +304,14 @@
                     ]);
 
                     console.log('QUERY FINISHED');
+                    console.log(result);
 
-                    console.log('loadStudents: query result', {
+                    return;
+
+                    /*console.log('loadStudents: query result', {
                         dataLength: data?.length,
                         error
-                    });
+                    });*/
 
                     if (error) {
                         setStatus('Ошибка загрузки данных: ' + error.message, true);
