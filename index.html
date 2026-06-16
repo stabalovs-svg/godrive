@@ -378,10 +378,16 @@
 
                 console.log('PROFILE 6');
 
-                const result = await supabaseClient
-                    .from('profiles')
-                    .select('role')
-                    .eq('id', currentUser.id);
+                const result = await Promise.race([
+                    supabaseClient
+                        .from('profiles')
+                        .select('role')
+                        .eq('id', currentUser.id),
+
+                    new Promise((_, reject) =>
+                        setTimeout(() => reject(new Error('PROFILE TIMEOUT')), 5000)
+                    )
+                ]);
 
                 console.log('PROFILE RAW RESULT');
                 console.log(result);
