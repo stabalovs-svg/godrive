@@ -200,7 +200,11 @@
 
                         console.log('Auth state changed:', event, 'session:', !!session);
 
-                        if (session && session.user) {
+                        if (
+                            session &&
+                            session.user &&
+                            event === 'INITIAL_SESSION'
+                        ) {
 
                             currentUser = session.user;
 
