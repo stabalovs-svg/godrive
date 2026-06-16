@@ -309,7 +309,8 @@
                     console.log('QUERY FINISHED');
                     console.log(result);
 
-                    return;
+                    const data = result.data;
+                    const error = result.error;
 
                     /*console.log('loadStudents: query result', {
                         dataLength: data?.length,
