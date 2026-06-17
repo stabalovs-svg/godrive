@@ -202,15 +202,14 @@
                         console.log('Auth state changed:', event, 'session:', !!session);
 
                         console.log('EVENT =', event);
-                        
+
                         if (
-                            session &&
-                            session.user &&
-                            (
-                                event === 'INITIAL_SESSION' ||
-                                event === 'SIGNED_IN'
-                            )
-                        ) {
+                           session &&
+                           session.user &&
+                           event === 'INITIAL_SESSION'
+                        )
+                        
+                        {
 
                             currentUser = session.user;
 
