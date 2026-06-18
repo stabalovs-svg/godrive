@@ -769,7 +769,12 @@
                     const phone = document.getElementById('new-phone').value.trim();
                     const contract_number = document.getElementById('new-contract').value.trim();
                     const category = document.getElementById('new-category').value;
-
+                    const email = document.getElementById('new-email').value.trim();
+                    const birth_date = document.getElementById('new-birth').value;
+                    const status = document.getElementById('new-status').value.trim();    
+                    const notes = document.getElementById('new-notes').value.trim();
+                    
+                   
                     try {
                         const { data, error } = await supabaseClient.from('students').insert([{ full_name, phone, contract_number, category }]);
                         if (error) {
