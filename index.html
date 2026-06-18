@@ -776,7 +776,7 @@
                     
                    
                     try {
-                        const { data, error } = await supabaseClient.from('students').insert([{ full_name, phone, contract_number, category }]);
+                        const { data, error } = await supabaseClient.from('students').insert([{ full_name, phone, email,contract_number, category, birth_date, status, notes }]);
                         if (error) {
                             setStatus('Ошибка добавления: ' + error.message, true);
                             return;
