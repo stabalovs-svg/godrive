@@ -680,6 +680,9 @@
         }
 
         function attachEventHandlers() {
+
+            console.log('ATTACH EVENT HANDLERS');
+            
             if (loginForm) {
                 loginForm.addEventListener('submit', async (event) => {
                     event.preventDefault();
