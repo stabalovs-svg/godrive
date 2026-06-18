@@ -205,10 +205,7 @@
                         if (
                             session &&
                             session.user &&
-                            (
-                                event === 'INITIAL_SESSION' ||
-                                
-                            )
+                            event === 'INITIAL_SESSION'
                         ) {
 
                             currentUser = session.user;
@@ -218,7 +215,7 @@
                             await getProfile();
 
                             await loadStudents();
-                        }
+}
 
                         if (event === 'SIGNED_OUT') {
 
