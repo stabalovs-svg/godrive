@@ -200,35 +200,22 @@
                    supabaseClient.auth.onAuthStateChange(async (event, session) => {
 
                         console.log('Auth state changed:', event, 'session:', !!session);
-
                         console.log('EVENT =', event);
 
                         if (
-                           session &&
-                           session.user &&
-                           event === 'INITIAL_SESSION'
-                        )
-                        
-                        {
+                            session &&
+                            session.user &&
+                            event === 'INITIAL_SESSION'
+                        ) {
 
                             currentUser = session.user;
 
-                            console.log('POINT A');
-
                             showCRM();
-
-                            console.log('POINT B');
 
                             await getProfile();
 
-                            console.log('POINT C');
-
                             await loadStudents();
-
-                            console.log('POINT D');
-
                         }
-
                     });
 
                 }
