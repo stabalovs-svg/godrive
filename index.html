@@ -197,7 +197,7 @@
                 // Слушатель изменений аутентификации
                 if (supabaseClient.auth.onAuthStateChange) {
 
-                   supabaseClient.auth.onAuthStateChange(async (event, session) => {
+                    supabaseClient.auth.onAuthStateChange(async (event, session) => {
 
                         console.log('Auth state changed:', event, 'session:', !!session);
                         console.log('EVENT =', event);
@@ -205,7 +205,10 @@
                         if (
                             session &&
                             session.user &&
-                            event === 'INITIAL_SESSION'
+                            (
+                                event === 'INITIAL_SESSION' ||
+                                event === 'SIGNED_IN'
+                            )
                         ) {
 
                             currentUser = session.user;
@@ -216,6 +219,15 @@
 
                             await loadStudents();
                         }
+
+                        if (event === 'SIGNED_OUT') {
+
+                            currentUser = null;
+                            currentRole = null;
+
+                            showLogin();
+                        }
+
                     });
 
                 }
