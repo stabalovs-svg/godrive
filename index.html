@@ -205,7 +205,10 @@
                         if (
                             session &&
                             session.user &&
-                            event === 'INITIAL_SESSION'
+                            (
+                                event === 'INITIAL_SESSION' ||
+                                event === 'SIGNED_IN'
+                            )
                         ) {
 
                             currentUser = session.user;
