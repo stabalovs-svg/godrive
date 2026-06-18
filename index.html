@@ -698,6 +698,8 @@
                             return;
                         }
                         currentUser = result.data?.user ?? null;
+                        console.log('LOGIN USER =', currentUser);
+                        console.log('LOGIN FINISHED');
                         if (currentUser) {
                             setStatus('Вход успешен. Загружаю профиль...');
 
