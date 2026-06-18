@@ -205,12 +205,8 @@
                         if (
                             session &&
                             session.user &&
-                            (
-                                event === 'INITIAL_SESSION' ||
-                                event === 'SIGNED_IN'
-                            )
+                            event === 'INITIAL_SESSION'
                         ) {
-
                             currentUser = session.user;
 
                             showCRM();
@@ -218,7 +214,7 @@
                             await getProfile();
 
                             await loadStudents();
-}
+                        }
 
                         if (event === 'SIGNED_OUT') {
 
@@ -704,14 +700,21 @@
                             return;
                         }
                         currentUser = result.data?.user ?? null;
+
                         console.log('LOGIN USER =', currentUser);
                         console.log('LOGIN FINISHED');
+
                         if (currentUser) {
-                            setStatus('Вход успешен. Загружаю профиль...');
+
+                            showCRM();
+
+                            await getProfile();
+
+                            await loadStudents();
 
                         } else {
+
                             setStatus('Вход успешен. Ждем подтверждения сессии...');
-                            showCRM();
                         }
                     } catch (error) {
                         setStatus('Ошибка входа: ' + error.message, true);
