@@ -230,6 +230,8 @@
                 // Слушатель изменений аутентификации
                 if (supabaseClient.auth.onAuthStateChange) {
 
+                    console.log('REGISTER AUTH HANDLER');
+                    
                     supabaseClient.auth.onAuthStateChange(async (event, session) => {
 
                         console.log('Auth state changed:', event, 'session:', !!session);
