@@ -230,6 +230,7 @@
 
                         console.log('Auth state changed:', event, 'session:', !!session);
                         console.log('EVENT =', event);
+                        console.log('SESSION USER =', session?.user?.email);
 
                        if (
                             session &&
@@ -302,6 +303,7 @@
         }
 
         function showCRM() {
+            console.log('SHOW CRM');
             console.log('UI: showCRM called');
             loginBlock.classList.add('hidden');
             crmBlock.classList.remove('hidden');
@@ -787,6 +789,7 @@
                     const password = document.getElementById('password').value;
 
                     try {
+                        console.log('LOGIN BUTTON CLICKED');
                         const result = await supabaseClient.auth.signInWithPassword({ email, password });
                         console.log('signIn result', result);
                         if (result.error) {
@@ -820,7 +823,7 @@
                 logoutBtn.type = 'button';
                 logoutBtn.addEventListener('click', async () => {
 
-                    console.log('Logout clicked');
+                    console.log('LOGOUT BUTTON CLICKED');
 
                     console.log('navigator.onLine =', navigator.onLine);
 
