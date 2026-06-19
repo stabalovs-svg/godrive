@@ -819,27 +819,23 @@
             if (logoutBtn) {
                 logoutBtn.type = 'button';
                 logoutBtn.addEventListener('click', async () => {
+
                     console.log('Logout clicked');
-                    if (!supabaseClient) {
-                        showLogin();
-                        return;
-                    }
+
+                    console.log('navigator.onLine =', navigator.onLine);
 
                     try {
+
                         const { error } = await supabaseClient.auth.signOut();
-                        console.log('signOut result', { error });
-                        if (error) {
-                            alert('Ошибка при выходе: ' + error.message);
-                            return;
-                        }
-                        const sessionCheck = await supabaseClient.auth.getSession();
-                        console.log('After signOut session:', sessionCheck);
-                        currentUser = null;
-                        currentRole = null;
-                        
-                    } catch (error) {
-                        alert('Ошибка при выходе: ' + error.message);
+
+                        console.log('signOut result', error);
+
+                    } catch (err) {
+
+                        console.error('SIGNOUT EXCEPTION', err);
+
                     }
+
                 });
             } else {
                 console.warn('logout button element not found');
