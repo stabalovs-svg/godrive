@@ -148,29 +148,54 @@
         <div class="modal-content">
     
             <h3>Карточка ученика</h3>
-    
-            <p><b>ФИО:</b> <span id="modal-name"></span></p>
-    
-            <p><b>Телефон:</b> <span id="modal-phone"></span></p>
-    
-            <p><b>Email:</b> <span id="modal-email"></span></p>
-    
-            <p><b>Договор:</b> <span id="modal-contract"></span></p>
-    
-            <p><b>Категория:</b> <span id="modal-category"></span></p>
-    
-            <p><b>Дата рождения:</b> <span id="modal-birth"></span></p>
-    
-            <p><b>Статус:</b> <span id="modal-status"></span></p>
-    
-            <p><b>Заметки:</b></p>
-    
-            <div id="modal-notes"></div>
-    
+            
+            <p>
+                <b>ФИО:</b><br>
+                <input type="text" id="modal-name">
+            </p>
+            
+            <p>
+                <b>Телефон:</b><br>
+                <input type="text" id="modal-phone">
+            </p>
+            
+            <p>
+                <b>Email:</b><br>
+                <input type="email" id="modal-email">
+            </p>
+            
+            <p>
+                <b>Договор:</b><br>
+                <input type="text" id="modal-contract">
+            </p>
+            
+            <p>
+                <b>Категория:</b><br>
+                <input type="text" id="modal-category">
+            </p>
+            
+            <p>
+                <b>Дата рождения:</b><br>
+                <input type="date" id="modal-birth">
+            </p>
+            
+            <p>
+                <b>Статус:</b><br>
+                <input type="text" id="modal-status">
+            </p>
+            
+            <p>
+                <b>Заметки:</b><br>
+                <textarea id="modal-notes"></textarea>
+            </p>
+            
+            <button id="save-student-btn">
+                Сохранить
+            </button>
+            
             <button id="close-modal">
                 Закрыть
             </button>
-    
         </div>
     
     </div>
@@ -498,35 +523,97 @@
 
                     const tr = btn.closest('tr');
 
-                    document.getElementById('modal-name').textContent =
+                    window.currentStudentId = tr.dataset.id;
+
+                    document.getElementById('modal-name').value =
                         tr.querySelector('.s-full_name')?.textContent || '';
 
-                    document.getElementById('modal-phone').textContent =
+                    document.getElementById('modal-phone').value =
                         tr.querySelector('.s-phone')?.textContent || '';
 
-                    document.getElementById('modal-email').textContent =
+                    document.getElementById('modal-email').value =
                         tr.querySelector('.s-email')?.textContent || '';
 
-                    document.getElementById('modal-contract').textContent =
+                    document.getElementById('modal-contract').value =
                         tr.querySelector('.s-contract')?.textContent || '';
 
-                    document.getElementById('modal-category').textContent =
+                    document.getElementById('modal-category').value =
                         tr.querySelector('.s-category')?.textContent || '';
 
-                    document.getElementById('modal-birth').textContent =
+                    document.getElementById('modal-birth').value =
                         tr.querySelector('.s-birth_date')?.textContent || '';
 
-                    document.getElementById('modal-status').textContent =
+                    document.getElementById('modal-status').value =
                         tr.querySelector('.s-status')?.textContent || '';
 
-                    document.getElementById('modal-notes').textContent =
+                    document.getElementById('modal-notes').value =
                         tr.querySelector('.s-notes')?.textContent || '';
 
                     document.getElementById('student-modal')
                         .classList.remove('hidden');
+
+                    document
+                        .getElementById('save-student-btn')
+                        .addEventListener('click', saveStudent);    
                 };
            });
 
+        }
+
+        async function saveStudent() {
+
+            const id = window.currentStudentId;
+
+            if (!id) {
+                alert('Не выбран ученик');
+                return;
+            }
+
+            const updateData = {
+
+                full_name:
+                    document.getElementById('modal-name').value,
+
+                phone:
+                    document.getElementById('modal-phone').value,
+
+                email:
+                    document.getElementById('modal-email').value,
+
+                contract_number:
+                    document.getElementById('modal-contract').value,
+
+                category:
+                    document.getElementById('modal-category').value,
+
+                birth_date:
+                    document.getElementById('modal-birth').value,
+
+                status:
+                    document.getElementById('modal-status').value,
+
+                notes:
+                    document.getElementById('modal-notes').value
+            };
+
+            const { error } = await supabaseClient
+                .from('students')
+                .update(updateData)
+                .eq('id', id);
+
+            if (error) {
+
+                alert('Ошибка: ' + error.message);
+                return;
+            }
+
+            alert('Сохранено');
+
+            document
+                .getElementById('student-modal')
+                .classList.add('hidden');
+
+            await loadStudents();
         }
         
         function openStudentCard(e) {
