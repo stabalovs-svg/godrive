@@ -121,6 +121,10 @@
                 <button type="submit">Сохранить в базу</button>
             </form>
         </div>
+        
+        <div class="search-block">
+            <input type="text" id="student-search" placeholder="Поиск по ФИО, телефону, email...">
+        </div>
 
         <table id="students-table">
             <thead>
@@ -407,6 +411,36 @@
                         console.error(error);
                     });
             });
+
+            // функция фильтрации для поиска студентов по ФИО, телефону и email
+            function filterStudents() {
+
+                const searchText =
+                document
+                    .getElementById('student-search')
+                    .value
+                    .toLowerCase();
+
+            const rows =
+                document.querySelectorAll(
+                    '#students-table tbody tr'
+                );
+
+            rows.forEach(row => {
+
+                const text =
+                    row.textContent.toLowerCase();
+
+                if (text.includes(searchText)) {
+
+                    row.style.display = '';
+
+                } else {
+
+                    row.style.display = 'none';
+                }
+            });
+        }
 
             // Получаем профиль и роль текущего пользователя из таблицы profiles
         async function getProfile() {
@@ -879,6 +913,16 @@
                 });
             } else {
                 console.warn('add student form element not found');
+            }
+            const searchInput =
+                document.getElementById('student-search');
+
+            if (searchInput) {
+
+                searchInput.addEventListener(
+                    'input',
+                    filterStudents
+                );
             }
         }
 
