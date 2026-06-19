@@ -833,6 +833,9 @@
 
                         console.log('signOut result', error);
 
+                        currentUser = null;
+                        currentRole = null;
+
                     } catch (err) {
 
                         console.error('SIGNOUT EXCEPTION', err);
