@@ -129,13 +129,21 @@
         <table id="students-table">
             <thead>
                 <tr>
-                    <th>ФИО</th>
+                    <th id="sort-name" style="cursor:pointer;">
+                        ФИО ↕
+                    </th>
                     <th>Телефон</th>
                     <th>email</th>
                     <th>Договор</th>
-                    <th>Категория</th>
-                    <th>День рождения</th>
-                    <th>Статус</th>
+                    <th id="sort-category" style="cursor:pointer;">
+                        Категория ↕
+                    </th>
+                    <th id="sort-birth" style="cursor:pointer;">
+                        День рождения ↕
+                    </th>
+                    <th id="sort-status" style="cursor:pointer;">
+                        Статус ↕
+                    </th>
                     <th>Заметки</th>
                     <th>Действия</th>
                 </tr>
@@ -220,6 +228,8 @@
         let statusElement = null;
         let addStudentForm = null;
         let studentsTableBody = null;
+        let currentSortField = null;
+        let currentSortDirection = 'asc';
 
         // Инициализация Supabase с проверкой
         async function initSupabase() {
@@ -940,6 +950,10 @@
 
             attachEventHandlers();
             console.log('STEP 4');
+
+            attachSearch();
+
+            attachSorting();
           
             // await checkSession();
             console.log('CHECK SESSION DISABLED');
@@ -955,6 +969,83 @@
         }
 
         window.addEventListener('load', startApp);
+
+        function sortTable(field) {
+
+            const rows = Array.from(
+                document.querySelectorAll('#students-table tbody tr')
+            );
+
+            if (currentSortField === field) {
+
+                currentSortDirection =
+                    currentSortDirection === 'asc'
+                        ? 'desc'
+                        : 'asc';
+
+            } else {
+
+                currentSortField = field;
+                currentSortDirection = 'asc';
+            }
+
+            rows.sort((a, b) => {
+
+                const aValue =
+                    a.querySelector(field)?.textContent?.trim() || '';
+
+                const bValue =
+                    b.querySelector(field)?.textContent?.trim() || '';
+
+                return currentSortDirection === 'asc'
+                    ? aValue.localeCompare(bValue)
+                    : bValue.localeCompare(aValue);
+
+            });
+
+            studentsTableBody.innerHTML = '';
+
+            rows.forEach(row => {
+
+                studentsTableBody.appendChild(row);
+
+            });
+        }
+
+        function attachSorting() {
+
+            document
+                .getElementById('sort-name')
+                ?.addEventListener('click', () => {
+
+                    sortTable('.s-full_name');
+
+                });
+
+            document
+                .getElementById('sort-category')
+                ?.addEventListener('click', () => {
+
+                    sortTable('.s-category');
+
+                });
+
+            document
+                .getElementById('sort-status')
+                ?.addEventListener('click', () => {
+
+                    sortTable('.s-status');
+
+                });
+
+            document
+                .getElementById('sort-birth')
+                ?.addEventListener('click', () => {
+
+                    sortTable('.s-birth_date');
+
+                });
+        }
     </script>
     
 </body>
