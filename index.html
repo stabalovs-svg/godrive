@@ -296,13 +296,10 @@
                         console.log('EVENT =', event);
                         console.log('SESSION USER =', session?.user?.email);
 
-                       if (
+                        if (
                             session &&
                             session.user &&
-                            (
-                                event === 'INITIAL_SESSION' ||
-                                event === 'SIGNED_IN'
-                            )
+                            event === 'INITIAL_SESSION'
                         ) {
 
                             currentUser = session.user;
