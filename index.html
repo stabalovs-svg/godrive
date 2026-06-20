@@ -144,7 +144,13 @@
                 </select>
 
                 <input type="date" id="new-birth">
-                <input type="text" id="new-status" placeholder="Статус">
+                <select id="new-status">
+                    <option value="оформление">Оформление</option>
+                    <option value="теория">Теория</option>
+                    <option value="вождение">Вождение</option>
+                    <option value="экзамен">Экзамен</option>
+                    <option value="выпуск">Выпуск</option>
+                </select>
                 <textarea id="new-notes" placeholder="Заметки"></textarea>
                 <button type="submit">Сохранить в базу</button>
             </form>
@@ -221,7 +227,13 @@
             
             <p>
                 <b>Статус:</b><br>
-                <input type="text" id="modal-status">
+                <select id="modal-status">
+                    <option value="оформление">Оформление</option>
+                    <option value="теория">Теория</option>
+                    <option value="вождение">Вождение</option>
+                    <option value="экзамен">Экзамен</option>
+                    <option value="выпуск">Выпуск</option>
+                </select>
             </p>
             
             <p>
@@ -411,16 +423,19 @@
 
                         switch ((status || '').toLowerCase()) {
 
-                            case 'новый':
+                            case 'оформление':
                                 return 'status-new';
 
-                            case 'учится':
+                            case 'теория':
+                                return 'status-learning';
+
+                            case 'вождение':
                                 return 'status-learning';
 
                             case 'экзамен':
                                 return 'status-exam';
 
-                            case 'сдал':
+                            case 'выпуск':
                                 return 'status-passed';
 
                             default:
