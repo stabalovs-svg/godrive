@@ -77,6 +77,34 @@
             }
 
         }
+
+        .status-new {
+            background: #e0e0e0;
+            color: #333;
+            padding: 4px 8px;
+            border-radius: 5px;
+        }
+
+        .status-learning {
+            background: #2196f3;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 5px;
+        }
+
+        .status-exam {
+            background: #ff9800;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 5px;
+        }
+
+        .status-passed {
+            background: #4caf50;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 5px;
+        }
     </style>
 </head>
 
@@ -230,6 +258,7 @@
         let studentsTableBody = null;
         let currentSortField = null;
         let currentSortDirection = 'asc';
+        let appLoading = false;
 
         // Инициализация Supabase с проверкой
         async function initSupabase() {
@@ -378,6 +407,26 @@
                     }
 
                     setStatus('Данные загружены.');
+                    function getStatusClass(status) {
+
+                        switch ((status || '').toLowerCase()) {
+
+                            case 'новый':
+                                return 'status-new';
+
+                            case 'учится':
+                                return 'status-learning';
+
+                            case 'экзамен':
+                                return 'status-exam';
+
+                            case 'сдал':
+                                return 'status-passed';
+
+                            default:
+                                return '';
+                        }
+                    }
                     studentsTableBody.innerHTML = data.map(student => `
                     <tr data-id="${student.id}">
                         <td class="s-full_name">${student.full_name || ''}</td>
@@ -386,7 +435,11 @@
                         <td class="s-contract">${student.contract_number || ''}</td>
                         <td class="s-category">${student.category || ''}</td>
                         <td class="s-birth_date">${student.birth_date || ''}</td>
-                        <td class="s-status">${student.status || ''}</td>
+                        <td class="s-status">
+                            <span class="${getStatusClass(student.status)}">
+                                ${student.status || ''}
+                            </span>
+                        </td>
                         <td class="s-notes">${student.notes || ''}</td>
                         <td class="s-actions">
                             <button class="card-btn">Карточка</button>
