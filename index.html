@@ -152,7 +152,7 @@
 
                 <input type="date" id="new-birth">
                 <select id="new-status">
-                    <option value="обучение">Оформление</option>
+                    <option value="оформление">Обучение</option>
                     <option value="теория">Теория</option>
                     <option value="вождение">Вождение</option>
                     <option value="экзамен">Экзамен</option>
@@ -235,7 +235,7 @@
             <p>
                 <b>Статус:</b><br>
                 <select id="modal-status">
-                    <option value="оформление">Оформление</option>
+                    <option value="оформление">Обучение</option>
                     <option value="теория">Теория</option>
                     <option value="вождение">Вождение</option>
                     <option value="экзамен">Экзамен</option>
@@ -430,7 +430,7 @@
 
                         switch ((status || '').toLowerCase()) {
 
-                            case 'обучение':
+                            case 'оформление':
                                 return 'status-new';
 
                             case 'теория':
