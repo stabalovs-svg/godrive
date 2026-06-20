@@ -299,16 +299,35 @@
                         if (
                             session &&
                             session.user &&
-                            event === 'INITIAL_SESSION'
+                            (
+                                event === 'INITIAL_SESSION' ||
+                                event === 'SIGNED_IN'
+                            )
                         ) {
 
-                            currentUser = session.user;
+                            if (appLoading) {
 
-                            showCRM();
+                                console.log('SKIP DUPLICATE AUTH EVENT');
 
-                            await getProfile();
+                                return;
+                            }
 
-                            await loadStudents();
+                            appLoading = true;
+
+                            try {
+
+                                currentUser = session.user;
+
+                                showCRM();
+
+                                await getProfile();
+
+                                await loadStudents();
+
+                            } finally {
+
+                                appLoading = false;
+                            }
                         }
 
                         if (event === 'SIGNED_OUT') {
