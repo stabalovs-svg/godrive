@@ -85,15 +85,22 @@
             border-radius: 5px;
         }
 
-        .status-learning {
+        .status-theory {
             background: #2196f3;
             color: white;
             padding: 4px 8px;
             border-radius: 5px;
         }
 
-        .status-exam {
+        .status-driving {
             background: #ff9800;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 5px;  
+        }
+
+        .status-exam {
+            background: #f44336;
             color: white;
             padding: 4px 8px;
             border-radius: 5px;
@@ -427,10 +434,10 @@
                                 return 'status-new';
 
                             case 'теория':
-                                return 'status-learning';
+                                return 'status-theory';
 
                             case 'вождение':
-                                return 'status-learning';
+                                return 'status-driving';
 
                             case 'экзамен':
                                 return 'status-exam';
