@@ -179,6 +179,7 @@
                     <th id="sort-category" style="cursor:pointer;">
                         Категория ↕
                     </th>
+                    <th>Инструктор</th>
                     <th id="sort-birth" style="cursor:pointer;">
                         День рождения ↕
                     </th>
@@ -225,6 +226,13 @@
             <p>
                 <b>Категория:</b><br>
                 <input type="text" id="modal-category">
+            </p>
+
+            <p>
+                <b>Инструктор:</b><br>
+                <select id="modal-instructor">
+                    <option value="">Не назначен</option>
+                </select>
             </p>
             
             <p>
@@ -472,6 +480,7 @@
                         <td class="s-email">${student.email || ''}</td>
                         <td class="s-contract">${student.contract_number || ''}</td>
                         <td class="s-category">${student.category || ''}</td>
+                        <td class="s-instructor">${student.instructor_id || ''}</td>
                         <td class="s-birth_date">${student.birth_date || ''}</td>
                         <td class="s-status">
                             <span class="${getStatusClass(student.status)}">
@@ -728,6 +737,9 @@
 
                 category:
                     document.getElementById('modal-category').value,
+
+                instructor_id:
+                    document.getElementById('modal-instructor').value || null,    
 
                 birth_date:
                     document.getElementById('modal-birth').value,
@@ -1136,6 +1148,34 @@
                     sortTable('.s-birth_date');
 
                 });
+        }
+
+        async function loadInstructors() {
+
+            const { data, error } = await supabaseClient
+                .from('instructors')
+                .select('*')
+                .order('full_name');
+
+            if (error) {
+                console.error(error);
+                return;
+            }
+
+            const select =
+                document.getElementById('modal-instructor');
+
+            select.innerHTML =
+                '<option value="">Не назначен</option>';
+
+            data.forEach(instr => {
+
+                select.innerHTML += `
+                    <option value="${instr.id}">
+                        ${instr.full_name}
+                    </option>
+        `       ;
+            });
         }
     </script>
     
