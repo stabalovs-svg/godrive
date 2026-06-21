@@ -330,37 +330,13 @@
                             await getProfile();
 
                             await loadStudents();
-                        } {
-
-                            if (appLoading) {
-
-                                console.log('SKIP DUPLICATE AUTH EVENT');
-
-                                return;
-                            }
-
-                            appLoading = true;
-
-                            try {
-
-                                currentUser = session.user;
-
-                                showCRM();
-
-                                await getProfile();
-
-                                await loadStudents();
-
-                            } finally {
-
-                                appLoading = false;
-                            }
-                        }
+                        } 
 
                         if (event === 'SIGNED_OUT') {
 
                             currentUser = null;
                             currentRole = null;
+                            crmInitialized = false;
 
                             showLogin();
                         }
