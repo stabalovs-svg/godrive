@@ -1181,13 +1181,18 @@
 
         async function loadInstructors() {
 
+            console.log('LOAD INSTRUCTORS START');
+
             const { data, error } = await supabaseClient
                 .from('instructors')
                 .select('*')
                 .order('full_name');
 
+            console.log('INSTRUCTORS RESULT');
+            console.log(data);
+            console.log(error);
+
             if (error) {
-                console.log('INSTRUCTORS', data);
                 console.error(error);
                 return;
             }
@@ -1204,8 +1209,10 @@
                     <option value="${instr.id}">
                         ${instr.full_name}
                     </option>
-        `       ;
+                ;
             });
+
+            console.log('INSTRUCTORS LOADED:', data.length);
         }
     </script>
     
