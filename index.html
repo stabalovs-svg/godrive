@@ -794,6 +794,8 @@
         
         async function openStudentCard(e) {
 
+            console.log('OPEN STUDENT CARD');
+
             await loadInstructors();
 
             const tr = e.target.closest('tr');
