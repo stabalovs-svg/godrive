@@ -286,6 +286,7 @@
         let currentSortField = null;
         let currentSortDirection = 'asc';
         let appLoading = false;
+        let crmInitialized = false;
 
         // Инициализация Supabase с проверкой
         async function initSupabase() {
@@ -312,6 +313,24 @@
                                 event === 'SIGNED_IN'
                             )
                         ) {
+
+                            if (crmInitialized) {
+
+                                console.log('CRM ALREADY INITIALIZED');
+
+                                return;
+                            }
+
+                            crmInitialized = true;
+
+                            currentUser = session.user;
+
+                            showCRM();
+
+                            await getProfile();
+
+                            await loadStudents();
+                        } {
 
                             if (appLoading) {
 
