@@ -112,6 +112,32 @@
             padding: 4px 8px;
             border-radius: 5px;
         }
+
+        .status-driving-learning{
+            background:#3f51b5;
+            color:white;
+        }
+
+        .status-driving-graduate{
+            background:#ff9800;
+            color:white;
+        }
+
+        .status-driving-exam{
+            background:#4caf50;
+            color:white;
+        }
+
+        .theory-learning {
+            background:#2196f3;
+            color:white;
+        }
+
+        .theory-exam {
+            background:#4caf50;
+            color:white;
+        }
+
     </style>
 </head>
 
@@ -766,7 +792,9 @@
             await loadStudents();
         }
         
-        function openStudentCard(e) {
+        async function openStudentCard(e) {
+
+            await loadInstructors();
 
             const tr = e.target.closest('tr');
 
@@ -794,6 +822,9 @@
             const notes =
                     tr.querySelector('.s-notes')?.textContent || '';
 
+            const instructorId =
+                    tr.querySelector('.s-instructor')?.textContent || '';        
+
             document.getElementById('modal-name').textContent = name;
             document.getElementById('modal-phone').textContent = phone;
             document.getElementById('modal-email').textContent = email;
@@ -802,6 +833,9 @@
             document.getElementById('modal-birth').textContent = birthDate;
             document.getElementById('modal-status').textContent = status;
             document.getElementById('modal-notes').textContent = notes;
+
+            document.getElementById('modal-instructor').value =
+                instructorId.trim();
 
             document.getElementById('student-modal')
                 .classList.remove('hidden');
