@@ -112,6 +112,32 @@
             padding: 4px 8px;
             border-radius: 5px;
         }
+
+        .status-driving-learning{
+            background:#3f51b5;
+            color:white;
+        }
+
+        .status-driving-graduate{
+            background:#ff9800;
+            color:white;
+        }
+
+        .status-driving-exam{
+            background:#4caf50;
+            color:white;
+        }
+
+        .theory-learning {
+            background:#2196f3;
+            color:white;
+        }
+
+        .theory-exam {
+            background:#4caf50;
+            color:white;
+        }
+
     </style>
 </head>
 
@@ -269,7 +295,6 @@
 
     <script>
         
-        alert('VERSION 777');  
         // Version: 2026-06-10T21:00Z (cache buster - fixed session sync with onAuthStateChange)
         const SUPABASE_URL = 'https://xcqrluiqllsnhtyojuhc.supabase.co';
         const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhjcXJsdWlxbGxzbmh0eW9qdWhjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODEwMTI2MjMsImV4cCI6MjA5NjU4ODYyM30.UOQA2kSLI6-lmlbsHCKjbWuNi5gbSGRiJijWbtiqqdQ';
@@ -489,19 +514,9 @@
                         </td>
                     </tr>
                 `).join('');
-                    console.log('POINT 1');
-
+                    console.log('loadStudents: rendered', data.length, 'rows. currentRole:', currentRole);
                     renderRowActions();
-
-                    console.log('POINT 2');
-
-                    alert('POINT 2');
-
                     attachCardButtons();
-
-                    console.log('POINT 3');
-
-                    alert('POINT 3');
                 } catch (error) {
                     setStatus('Ошибка: ' + error.message, true);
                     studentsTableBody.innerHTML = `<tr><td colspan="6">Ошибка: ${error.message}</td></tr>`;
@@ -509,26 +524,7 @@
                 }
             }
             // Добавьте обработчик события отправки формы
-            document.getElementById('add-student-container').addEventListener('submit', function (event) {
-                event.preventDefault();
-                const formData = new FormData(event.target);
-                // Отправьте данные на сервер для добавления студента
-                fetch('https://xcqrluiqllsnhtyojuhc.supabase.co', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(Object.fromEntries(formData))
-                })
-                    .then(response => response.json())
-                    .then(data => {
-                        // Обновите таблицу студентов после добавления нового студента
-                        loadStudents();
-                    })
-                    .catch(error => {
-                        console.error(error);
-                    });
-            });
+
 
             // функция фильтрации для поиска студентов по ФИО, телефону и email
             function filterStudents() {
@@ -675,15 +671,47 @@
             }
         function attachCardButtons() {
 
-            console.log('ATTACH CARD BUTTONS');
-
-            alert('ATTACH CARD BUTTONS');
-
             document.querySelectorAll('.card-btn').forEach(btn => {
 
-                btn.onclick = openStudentCard;
+                btn.onclick = function () {
 
-            });
+                    const tr = btn.closest('tr');
+
+                    window.currentStudentId = tr.dataset.id;
+
+                    document.getElementById('modal-name').value =
+                        tr.querySelector('.s-full_name')?.textContent || '';
+
+                    document.getElementById('modal-phone').value =
+                        tr.querySelector('.s-phone')?.textContent || '';
+
+                    document.getElementById('modal-email').value =
+                        tr.querySelector('.s-email')?.textContent || '';
+
+                    document.getElementById('modal-contract').value =
+                        tr.querySelector('.s-contract')?.textContent || '';
+
+                    document.getElementById('modal-category').value =
+                        tr.querySelector('.s-category')?.textContent || '';
+
+                    document.getElementById('modal-birth').value =
+                        tr.querySelector('.s-birth_date')?.textContent || '';
+
+                    document.getElementById('modal-status').value =
+                        tr.querySelector('.s-status')?.textContent || '';
+
+                    document.getElementById('modal-notes').value =
+                        tr.querySelector('.s-notes')?.textContent || '';
+
+                    document.getElementById('student-modal')
+                        .classList.remove('hidden');
+
+                    document
+                        .getElementById('save-student-btn')
+                        .addEventListener('click', saveStudent);    
+                };
+           });
+
         }
 
         async function saveStudent() {
@@ -745,7 +773,7 @@
             await loadStudents();
         }
         
-        function openStudentCard(e) {
+        async function openStudentCard(e) {
 
             console.log('OPEN STUDENT CARD');
 
@@ -777,6 +805,9 @@
             const notes =
                     tr.querySelector('.s-notes')?.textContent || '';
 
+            const instructorId =
+                    tr.querySelector('.s-instructor')?.textContent || '';        
+
             document.getElementById('modal-name').textContent = name;
             document.getElementById('modal-phone').textContent = phone;
             document.getElementById('modal-email').textContent = email;
@@ -785,6 +816,9 @@
             document.getElementById('modal-birth').textContent = birthDate;
             document.getElementById('modal-status').textContent = status;
             document.getElementById('modal-notes').textContent = notes;
+
+            document.getElementById('modal-instructor').value =
+                instructorId.trim();
 
             document.getElementById('student-modal')
                 .classList.remove('hidden');
@@ -1130,10 +1164,16 @@
 
         async function loadInstructors() {
 
+            console.log('LOAD INSTRUCTORS START');
+
             const { data, error } = await supabaseClient
                 .from('instructors')
                 .select('*')
                 .order('full_name');
+
+            console.log('INSTRUCTORS RESULT');
+            console.log(data);
+            console.log(error);
 
             if (error) {
                 console.error(error);
@@ -1152,8 +1192,11 @@
                     <option value="${instr.id}">
                         ${instr.full_name}
                     </option>
-        `       ;
+    `            ;
+
             });
+
+            console.log('INSTRUCTORS LOADED:', data.length);
         }
     </script>
     
