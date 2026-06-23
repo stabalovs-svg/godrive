@@ -808,14 +808,14 @@
             const instructorId =
                     tr.querySelector('.s-instructor')?.textContent || '';        
 
-            document.getElementById('modal-name').textContent = name;
-            document.getElementById('modal-phone').textContent = phone;
-            document.getElementById('modal-email').textContent = email;
-            document.getElementById('modal-contract').textContent = contract;
-            document.getElementById('modal-category').textContent = category;
-            document.getElementById('modal-birth').textContent = birthDate;
-            document.getElementById('modal-status').textContent = status;
-            document.getElementById('modal-notes').textContent = notes;
+            document.getElementById('modal-name').value = name;
+            document.getElementById('modal-phone').value = phone;
+            document.getElementById('modal-email').value = email;
+            document.getElementById('modal-contract').value = contract;
+            document.getElementById('modal-category').value = category;
+            document.getElementById('modal-birth').value = birthDate;
+            document.getElementById('modal-status').value = status;
+            document.getElementById('modal-notes').value = notes;
 
             document.getElementById('modal-instructor').value =
                 instructorId.trim();
