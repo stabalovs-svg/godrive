@@ -516,7 +516,7 @@
                 `).join('');
                     console.log('loadStudents: rendered', data.length, 'rows. currentRole:', currentRole);
                     renderRowActions();
-                    attachCardButtons();
+                    
                 } catch (error) {
                     setStatus('Ошибка: ' + error.message, true);
                     studentsTableBody.innerHTML = `<tr><td colspan="6">Ошибка: ${error.message}</td></tr>`;
@@ -669,6 +669,7 @@
                 document.querySelectorAll('.delete-btn')
                     .forEach(btn => btn.onclick = onDeleteRow);
             }
+            /*
         function attachCardButtons() {
 
             document.querySelectorAll('.card-btn').forEach(btn => {
@@ -713,6 +714,7 @@
            });
 
         }
+            */
 
         async function saveStudent() {
 
