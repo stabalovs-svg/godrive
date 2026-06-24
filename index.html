@@ -765,6 +765,12 @@
 
             console.log('SAVE ID =', id);
             console.log('SAVE DATA =', updateData);
+            console.log(
+                'BEFORE SAVE',
+                window.currentStudentId,
+                document.getElementById('modal-instructor').value,
+                document.getElementById('modal-status').value
+            );
             
             const { error } = await supabaseClient
                 .from('students')
