@@ -786,6 +786,13 @@
 
             const tr = e.target.closest('tr');
 
+            window.currentStudentId = tr.dataset.id;
+
+            console.log(
+                'CURRENT STUDENT ID =',
+                window.currentStudentId
+            );
+
             const name =
                     tr.querySelector('.s-full_name')?.textContent.trim() || '';
 
@@ -825,6 +832,9 @@
 
             document.getElementById('modal-instructor').value =
                 instructorId.trim();
+
+            document.getElementById('save-student-btn').onclick = 
+                saveStudent;    
 
             document.getElementById('student-modal')
                 .classList.remove('hidden');
