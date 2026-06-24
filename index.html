@@ -1013,9 +1013,13 @@
 
             if (logoutBtn) {
                 logoutBtn.type = 'button';
-                logoutBtn.addEventListener('click', async () => {
+                logoutBtn.addEventListener('click', async (e) => {
 
                     console.log('LOGOUT BUTTON CLICKED');
+
+                    console.trace('WHO CALLED LOGOUT');
+
+                    console.log('EVENT =', e);
 
                     console.log('navigator.onLine =', navigator.onLine);
 
