@@ -755,6 +755,9 @@
                     document.getElementById('modal-notes').value
             };
 
+            console.log('SAVE ID =', id);
+            console.log('SAVE DATA =', updateData);
+            
             const { error } = await supabaseClient
                 .from('students')
                 .update(updateData)
