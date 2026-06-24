@@ -420,8 +420,18 @@
 
         async function loadStudents() {
 
+                console.log(
+                    'LOAD START TIME',
+                    new Date().toISOString()
+                );
+
+                console.log(
+                    'CURRENT USER',
+                    currentUser?.id
+                );
 
                 console.log('loadStudents called, supabaseClient:', !!supabaseClient);
+                
                 studentsTableBody.innerHTML = '<tr><td colspan="6">Загрузка данных...</td></tr>';
 
                 if (!supabaseClient) {
@@ -434,17 +444,9 @@
                     console.log('START QUERY');
 
                 
-                    const result = await Promise.race([
-
-                        supabaseClient
-                            .from('students')
-                            .select('*'),
-
-                        new Promise((_, reject) =>
-                            setTimeout(() => reject(new Error('STUDENTS TIMEOUT')), 15000)
-                        )
-
-                    ]);
+                    const result = await supabaseClient
+                        .from('students')
+                        .select('*');
 
                     console.log('QUERY FINISHED');
                     console.log(result);
@@ -566,23 +568,22 @@
                 return;
                 }
 
+            console.log(
+                'PROFILE USER',
+                currentUser?.id
+            );    
+
             console.log('PROFILE 5');
 
             try {
 
                 console.log('PROFILE 6');
 
-                const result = await Promise.race([
-                    supabaseClient
-                        .from('profiles')
-                        .select('role')
-                        .eq('id', currentUser.id),
-
-                    new Promise((_, reject) =>
-                        setTimeout(() => reject(new Error('PROFILE TIMEOUT')), 15000)
-                    )
-                ]);
-
+                const result = await supabaseClient
+                    .from('profiles')
+                    .select('role')
+                    .eq('id', currentUser.id);
+                    
                 console.log('PROFILE RAW RESULT');
                 console.log(result);
 
