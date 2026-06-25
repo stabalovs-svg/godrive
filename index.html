@@ -294,7 +294,7 @@
     </div>
 
     <script>
-        console.log('VERSION 24-06-2026 20:00');
+        console.log('VERSION 25-06-2026 08:10');
         // Version: 2026-06-10T21:00Z (cache buster - fixed session sync with onAuthStateChange)
         const SUPABASE_URL = 'https://xcqrluiqllsnhtyojuhc.supabase.co';
         const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhjcXJsdWlxbGxzbmh0eW9qdWhjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODEwMTI2MjMsImV4cCI6MjA5NjU4ODYyM30.UOQA2kSLI6-lmlbsHCKjbWuNi5gbSGRiJijWbtiqqdQ';
@@ -325,8 +325,8 @@
                         SUPABASE_ANON_KEY,
                         {
                             auth: {
-                                autoRefreshToken: true,
-                                persistSession: true,
+                                autoRefreshToken: false,
+                                persistSession: false,
                                 detectSessionInUrl: false
                             }
                         }
@@ -420,8 +420,8 @@
                         SUPABASE_ANON_KEY,
                         {
                             auth: {
-                                autoRefreshToken: true,
-                                persistSession: true,
+                                autoRefreshToken: false,
+                                persistSession: false,
                                 detectSessionInUrl: false
                             }
                         }
