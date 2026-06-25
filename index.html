@@ -340,12 +340,12 @@
                     
                     supabaseClient.auth.onAuthStateChange(async (event, session) => {
 
-                        if (authRecoveryStarted) {
-                            console.log('AUTH RECOVERY ALREADY RUNNING');
-                            return;
-                        }
-
-                        authRecoveryStarted = true;
+                        console.log(
+                            'AUTH EVENT',
+                            event,
+                            'crmInitialized=',
+                            crmInitialized
+                        );
 
                         console.log('Auth state changed:', event, 'session:', !!session);
                         console.log('EVENT =', event);
@@ -376,8 +376,7 @@
                             await getProfile();
 
                             await loadStudents();
-
-                            authRecoveryStarted = false;
+                            
                         } 
 
                         if (event === 'SIGNED_OUT') {
