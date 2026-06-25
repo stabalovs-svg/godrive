@@ -3,6 +3,9 @@
 
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
     <title>CRM Автошкола</title>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <style>
@@ -294,7 +297,14 @@
     </div>
 
     <script>
-        console.log('VERSION 25-06-2026 08:10');
+
+        const BUILD_VERSION = '2026-06-25 09:00';
+
+        document.title =
+            'CRM Автошкола [' + BUILD_VERSION + ']';
+
+        console.log('BUILD', BUILD_VERSION);
+
         // Version: 2026-06-10T21:00Z (cache buster - fixed session sync with onAuthStateChange)
         const SUPABASE_URL = 'https://xcqrluiqllsnhtyojuhc.supabase.co';
         const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhjcXJsdWlxbGxzbmh0eW9qdWhjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODEwMTI2MjMsImV4cCI6MjA5NjU4ODYyM30.UOQA2kSLI6-lmlbsHCKjbWuNi5gbSGRiJijWbtiqqdQ';
