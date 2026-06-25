@@ -302,6 +302,8 @@
         let supabaseClient = null;
         let currentUser = null;
         let currentRole = null; // 'manager' | 'admin' | 'instructor'
+        let crmInitialized = false;
+        let authRecoveryStarted = false;
         let loginBlock = null;
         let crmBlock = null;
         let loginForm = null;
@@ -312,12 +314,23 @@
         let currentSortField = null;
         let currentSortDirection = 'asc';
         let appLoading = false;
-        let crmInitialized = false;
+        
 
         // Инициализация Supabase с проверкой
         async function initSupabase() {
             if (typeof window.supabase !== 'undefined') {
-                supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+                supabaseClient =
+                    window.supabase.createClient(
+                        SUPABASE_URL,
+                        SUPABASE_ANON_KEY,
+                        {
+                            auth: {
+                                autoRefreshToken: true,
+                                persistSession: true,
+                                detectSessionInUrl: false
+                            }
+                        }
+                    );
                 console.log('Supabase initialized successfully', { supabaseLoaded: true, supabaseClient: !!supabaseClient });
 
                 // Слушатель изменений аутентификации
@@ -326,6 +339,13 @@
                     console.log('REGISTER AUTH HANDLER');
                     
                     supabaseClient.auth.onAuthStateChange(async (event, session) => {
+
+                        if (authRecoveryStarted) {
+                            console.log('AUTH RECOVERY ALREADY RUNNING');
+                            return;
+                        }
+
+                        authRecoveryStarted = true;
 
                         console.log('Auth state changed:', event, 'session:', !!session);
                         console.log('EVENT =', event);
@@ -356,6 +376,8 @@
                             await getProfile();
 
                             await loadStudents();
+
+                            authRecoveryStarted = false;
                         } 
 
                         if (event === 'SIGNED_OUT') {
@@ -363,6 +385,7 @@
                             currentUser = null;
                             currentRole = null;
                             crmInitialized = false;
+                            authRecoveryStarted = false;
 
                             showLogin();
                         }
@@ -392,7 +415,18 @@
             });
 
             if (typeof window.supabase !== 'undefined') {
-                supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+                supabaseClient =
+                    window.supabase.createClient(
+                        SUPABASE_URL,
+                        SUPABASE_ANON_KEY,
+                        {
+                            auth: {
+                                autoRefreshToken: true,
+                                persistSession: true,
+                                detectSessionInUrl: false
+                            }
+                        }
+                    );
                 console.log('Supabase initialized after wait', { supabaseLoaded: true, supabaseClient: !!supabaseClient });
             }
         }
