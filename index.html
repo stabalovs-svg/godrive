@@ -298,7 +298,7 @@
 
     <script>
 
-        const BUILD_VERSION = '2026-06-25 09:00';
+        const BUILD_VERSION = '2026-06-26 09:01';
 
         document.title =
             'CRM Автошкола [' + BUILD_VERSION + ']';
@@ -491,11 +491,23 @@
                         .from('students')
                         .select('*');
 
+                    const instructorsResult = await supabaseClient
+                        .from('instructors')
+                        .select('id, full_name');
+
                     console.log('QUERY FINISHED');
                     console.log(result);
 
                     const data = result.data;
                     const error = result.error;
+
+                    const instructors = {};
+
+                    (instructorsResult.data || []).forEach(item => {
+
+                        instructors[item.id] = item.full_name;
+
+                    });
 
                     /*console.log('loadStudents: query result', {
                         dataLength: data?.length,
@@ -546,7 +558,7 @@
                         <td class="s-email">${student.email || ''}</td>
                         <td class="s-contract">${student.contract_number || ''}</td>
                         <td class="s-category">${student.category || ''}</td>
-                        <td class="s-instructor">${student.instructor_id || ''}</td>
+                        <td class="s-instructor">${instructors[student.instructor_id] || ''}</td>
                         <td class="s-birth_date">${student.birth_date || ''}</td>
                         <td class="s-status">
                             <span class="${getStatusClass(student.status)}">
