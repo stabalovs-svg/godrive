@@ -298,12 +298,38 @@
 
     <script>
 
-        const BUILD_VERSION = '2026-06-26 09:01';
+        const BUILD_VERSION = '2026-06-26 09:44';
 
         document.title =
             'CRM Автошкола [' + BUILD_VERSION + ']';
 
         console.log('BUILD', BUILD_VERSION);
+
+        /*
+======================================================
+
+GoDrive CRM
+
+Журнал изменений
+
+------------------------------------------------------
+
+BUILD 2026-06-25 08:10
+
+✓ Исправлена авторизация
+✓ Исправлен выход из системы
+✓ Исправлено зависание Supabase
+✓ Исправлено обновление токенов
+✓ Отображение инструкторов по фамилии
+
+------------------------------------------------------
+
+BUILD 2026-06-26 01
+
+...
+
+======================================================
+*/
 
         // Version: 2026-06-10T21:00Z (cache buster - fixed session sync with onAuthStateChange)
         const SUPABASE_URL = 'https://xcqrluiqllsnhtyojuhc.supabase.co';
@@ -558,7 +584,12 @@
                         <td class="s-email">${student.email || ''}</td>
                         <td class="s-contract">${student.contract_number || ''}</td>
                         <td class="s-category">${student.category || ''}</td>
-                        <td class="s-instructor">${instructors[student.instructor_id] || ''}</td>
+                        <td
+                            class="s-instructor"
+                            data-id="${student.instructor_id}"
+                        >
+                            ${instructorName}
+                        </td>
                         <td class="s-birth_date">${student.birth_date || ''}</td>
                         <td class="s-status">
                             <span class="${getStatusClass(student.status)}">
@@ -889,7 +920,7 @@
                     tr.querySelector('.s-notes')?.textContent.trim() || '';
 
             const instructorId =
-                    tr.querySelector('.s-instructor')?.textContent.trim() || '';        
+                    tr.querySelector('.s-instructor')?.dataset.id || '';        
 
             document.getElementById('modal-name').value = name;
             document.getElementById('modal-phone').value = phone;
@@ -901,7 +932,7 @@
             document.getElementById('modal-notes').value = notes;
 
             document.getElementById('modal-instructor').value =
-                instructorId.trim();
+                instructorId;
 
             document.getElementById('save-student-btn').onclick = 
                 saveStudent;    
