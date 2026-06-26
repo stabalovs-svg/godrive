@@ -298,38 +298,12 @@
 
     <script>
 
-        const BUILD_VERSION = '2026-06-26 09:44';
+        const BUILD_VERSION = '2026-06-25 09:00';
 
         document.title =
             'CRM Автошкола [' + BUILD_VERSION + ']';
 
         console.log('BUILD', BUILD_VERSION);
-
-        /*
-======================================================
-
-GoDrive CRM
-
-Журнал изменений
-
-------------------------------------------------------
-
-BUILD 2026-06-25 08:10
-
-✓ Исправлена авторизация
-✓ Исправлен выход из системы
-✓ Исправлено зависание Supabase
-✓ Исправлено обновление токенов
-✓ Отображение инструкторов по фамилии
-
-------------------------------------------------------
-
-BUILD 2026-06-26 01
-
-...
-
-======================================================
-*/
 
         // Version: 2026-06-10T21:00Z (cache buster - fixed session sync with onAuthStateChange)
         const SUPABASE_URL = 'https://xcqrluiqllsnhtyojuhc.supabase.co';
@@ -517,23 +491,11 @@ BUILD 2026-06-26 01
                         .from('students')
                         .select('*');
 
-                    const instructorsResult = await supabaseClient
-                        .from('instructors')
-                        .select('id, full_name');
-
                     console.log('QUERY FINISHED');
                     console.log(result);
 
                     const data = result.data;
                     const error = result.error;
-
-                    const instructors = {};
-
-                    (instructorsResult.data || []).forEach(item => {
-
-                        instructors[item.id] = item.full_name;
-
-                    });
 
                     /*console.log('loadStudents: query result', {
                         dataLength: data?.length,
@@ -586,9 +548,9 @@ BUILD 2026-06-26 01
                         <td class="s-category">${student.category || ''}</td>
                         <td
                             class="s-instructor"
-                            data-id="${student.instructor_id}"
+                            data-id="${student.instructor_id || ''}"
                         >
-                            ${instructorName}
+                            ${instructors[student.instructor_id] || ''}
                         </td>
                         <td class="s-birth_date">${student.birth_date || ''}</td>
                         <td class="s-status">
@@ -932,7 +894,7 @@ BUILD 2026-06-26 01
             document.getElementById('modal-notes').value = notes;
 
             document.getElementById('modal-instructor').value =
-                instructorId;
+                instructorId.trim();
 
             document.getElementById('save-student-btn').onclick = 
                 saveStudent;    
