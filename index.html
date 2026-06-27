@@ -299,7 +299,7 @@
 
     <script>
 
-        const BUILD_VERSION = '2026-06-27 13:30';
+        const BUILD_VERSION = '2026-06-27 14:35';
 
         document.title =
             'CRM Автошкола [' + BUILD_VERSION + ']';
@@ -803,6 +803,11 @@
         async function saveStudent() {
 
             const id = window.currentStudentId;
+            const { data: oldStudent } = await supabaseClient
+                .from('students')
+                .select('status, theory_start_date')
+                .eq('id', id)
+                .single();
 
             if (!id) {
                 alert('Не выбран ученик');
@@ -846,6 +851,22 @@
                 notes:
                     document.getElementById('modal-notes').value
             };
+
+            if (
+                oldStudent &&
+                oldStudent.status === 'оформление' &&
+                updateData.status === 'теория' &&
+                !oldStudent.theory_start_date
+            ) {
+
+                updateData.theory_start_date =
+                    new Date().toISOString().split('T')[0];
+
+                console.log(
+                    'THEORY START DATE =',
+                    updateData.theory_start_date
+                );
+            }
 
             console.log('SAVE ID =', id);
             console.log('SAVE DATA =', updateData);
