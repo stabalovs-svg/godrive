@@ -298,7 +298,7 @@
 
     <script>
 
-        const BUILD_VERSION = '2026-06-26 09:01';
+        const BUILD_VERSION = '2026-06-27 07:35';
 
         document.title =
             'CRM Автошкола [' + BUILD_VERSION + ']';
@@ -558,7 +558,12 @@
                         <td class="s-email">${student.email || ''}</td>
                         <td class="s-contract">${student.contract_number || ''}</td>
                         <td class="s-category">${student.category || ''}</td>
-                        <td class="s-instructor">${instructors[student.instructor_id] || ''}</td>
+                        <td
+                            class="s-instructor"
+                            data-id="${student.instructor_id || ''}"
+                        >
+                            ${instructors[student.instructor_id] || ''}
+                        </td>
                         <td class="s-birth_date">${student.birth_date || ''}</td>
                         <td class="s-status">
                             <span class="${getStatusClass(student.status)}">
@@ -889,7 +894,7 @@
                     tr.querySelector('.s-notes')?.textContent.trim() || '';
 
             const instructorId =
-                    tr.querySelector('.s-instructor')?.textContent.trim() || '';        
+                tr.querySelector('.s-instructor')?.dataset.id || '';        
 
             document.getElementById('modal-name').value = name;
             document.getElementById('modal-phone').value = phone;
