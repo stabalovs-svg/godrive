@@ -215,6 +215,7 @@
                     <th id="sort-status" style="cursor:pointer;">
                         Статус ↕
                     </th>
+                    <th>Срок</th>
                     <th>Заметки</th>
                     <th>Действия</th>
                 </tr>
@@ -299,7 +300,7 @@
 
     <script>
 
-        const BUILD_VERSION = '2026-06-27 14:35';
+        const BUILD_VERSION = '2026-06-28 15:00';
 
         document.title =
             'CRM Автошкола [' + BUILD_VERSION + ']';
@@ -574,6 +575,50 @@
                                 return '';
                         }
                     }
+                    function calculateTrainingTerm(student) {
+
+                        if (
+                            !student.theory_start_date ||
+                            student.status === 'оформление'
+                        ) {
+                            return '—';
+                        }
+
+                        const start =
+                            new Date(student.theory_start_date);
+
+                        const today =
+                            new Date();
+
+                        const passed =
+                            Math.floor(
+                                (today - start) /
+                                (1000 * 60 * 60 * 24)
+                            );
+
+                        let limit = 365;
+
+                        if (
+                            student.status === 'теория сдана' ||
+                            student.status === 'вождение' ||
+                            student.status === 'вождение экзамен' ||
+                            student.status === 'вождение сдано'
+                        ) {
+                            limit = 1095;
+                        }
+
+                        const left = limit - passed;
+
+                        if (left < 0) {
+                            return `❌ Просрочен на ${Math.abs(left)} дн.`;
+                        }
+
+                        if (left <= 30) {
+                            return `⚠ Осталось ${left} дн.`;
+                        }
+
+                        return `🟢 ${left} дн.`;
+                    }
                     studentsTableBody.innerHTML = data.map(student => `
                     <tr data-id="${student.id}">
                         <td class="s-full_name">${student.full_name || ''}</td>
@@ -592,6 +637,9 @@
                             <span class="${getStatusClass(student.status)}">
                                 ${student.status || ''}
                             </span>
+                        </td>
+                        <td class="s-term">
+                            ${calculateTrainingTerm(student)}
                         </td>
                         <td class="s-notes">${student.notes || ''}</td>
                         <td class="s-actions">
