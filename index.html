@@ -301,7 +301,7 @@
 
     <script>
 
-        const BUILD_VERSION = '2026-06-28 17:50';
+        const BUILD_VERSION = '2026-06-28 18:40';
 
         document.title =
             'CRM Автошкола [' + BUILD_VERSION + ']';
@@ -563,19 +563,24 @@
                             case 'теория':
                                 return 'status-theory';
 
+                            case 'теория сдана':
+                                return 'status-theory-passed';
+
                             case 'вождение':
                                 return 'status-driving';
 
-                            case 'экзамен':
-                                return 'status-exam';
+                            case 'вождение экзамен':
+                                return 'status-driving-exam';
 
-                            case 'выпуск':
-                                return 'status-passed';
+                            case 'вождение сдано':
+                                return 'status-driving-passed';
 
                             default:
                                 return '';
                         }
+
                     }
+
                     function calculateTrainingTerm(student) {
 
                         if (
