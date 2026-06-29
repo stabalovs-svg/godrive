@@ -313,8 +313,8 @@
     CRM GoDrive
     =====================================================
     
-    v1.0
-    2026-06-27 07:35
+    v1.1
+    2026-06-29 06:53
     
     ✔ Авторизация стабильна
     ✔ Работа с Supabase исправлена
@@ -322,10 +322,10 @@
     ✔ Исправлено кеширование Avast Browser
     ✔ BUILD_VERSION добавлен
     ✔ Показ имени инструктора
-    
+    ✔ Контроль сроков обучения
     
     Следующий этап:
-    → Контроль сроков обучения
+    → день рождения контроль сроков 
     → Архив
     → Оплаты
     =====================================================
@@ -582,7 +582,7 @@
 
                     }
 
-                    function calculateTrainingTerm(student) {
+                    function getDeadlineInfo(student) {
 
                         if (
                             !student.theory_start_date ||
@@ -591,39 +591,36 @@
                             return '—';
                         }
 
-                        const start =
-                            new Date(student.theory_start_date);
+                        const start = new Date(student.theory_start_date);
+                        const today = new Date();
 
-                        const today =
-                            new Date();
+                        const passed = Math.floor(
+                            (today - start) / (1000 * 60 * 60 * 24)
+                        );
 
-                        const passed =
-                            Math.floor(
-                                (today - start) /
-                                (1000 * 60 * 60 * 24)
-                            );
-
-                        let limit = 365;
-
-                        if (
-                            student.status === 'теория сдана' ||
-                            student.status === 'вождение' ||
-                            student.status === 'вождение экзамен' ||
-                            student.status === 'вождение сдано'
-                        ) {
-                            limit = 1095;
-                        }
+                        const limit =
+                            student.status === 'теория'
+                                ? 365
+                                : 1095;
 
                         const left = limit - passed;
 
+                        // 1. Просрочен
                         if (left < 0) {
-                            return `❌ Просрочен на ${Math.abs(left)} дн.`;
+                            return '❌ Просрочен';
                         }
 
+                        // 2. Последний день
+                        if (left === 0) {
+                            return '🔴 Последний день';
+                        }
+
+                        // 3. Осталось меньше месяца
                         if (left <= 30) {
-                            return `⚠ Осталось ${left} дн.`;
+                            return `🟠 Осталось ${left} дн.`;
                         }
 
+                        // 4. Пока всё хорошо
                         return `🟢 ${left} дн.`;
                     }
                     studentsTableBody.innerHTML = data.map(student => `
@@ -646,7 +643,7 @@
                             </span>
                         </td>
                         <td class="s-term">
-                            ${calculateTrainingTerm(student)}
+                            ${getDeadlineInfo(student)}
                         </td>
                         <td class="s-notes">${student.notes || ''}</td>
                         <td class="s-actions">
