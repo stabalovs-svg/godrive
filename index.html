@@ -448,6 +448,57 @@
                 <b>Заметки:</b><br>
                 <textarea id="modal-notes"></textarea>
             </p>
+
+            <hr>
+            
+            <h3>📄 Договор и оплата</h3>
+            
+            <p>
+                <b>Дата договора:</b><br>
+                <input type="date" id="modal-contract-date">
+            </p>
+            
+            <p>
+                <b>Срок договора (месяцев):</b><br>
+                <select id="modal-contract-duration">
+                    <option value="">Выберите</option>
+                    <option value="6">6 месяцев</option>
+                    <option value="12">12 месяцев</option>
+                </select>
+            </p>
+            
+            <p>
+                <b>Стоимость курса (€):</b><br>
+                <input type="number" id="modal-course-price" step="0.01" min="0">
+            </p>
+            
+            <hr>
+            
+            <div id="payment-summary">
+            
+                <p><b>Оплачено:</b> 0 €</p>
+            
+                <p><b>Осталось:</b> 0 €</p>
+            
+            </div>
+            
+            <hr>
+            
+            <h4>История платежей</h4>
+            
+            <div id="payments-list">
+            
+                Пока нет платежей
+            
+            </div>
+            
+            <br>
+            
+            <button id="add-payment-btn">
+            
+                ➕ Добавить платеж
+            
+            </button>
             
             <button id="save-student-btn">
                 Сохранить
@@ -462,7 +513,7 @@
 
     <script>
 
-        const BUILD_VERSION = '2026-06-29 15:22';
+        const BUILD_VERSION = '2026-06-29 22:48';
 
         document.title =
             'CRM Автошкола [' + BUILD_VERSION + ']';
