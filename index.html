@@ -141,6 +141,24 @@
             color:white;
         }
 
+        .row-warning{
+
+            background:#fff8e1;
+
+        }
+
+        .row-last-day{
+
+            background:#ffe0b2;
+
+        }
+
+        .row-expired{
+
+            background:#ffebee;
+
+        }
+
         
     </style>
 </head>
@@ -302,7 +320,7 @@
 
     <script>
 
-        const BUILD_VERSION = '2026-06-29 06:53';
+        const BUILD_VERSION = '2026-06-29 09:00';
 
         document.title =
             'CRM Автошкола [' + BUILD_VERSION + ']';
@@ -623,8 +641,48 @@
                         // 4. Пока всё хорошо
                         return `🟢 ${left} дн.`;
                     }
+                    function getRowClass(student) {
+
+                        if (
+                            !student.theory_start_date ||
+                            student.status === 'оформление'
+                        ) {
+                            return '';
+                        }
+
+                        const start = new Date(student.theory_start_date);
+                        const today = new Date();
+
+                        const passed = Math.floor(
+                            (today - start) / (1000 * 60 * 60 * 24)
+                        );
+
+                        const limit =
+                            student.status === 'теория'
+                                ? 365
+                                : 1095;
+
+                        const left = limit - passed;
+
+                        if (left < 0) {
+                            return 'row-expired';
+                        }
+
+                        if (left === 0) {
+                            return 'row-last-day';
+                        }
+
+                        if (left <= 30) {
+                            return 'row-warning';
+                        }
+
+                        return '';
+                    }
                     studentsTableBody.innerHTML = data.map(student => `
-                    <tr data-id="${student.id}">
+                    <tr
+                        data-id="${student.id}"
+                        class="${getRowClass(student)}"
+                    >
                         <td class="s-full_name">${student.full_name || ''}</td>
                         <td class="s-phone">${student.phone || ''}</td>
                         <td class="s-email">${student.email || ''}</td>
