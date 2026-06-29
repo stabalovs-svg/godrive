@@ -159,69 +159,111 @@
 
         }
         
-        .dashboard{
+        .crm-header{
+
+            margin-bottom:18px;
+
+        }
+
+        .crm-title{
+
+            margin-bottom:12px;
+
+        }
+
+        .crm-title h2{
+
+            margin:0;
+
+            color:#1f4e79;
+
+        }
+
+        .crm-title span{
+
+            color:#777;
+
+            font-size:14px;
+
+        }
+
+        .dashboard-bar{
 
             display:flex;
 
-            gap:18px;
-
-            margin:20px 0;
-
             flex-wrap:wrap;
 
-        }
+            gap:20px;
 
-        .dashboard-card{
+            align-items:center;
 
-            flex:1;
+            padding:10px 15px;
 
-            min-width:160px;
+            border:1px solid #ddd;
 
-            background:white;
+            border-radius:8px;
 
-            border-radius:12px;
-
-            padding:18px;
-
-            box-shadow:0 2px 10px rgba(0,0,0,.08);
-
-            text-align:center;
+            background:#fafafa;
 
         }
 
-        .dashboard-icon{
+        .dashboard-item{
 
-            font-size:32px;
+            font-weight:600;
 
-        }
-
-        .dashboard-value{
-
-            font-size:28px;
-
-            font-weight:bold;
-
-            margin:10px 0;
-
-        }
-
-        .dashboard-title{
-
-            color:#666;
+            cursor:default;
 
         }
 
         .warning{
 
-            border:3px solid orange;
+            color:#d97706;
 
         }
 
-        .birthday-list{
+        .birthday-line{
 
-            margin-bottom:20px;
+            margin-top:8px;
 
-            font-size:15px;
+            padding-left:5px;
+
+            color:#444;
+
+            font-size:14px;
+
+        }
+
+        .good{
+
+            color:#2e7d32;
+
+        }
+
+        .warning{
+
+            color:#ef6c00;
+
+        }
+
+        .danger{
+
+            color:#c62828;
+
+        }
+
+        .crm-footer{
+
+            margin-top:30px;
+
+            padding:12px;
+
+            text-align:center;
+
+            color:#888;
+
+            font-size:13px;
+
+            border-top:1px solid #ddd;
 
         }
         
@@ -277,46 +319,45 @@
             </form>
         </div>
         
+        <div class="crm-header">
+        
+            <div class="crm-title">
+                <h2>GoDrive CRM</h2>
+                <span>Система управления автошколой</span>
+            </div>
+        
+            <div id="dashboard-bar" class="dashboard-bar">
+        
+                <span class="dashboard-item" id="dash-total">
+                    👨‍🎓 Всего: 0
+                </span>
+        
+                <span class="dashboard-item" id="dash-theory">
+                    📘 Теория: 0
+                </span>
+        
+                <span class="dashboard-item" id="dash-practice">
+                    🚗 Практика: 0
+                </span>
+        
+                <span class="dashboard-item warning" id="dash-attention">
+                    ⚠ Внимание: 0
+                </span>
+        
+                <span class="dashboard-item" id="dash-birthday">
+                    🎂 ДР: 0
+                </span>
+        
+            </div>
+        
+            <div id="birthday-line" class="birthday-line"></div>
+        
+        </div>
+        
         <div class="search-block">
             <input type="text" id="student-search" placeholder="Поиск по ФИО, телефону, email...">
         </div>
-        
-        <div id="dashboard" class="dashboard">
-        
-            <div class="dashboard-card">
-                <div class="dashboard-icon">👨‍🎓</div>
-                <div class="dashboard-value" id="dash-total">0</div>
-                <div class="dashboard-title">Всего учеников</div>
-            </div>
-        
-            <div class="dashboard-card">
-                <div class="dashboard-icon">📘</div>
-                <div class="dashboard-value" id="dash-theory">0</div>
-                <div class="dashboard-title">Теория</div>
-            </div>
-        
-            <div class="dashboard-card">
-                <div class="dashboard-icon">🚗</div>
-                <div class="dashboard-value" id="dash-practice">0</div>
-                <div class="dashboard-title">Практика</div>
-            </div>
-        
-            <div class="dashboard-card warning">
-                <div class="dashboard-icon">⚠</div>
-                <div class="dashboard-value" id="dash-attention">0</div>
-                <div class="dashboard-title">Требуют внимания</div>
-            </div>
-        
-            <div class="dashboard-card">
-                <div class="dashboard-icon">🎂</div>
-                <div class="dashboard-value" id="dash-birthday">0</div>
-                <div class="dashboard-title">Дни рождения</div>
-            </div>
-        
-        </div>
-        
-        <div id="birthday-list" class="birthday-list"></div>
-        
+                        
         <table id="students-table">
             <thead>
                 <tr>
@@ -421,7 +462,7 @@
 
     <script>
 
-        const BUILD_VERSION = '2026-06-29 13:10';
+        const BUILD_VERSION = '2026-06-29 15:22';
 
         document.title =
             'CRM Автошкола [' + BUILD_VERSION + ']';
@@ -432,8 +473,8 @@
     CRM GoDrive
     =====================================================
     
-    v1.0.3
-    2026-06-29 13:10
+    v1.0.4
+    2026-06-29 15:22
     
     ✔ Авторизация стабильна
     ✔ Работа с Supabase исправлена
@@ -793,7 +834,10 @@
                         }
 
                         const start = new Date(student.theory_start_date);
+                        start.setHours(0,0,0,0);
+
                         const today = new Date();
+                        today.setHours(0,0,0,0);
 
                         const passed = Math.floor(
                             (today - start) / (1000 * 60 * 60 * 24)
@@ -820,6 +864,118 @@
 
                         return '';
                     }
+
+                    function calculateDashboard(data) {
+
+                        const dashboard = {
+
+                            total: 0,
+
+                            theory: 0,
+
+                            practice: 0,
+
+                            attention: 0,
+
+                            birthdays: [],
+
+                            birthdayCount: 0
+
+                        };
+
+                        dashboard.total = data.length;
+
+                        const today = new Date();
+
+                        today.setHours(0, 0, 0, 0);
+
+                        data.forEach(student => {
+
+                            // Теория
+
+                            if (
+                                student.status === "теория" ||
+                                student.status === "теория сдана"
+                            ) {
+                                dashboard.theory++;
+                            }
+
+                            // Практика
+
+                            if (
+                                student.status === "вождение" ||
+                                student.status === "вождение экзамен" ||
+                                student.status === "вождение сдано"
+                            ) {
+                                dashboard.practice++;
+                            }
+
+                            // Требуют внимания
+
+                            const info = getDeadlineInfo(student);
+
+                            if (
+                                info.startsWith("❌") ||
+                                info.startsWith("🔴") ||
+                                info.startsWith("🟠")
+                            ) {
+                                dashboard.attention++;
+                            }
+
+                            // Дни рождения
+
+                            if (student.birth_date) {
+
+                                const birth = new Date(student.birth_date);
+
+                                const birthday = new Date(today);
+
+                                birthday.setMonth(birth.getMonth());
+
+                                birthday.setDate(birth.getDate());
+
+                                birthday.setHours(0, 0, 0, 0);
+
+                                if (birthday < today) {
+
+                                    birthday.setFullYear(today.getFullYear() + 1);
+
+                                }
+
+                                const diff = Math.ceil(
+                                    (birthday - today) / (1000 * 60 * 60 * 24)
+                                );
+
+                                if (
+                                    diff === 0 ||
+                                    diff === 3 ||
+                                    diff === 10
+                                ) {
+
+                                    dashboard.birthdayCount++;
+
+                                    dashboard.birthdays.push({
+
+                                        name: student.full_name,
+
+                                        diff
+
+                                    });
+
+                                }
+
+                            }
+
+                        });
+
+                        dashboard.birthdays.sort(
+                            (a, b) => a.diff - b.diff
+                        );
+
+                        return dashboard;
+
+                    }
+
                     studentsTableBody.innerHTML = data.map(student => `
                     <tr
                         data-id="${student.id}"
@@ -851,6 +1007,73 @@
                         </td>
                     </tr>
                 `).join('');
+
+                    const dash = calculateDashboard(data);
+
+                    document.getElementById("dash-total").textContent =
+                        `👨‍🎓 Всего ${dash.total}`;
+
+                    document.getElementById("dash-theory").textContent =
+                        `📘 Теория ${dash.theory}`;
+
+                    document.getElementById("dash-practice").textContent =
+                        `🚗 Практика ${dash.practice}`;
+
+                    document.getElementById("dash-attention").textContent =
+                        `⚠ Внимание ${dash.attention}`;
+
+                    const attention =
+                        document.getElementById("dash-attention");
+
+                    attention.classList.remove(
+                        "good",
+                        "warning",
+                        "danger"
+                    );
+
+                    if (dash.attention === 0) {
+
+                        attention.classList.add("good");
+
+                    } else if (dash.attention <= 2) {
+
+                        attention.classList.add("warning");
+
+                    } else {
+
+                        attention.classList.add("danger");
+
+                    }
+
+                    document.getElementById("dash-birthday").textContent =
+                        `🎂 ДР ${dash.birthdayCount}`;
+
+                    const birthdayLine = document.getElementById("birthday-line");
+
+                    if (dash.birthdays.length) {
+
+                        birthdayLine.innerHTML =
+
+                            "🎂 Ближайшие дни рождения: " +
+
+                            dash.birthdays.map(b => {
+
+                                if (b.diff === 0) {
+
+                                    return `Сегодня — ${b.name}`;
+
+                                }
+
+                                return `Через ${b.diff} дн. — ${b.name}`;
+
+                            }).join(" • ");
+
+                    } else {
+
+                        birthdayLine.innerHTML = "";
+
+                    }
+
                     console.log('loadStudents: rendered', data.length, 'rows. currentRole:', currentRole);
                     renderRowActions();
                     
@@ -1591,6 +1814,13 @@
         }
     </script>
     
+    <footer class="crm-footer">
+    
+        GoDrive CRM v1.0.3
+    
+        © 2026
+    
+    </footer>
 </body>
 
 </html>
