@@ -574,7 +574,7 @@
 
     <script>
 
-        const BUILD_VERSION = '2026-06-30 19:39';
+        const BUILD_VERSION = '2026-06-30 21:20';
 
         document.title =
             'CRM Автошкола [' + BUILD_VERSION + ']';
@@ -1981,6 +1981,14 @@
                 alert('Ошибка: ' + error.message);
                 return;
             }
+
+            document.getElementById('payment-amount').value = '';
+
+            document.getElementById('payment-type').selectedIndex = 0;
+
+            document.getElementById('payment-method').selectedIndex = 0;
+
+            await loadPayments(window.currentStudentId);
 
             alert('Платёж добавлен');
         }
