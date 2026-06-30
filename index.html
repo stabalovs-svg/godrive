@@ -574,7 +574,7 @@
 
     <script>
 
-        const BUILD_VERSION = '2026-06-30 16:55';
+        const BUILD_VERSION = '2026-06-30 18:34';
 
         document.title =
             'CRM Автошкола [' + BUILD_VERSION + ']';
@@ -1558,6 +1558,9 @@
 
             document.getElementById('save-student-btn').onclick = 
                 saveStudent;
+
+            document.getElementById('add-payment-btn').onclick = 
+                addPayment;
                 
             document.getElementById('payment-date').value =
                 new Date().toISOString().split('T')[0];    
@@ -1944,6 +1947,42 @@
 
             console.log('INSTRUCTORS LOADED:', data.length);
         }
+
+        async function addPayment() {
+
+            const payment = {
+
+                student_id:
+                    window.currentStudentId,
+
+                payment_date:
+                    document.getElementById('payment-date').value,
+
+                purpose:
+                    document.getElementById('payment-type').value,
+
+                amount:
+                    parseFloat(
+                        document.getElementById('payment-amount').value
+                    ),
+
+                payment_method:
+                    document.getElementById('payment-method').value
+            };
+
+            const { error } = await supabaseClient
+                .from('payments')
+                .insert([payment]);
+
+            if (error) {
+
+                alert('Ошибка: ' + error.message);
+                return;
+            }
+
+            alert('Платёж добавлен');
+        }
+
     </script>
     
     <footer class="crm-footer">
