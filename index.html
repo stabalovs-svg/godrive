@@ -574,7 +574,7 @@
 
     <script>
 
-        const BUILD_VERSION = '2026-06-30 18:34';
+        const BUILD_VERSION = '2026-06-30 19:19';
 
         document.title =
             'CRM Автошкола [' + BUILD_VERSION + ']';
@@ -1556,6 +1556,8 @@
             document.getElementById('modal-course-price').value =
                 student.course_price || '';
 
+            await loadPayments(window.currentStudentId);    
+
             document.getElementById('save-student-btn').onclick = 
                 saveStudent;
 
@@ -1981,6 +1983,46 @@
             }
 
             alert('Платёж добавлен');
+        }
+
+        async function loadPayments(studentId) {
+
+            const { data, error } = await supabaseClient
+                .from('payments')
+                .select('*')
+                .eq('student_id', studentId)
+                .order('payment_date', { ascending: true });
+
+            if (error) {
+
+                document.getElementById('payments-list').innerHTML =
+                    'Ошибка загрузки платежей';
+
+                return;
+            }
+
+            if (!data.length) {
+
+                document.getElementById('payments-list').innerHTML =
+                    'Пока нет платежей';
+
+                return;
+            }
+
+            document.getElementById('payments-list').innerHTML =
+                data.map(payment => `
+                    <div class="payment-row">
+
+                        <span>${payment.payment_date}</span>
+
+                        <span>${payment.purpose}</span>
+
+                        <span>${payment.amount} €</span>
+
+                        <span>${payment.payment_method}</span>
+
+                    </div>
+                ).join('');
         }
 
     </script>
