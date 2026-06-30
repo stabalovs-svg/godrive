@@ -520,6 +520,41 @@
             
             <br>
             
+            <hr>
+            
+            <h4>➕ Новый платеж</h4>
+            
+            <p>
+                Дата<br>
+                <input type="date" id="payment-date">
+            </p>
+            
+            <p>
+                Назначение<br>
+                <select id="payment-type">
+                    <option value="Теория">Теория</option>
+                    <option value="Вождение">Вождение</option>
+                    <option value="Продление договора">Продление договора</option>
+                    <option value="Экзамен">Экзамен</option>
+                    <option value="Другое">Другое</option>
+                </select>
+            </p>
+            
+            <p>
+                Сумма (€)<br>
+                <input type="number" id="payment-amount" step="0.01">
+            </p>
+            
+            <p>
+                Способ оплаты<br>
+                <select id="payment-method">
+                    <option>Наличные</option>
+                    <option>Карта</option>
+                    <option>Перевод</option>
+                </select>
+            </p>
+            
+            
             <button id="add-payment-btn">
             
                 ➕ Добавить платеж
@@ -539,7 +574,7 @@
 
     <script>
 
-        const BUILD_VERSION = '2026-06-30 16:21';
+        const BUILD_VERSION = '2026-06-30 16:55';
 
         document.title =
             'CRM Автошкола [' + BUILD_VERSION + ']';
@@ -1522,7 +1557,10 @@
                 student.course_price || '';
 
             document.getElementById('save-student-btn').onclick = 
-                saveStudent;    
+                saveStudent;
+                
+            document.getElementById('payment-date').value =
+                new Date().toISOString().split('T')[0];    
 
             document.getElementById('student-modal')
                 .classList.remove('hidden');
