@@ -539,7 +539,7 @@
 
     <script>
 
-        const BUILD_VERSION = '2026-06-30 16:04';
+        const BUILD_VERSION = '2026-06-30 16:21';
 
         document.title =
             'CRM Автошкола [' + BUILD_VERSION + ']';
@@ -1484,34 +1484,6 @@
                 'CURRENT STUDENT ID =',
                 window.currentStudentId
             );
-
-            const name =
-                    tr.querySelector('.s-full_name')?.textContent.trim() || '';
-
-            const phone =
-                    tr.querySelector('.s-phone')?.textContent.trim() || '';
-
-            const email =
-                    tr.querySelector('.s-email')?.textContent.trim() || '';
-
-            const contract =
-                    tr.querySelector('.s-contract')?.textContent.trim() || '';
-
-            const category =
-                    tr.querySelector('.s-category')?.textContent.trim() || '';
-
-            const birthDate =
-                    tr.querySelector('.s-birth_date')?.textContent.trim() || '';
-
-            const status =
-                    tr.querySelector('.s-status')?.textContent.trim() || '';
-            console.log('STATUS = [' + status + ']');        
-
-            const notes =
-                    tr.querySelector('.s-notes')?.textContent.trim() || '';
-
-            const instructorId =
-                tr.querySelector('.s-instructor')?.dataset.id || '';        
 
             document.getElementById('modal-name').value =
                 student.full_name || '';
