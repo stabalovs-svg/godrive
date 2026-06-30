@@ -539,7 +539,7 @@
 
     <script>
 
-        const BUILD_VERSION = '2026-06-30 08:45';
+        const BUILD_VERSION = '2026-06-30 15:55';
 
         document.title =
             'CRM Автошкола [' + BUILD_VERSION + ']';
@@ -1402,6 +1402,16 @@
 
                 notes:
                     document.getElementById('modal-notes').value
+
+                contract_date:
+                    document.getElementById('modal-contract-date').value || null,
+
+                contract_duration_months:
+                    document.getElementById('modal-contract-duration').value || null,
+
+                course_price:
+                    document.getElementById('modal-course-price').value || null,
+
             };
 
             if (
@@ -1459,6 +1469,17 @@
 
             window.currentStudentId = tr.dataset.id;
 
+            const { data: student, error } = await supabaseClient
+                .from('students')
+                .select('*')
+                .eq('id', window.currentStudentId)
+                .single();
+
+            if (error) {
+                alert('Ошибка загрузки карточки');
+                return;
+            }
+
             console.log(
                 'CURRENT STUDENT ID =',
                 window.currentStudentId
@@ -1492,17 +1513,41 @@
             const instructorId =
                 tr.querySelector('.s-instructor')?.dataset.id || '';        
 
-            document.getElementById('modal-name').value = name;
-            document.getElementById('modal-phone').value = phone;
-            document.getElementById('modal-email').value = email;
-            document.getElementById('modal-contract').value = contract;
-            document.getElementById('modal-category').value = category;
-            document.getElementById('modal-birth').value = birthDate;
-            document.getElementById('modal-status').value = status;
-            document.getElementById('modal-notes').value = notes;
+            document.getElementById('modal-name').value =
+                student.full_name || '';
+
+            document.getElementById('modal-phone').value =
+                student.phone || '';
+
+            document.getElementById('modal-email').value =
+                student.email || '';
+
+            document.getElementById('modal-contract').value =
+                student.contract_number || '';
+
+            document.getElementById('modal-category').value =
+                student.category || '';
+
+            document.getElementById('modal-birth').value =
+                student.birth_date || '';
+
+            document.getElementById('modal-status').value =
+                student.status || '';
+
+            document.getElementById('modal-notes').value =
+                student.notes || '';
 
             document.getElementById('modal-instructor').value =
-                instructorId.trim();
+                student.instructor_id || '';
+
+            document.getElementById('modal-contract-date').value =
+                student.contract_date || '';
+
+            document.getElementById('modal-contract-duration').value =
+                student.contract_duration_months || '';
+
+            document.getElementById('modal-course-price').value =
+                student.course_price || '';
 
             document.getElementById('save-student-btn').onclick = 
                 saveStudent;    
