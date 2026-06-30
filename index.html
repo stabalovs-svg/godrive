@@ -498,16 +498,23 @@
                 <input type="number" id="modal-course-price" step="0.01" min="0">
             </p>
             
-            <hr>
-            
-            <div id="payment-summary">
-            
-                <p><b>Оплачено:</b> 0 €</p>
-            
-                <p><b>Осталось:</b> 0 €</p>
-            
-            </div>
-            
+           <hr>
+
+           <p>
+                <b>🟢 Оплачено:</b>
+                <span id="paid-total">0 €</span>
+            </p>
+
+            <p>
+                <b>🟠 Осталось:</b>
+                <span id="left-total">0 €</span>
+            </p>
+
+            <p>
+                <b>💼 Дополнительные услуги:</b>
+                <span id="extra-total">0 €</span>
+            </p>
+
             <hr>
             
             <h4>История платежей</h4>
@@ -574,7 +581,7 @@
 
     <script>
 
-        const BUILD_VERSION = '2026-06-30 21:20';
+        const BUILD_VERSION = '2026-06-30 22:40';
 
         document.title =
             'CRM Автошкола [' + BUILD_VERSION + ']';
