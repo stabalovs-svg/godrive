@@ -621,7 +621,7 @@
 
     <script>
 
-        const BUILD_VERSION = '2026-07-01 13:17';
+        const BUILD_VERSION = '2026-07-01 13:40';
 
         document.title =
             'CRM Автошкола [' + BUILD_VERSION + ']';
@@ -2119,10 +2119,7 @@
 
             document.getElementById('payments-list').innerHTML =
                 data.map(payment => `
-                    <div class="payment-row">
-            
-            document.getElementById('payments-count').textContent =
-    `           Всего платежей: ${data.length}`;            
+                    <div class="payment-row">                                    
 
                         <span>${new Date(payment.payment_date).toLocaleDateString('ru-RU')}</span>
 
@@ -2134,6 +2131,10 @@
 
                     </div>
         `        ).join('');
+
+            document.getElementById('payments-count').textContent =
+    `           Платежей: ${data.length}`;
+
         }
 
     </script>
