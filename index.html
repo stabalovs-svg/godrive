@@ -422,6 +422,7 @@
                     </th>
                     <th>Телефон</th>
                     <th>email</th>
+                    <th>💰 Оплата</th>
                     <th>Договор</th>
                     <th id="sort-category" style="cursor:pointer;">
                         Категория ↕
@@ -621,7 +622,7 @@
 
     <script>
 
-        const BUILD_VERSION = '2026-07-01 13:55';
+        const BUILD_VERSION = '2026-07-01 14:45';
 
         document.title =
             'CRM Автошкола [' + BUILD_VERSION + ']';
@@ -840,6 +841,10 @@
                         .from('instructors')
                         .select('id, full_name');
 
+                    const paymentsResult = await supabaseClient
+                        .from('payments')
+                        .select('student_id, amount, purpose');    
+
                     console.log('QUERY FINISHED');
                     console.log(result);
 
@@ -851,6 +856,20 @@
                     (instructorsResult.data || []).forEach(item => {
 
                         instructors[item.id] = item.full_name;
+
+                    });
+
+                    const payments = {};
+
+                    (paymentsResult.data || []).forEach(payment => {
+
+                        if (!payments[payment.student_id]) {
+
+                            payments[payment.student_id] = [];
+
+                        }
+
+                        payments[payment.student_id].push(payment);
 
                     });
 
@@ -1143,6 +1162,9 @@
                         <td class="s-full_name">${student.full_name || ''}</td>
                         <td class="s-phone">${student.phone || ''}</td>
                         <td class="s-email">${student.email || ''}</td>
+                        <td class="s-payment">
+                            ${getPaymentStatus(student)}
+                        </td>
                         <td class="s-contract">${student.contract_number || ''}</td>
                         <td class="s-category">${student.category || ''}</td>
                         <td
@@ -2081,6 +2103,46 @@
                 default:
                     return '📦';
             }
+
+        }
+
+        function getPaymentStatus(student) {
+
+            const list =
+                payments[student.id] || [];
+
+            const paid = list
+                .filter(p =>
+                    p.purpose === 'Теория' ||
+                    p.purpose === 'Вождение'
+                )
+                .reduce(
+                    (sum, p) => sum + Number(p.amount),
+                    0
+                );
+
+            const price =
+                Number(student.course_price) || 0;
+
+            if (price === 0) {
+
+                return '—';
+
+            }
+
+            if (paid >= price) {
+
+                return `🟢 ${paid} / ${price} €`;
+
+            }
+
+            if (paid === 0) {
+
+                return `🔴 0 / ${price} €`;
+
+            }
+
+            return `🟠 ${paid} / ${price} €`;
 
         }
 
