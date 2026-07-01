@@ -622,7 +622,7 @@
 
     <script>
 
-        const BUILD_VERSION = '2026-07-01 20:00';
+        const BUILD_VERSION = '2026-07-01 20:17';
 
         document.title =
             'CRM Автошкола [' + BUILD_VERSION + ']';
@@ -1001,6 +1001,45 @@
 
                         // 4. Пока всё хорошо
                         return `🟢 ${left} дн.`;
+                    }
+
+                    function getTrainingReminder(student) {
+
+                        if (
+                            !student.theory_start_date ||
+                            student.status === 'оформление'
+                        ) {
+                            return null;
+                        }
+
+                        const today = new Date();
+                        today.setHours(0, 0, 0, 0);
+
+                        const start = new Date(student.theory_start_date);
+                        start.setHours(0, 0, 0, 0);
+
+                        const passed = Math.floor(
+                            (today - start) / (1000 * 60 * 60 * 24)
+                        );
+
+                        const limit =
+                            student.status === 'теория'
+                                ? 365
+                                : 1095;
+
+                        const left = limit - passed;
+
+                        if (left < 0)
+                            return '❌ Просрочен';
+
+                        if (left === 0)
+                            return '🔴 Последний день';
+
+                        if (left <= 30)
+                            return `🟠 Осталось ${left} дн.`;
+
+                        return null;
+
                     }
 
                     function getPaymentStatus(student) {
@@ -2229,9 +2268,11 @@
     
     <footer class="crm-footer">
     
-        GoDrive CRM v1.0.3
+        GoDrive CRM v1.0.5
     
         © 2026
+
+        Разработано специально для автошколы GoDrive
     
     </footer>
 </body>
