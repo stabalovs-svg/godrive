@@ -292,6 +292,36 @@
             border-top:1px solid #ddd;
 
         }
+
+        .payments-header,
+        .payment-row{
+            display:grid;
+            grid-template-columns:110px 1fr 90px 70px;
+            gap:10px;
+            align-items:center;
+        }
+
+        .payments-header{
+            font-weight:bold;
+            padding:6px 0;
+            border-bottom:1px solid #ddd;
+            margin-bottom:6px;
+        }
+
+        .payment-row{
+            padding:8px 0;
+            border-bottom:1px solid #eee;
+            font-size:14px;
+        }
+
+        .payment-row span:nth-child(3){
+            text-align:right;
+            font-weight:bold;
+        }
+
+        .payment-row span:nth-child(4){
+            text-align:center;
+        }
         
     </style>
 </head>
@@ -518,6 +548,15 @@
             <hr>
             
             <h4>История платежей</h4>
+
+            <div class="payments-header">
+                <span>Дата</span>
+                <span>Назначение</span>
+                <span>Сумма</span>
+                <span>Способ</span>
+            </div>
+
+            <div id="payments-count"></div>
             
             <div id="payments-list">
             
@@ -582,7 +621,7 @@
 
     <script>
 
-        const BUILD_VERSION = '2026-07-01 11:30';
+        const BUILD_VERSION = '2026-07-01 13:17';
 
         document.title =
             'CRM Автошкола [' + BUILD_VERSION + ']';
@@ -2001,6 +2040,25 @@
             alert('Платёж добавлен');
         }
 
+        function getPaymentIcon(method) {
+
+            switch (method) {
+
+                case 'Карта':
+                    return '💳';
+
+                case 'Наличные':
+                    return '💵';
+
+                case 'Перевод':
+                    return '🏦';
+
+                default:
+                    return '💰';
+            }
+
+        }
+
         async function loadPayments(studentId) {
 
             const { data, error } = await supabaseClient
@@ -2062,14 +2120,17 @@
             document.getElementById('payments-list').innerHTML =
                 data.map(payment => `
                     <div class="payment-row">
+            
+            document.getElementById('payments-count').textContent =
+    `           Всего платежей: ${data.length}`;            
 
-                        <span>${payment.payment_date}</span>
+                        <span>${new Date(payment.payment_date).toLocaleDateString('ru-RU')}</span>
 
                         <span>${payment.purpose}</span>
 
-                        <span>${payment.amount} €</span>
+                        <span>${Number(payment.amount).toFixed(2)} €</span>
 
-                        <span>${payment.payment_method}</span>
+                        <span>${getPaymentIcon(payment.payment_method)}</span>
 
                     </div>
         `        ).join('');
