@@ -622,7 +622,7 @@
 
     <script>
 
-        const BUILD_VERSION = '2026-07-01 22:40';
+        const BUILD_VERSION = '2026-07-01 22:59';
 
         document.title =
             'CRM Автошкола [' + BUILD_VERSION + ']';
@@ -1000,6 +1000,71 @@
 
                     }
 
+                    function getBirthdayReminder(student) {
+
+                        if (!student.birth_date) {
+                            return null;
+                        }
+
+                        const today = new Date();
+                        today.setHours(0, 0, 0, 0);
+
+                        const birth = new Date(student.birth_date);
+
+                        const birthday = new Date(today);
+
+                        birthday.setMonth(birth.getMonth());
+                        birthday.setDate(birth.getDate());
+
+                        if (birthday < today) {
+                            birthday.setFullYear(today.getFullYear() + 1);
+                        }
+
+                        const diff = Math.ceil(
+                            (birthday - today) / (1000 * 60 * 60 * 24)
+                        );
+
+                        if (diff === 0)
+                            return "🎂 Сегодня День рождения";
+
+                        if (diff === 3)
+                            return "🎂 Через 3 дня День рождения";
+
+                        if (diff === 10)
+                            return "🎂 Через 10 дней День рождения";
+
+                        return null;
+                    }
+
+                    function getTrainingDays(student) {
+
+                        if (
+                            !student.theory_start_date ||
+                            student.status === "оформление"
+                        ) {
+                            return "—";
+                        }
+
+                        const today = new Date();
+                        today.setHours(0, 0, 0, 0);
+
+                        const start = new Date(student.theory_start_date);
+                        start.setHours(0, 0, 0, 0);
+
+                        const passed = Math.floor(
+                            (today - start) / (1000 * 60 * 60 * 24)
+                        );
+
+                        const limit =
+                            student.status === "теория"
+                                ? 365
+                                : 1095;
+
+                        const left = limit - passed;
+
+                        return `🟢 ${left} дн.`;
+                    }
+
                     function getDeadlineInfo(student) {
 
                         const training = getTrainingReminder(student);
@@ -1008,48 +1073,12 @@
                         const contract = getContractReminder(student);
                         if (contract) return contract;
 
-                        return '—';
+                        const birthday = getBirthdayReminder(student);
+                        if (birthday) return birthday;
+
+                        return getTrainingDays(student);
+
                     }
-                    
-                    function getPaymentStatus(student) {
-
-                        const list =
-                            payments[student.id] || [];
-
-                        const paid = list
-                            .filter(p =>
-                                p.purpose === 'Теория' ||
-                                p.purpose === 'Вождение'
-                            )
-                            .reduce(
-                                (sum, p) => sum + Number(p.amount),
-                                0
-                            );
-
-                        const price =
-                            Number(student.course_price) || 0;
-
-                        if (price === 0) {
-
-                            return '—';
-
-                        }
-
-                        if (paid >= price) {
-
-                            return `🟢 ${paid} / ${price} €`;
-
-                        }
-
-                        if (paid === 0) {
-
-                            return `🔴 0 / ${price} €`;
-
-                        }
-
-                        return `🟠 ${paid} / ${price} €`;
-
-                    }        
                     function getRowClass(student) {
 
                         if (
