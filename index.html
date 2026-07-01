@@ -622,7 +622,7 @@
 
     <script>
 
-        const BUILD_VERSION = '2026-07-01 14:45';
+        const BUILD_VERSION = '2026-07-01 15:03';
 
         document.title =
             'CRM Автошкола [' + BUILD_VERSION + ']';
@@ -2106,46 +2106,7 @@
 
         }
 
-        function getPaymentStatus(student) {
-
-            const list =
-                payments[student.id] || [];
-
-            const paid = list
-                .filter(p =>
-                    p.purpose === 'Теория' ||
-                    p.purpose === 'Вождение'
-                )
-                .reduce(
-                    (sum, p) => sum + Number(p.amount),
-                    0
-                );
-
-            const price =
-                Number(student.course_price) || 0;
-
-            if (price === 0) {
-
-                return '—';
-
-            }
-
-            if (paid >= price) {
-
-                return `🟢 ${paid} / ${price} €`;
-
-            }
-
-            if (paid === 0) {
-
-                return `🔴 0 / ${price} €`;
-
-            }
-
-            return `🟠 ${paid} / ${price} €`;
-
-        }
-
+        
         async function loadPayments(studentId) {
 
             const { data, error } = await supabaseClient
@@ -2221,6 +2182,46 @@
 
             document.getElementById('payments-count').textContent =
     `           Платежей: ${data.length}`;
+
+        }
+
+        function getPaymentStatus(student) {
+
+            const list =
+                payments[student.id] || [];
+
+            const paid = list
+                .filter(p =>
+                    p.purpose === 'Теория' ||
+                    p.purpose === 'Вождение'
+                )
+                .reduce(
+                    (sum, p) => sum + Number(p.amount),
+                    0
+                );
+
+            const price =
+                Number(student.course_price) || 0;
+
+            if (price === 0) {
+
+                return '—';
+
+            }
+
+            if (paid >= price) {
+
+                return `🟢 ${paid} / ${price} €`;
+
+            }
+
+            if (paid === 0) {
+
+                return `🔴 0 / ${price} €`;
+
+            }
+
+            return `🟠 ${paid} / ${price} €`;
 
         }
 
