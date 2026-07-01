@@ -539,12 +539,12 @@
             <p>
                 Назначение<br>
                 <select id="payment-type">
-                    <option>Теория</option>
-                    <option>Вождение</option>
-                    <option>Продление договора</option>
-                    <option>Пересдача теории</option>
-                    <option>Пересдача вождения</option>
-                    <option>Другое</option>
+                    <option value="Теория">Теория</option>
+                    <option value="Вождение">Вождение</option>
+                    <option value="Продление договора">Продление договора</option>
+                    <option value="Пересдача теории">Пересдача теории</option>
+                    <option value="Пересдача вождения">Пересдача вождения</option>
+                    <option value="Другое">Другое</option>
                 </select>
             </p>
             
@@ -582,7 +582,7 @@
 
     <script>
 
-        const BUILD_VERSION = '2026-07-01 08:00';
+        const BUILD_VERSION = '2026-07-01 11:30';
 
         document.title =
             'CRM Автошкола [' + BUILD_VERSION + ']';
@@ -1996,15 +1996,6 @@
 
             document.getElementById('payment-method').selectedIndex = 0;
 
-            document.getElementById('paid-total').textContent =
-                paid.toFixed(2) + ' €';
-
-            document.getElementById('left-total').textContent =
-                left.toFixed(2) + ' €';
-
-            document.getElementById('extra-total').textContent =
-                extra.toFixed(2) + ' €';
-
             await loadPayments(window.currentStudentId);
 
             alert('Платёж добавлен');
@@ -2058,6 +2049,15 @@
 
             const left =
                 Math.max(coursePrice - paid, 0);
+
+            document.getElementById('paid-total').textContent =
+                paid.toFixed(2) + ' €';
+
+            document.getElementById('left-total').textContent =
+                left.toFixed(2) + ' €';
+
+            document.getElementById('extra-total').textContent =
+                extra.toFixed(2) + ' €';    
 
             document.getElementById('payments-list').innerHTML =
                 data.map(payment => `
