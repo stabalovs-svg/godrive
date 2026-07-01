@@ -622,7 +622,7 @@
 
     <script>
 
-        const BUILD_VERSION = '2026-07-01 15:03';
+        const BUILD_VERSION = '2026-07-01 15:30';
 
         document.title =
             'CRM Автошкола [' + BUILD_VERSION + ']';
@@ -1002,6 +1002,46 @@
                         // 4. Пока всё хорошо
                         return `🟢 ${left} дн.`;
                     }
+
+                    function getPaymentStatus(student) {
+
+                        const list =
+                            payments[student.id] || [];
+
+                        const paid = list
+                            .filter(p =>
+                                p.purpose === 'Теория' ||
+                                p.purpose === 'Вождение'
+                            )
+                            .reduce(
+                                (sum, p) => sum + Number(p.amount),
+                                0
+                            );
+
+                        const price =
+                            Number(student.course_price) || 0;
+
+                        if (price === 0) {
+
+                            return '—';
+
+                        }
+
+                        if (paid >= price) {
+
+                            return `🟢 ${paid} / ${price} €`;
+
+                        }
+
+                        if (paid === 0) {
+
+                            return `🔴 0 / ${price} €`;
+
+                        }
+
+                        return `🟠 ${paid} / ${price} €`;
+
+                    }        
                     function getRowClass(student) {
 
                         if (
@@ -2182,46 +2222,6 @@
 
             document.getElementById('payments-count').textContent =
     `           Платежей: ${data.length}`;
-
-        }
-
-        function getPaymentStatus(student) {
-
-            const list =
-                payments[student.id] || [];
-
-            const paid = list
-                .filter(p =>
-                    p.purpose === 'Теория' ||
-                    p.purpose === 'Вождение'
-                )
-                .reduce(
-                    (sum, p) => sum + Number(p.amount),
-                    0
-                );
-
-            const price =
-                Number(student.course_price) || 0;
-
-            if (price === 0) {
-
-                return '—';
-
-            }
-
-            if (paid >= price) {
-
-                return `🟢 ${paid} / ${price} €`;
-
-            }
-
-            if (paid === 0) {
-
-                return `🔴 0 / ${price} €`;
-
-            }
-
-            return `🟠 ${paid} / ${price} €`;
 
         }
 
