@@ -622,7 +622,7 @@
 
     <script>
 
-        const BUILD_VERSION = '2026-07-01 21:42';
+        const BUILD_VERSION = '2026-07-01 22:15';
 
         document.title =
             'CRM Автошкола [' + BUILD_VERSION + ']';
@@ -1002,87 +1002,24 @@
 
                     function getDeadlineInfo(student) {
 
-                        if (
-                            !student.theory_start_date ||
-                            student.status === 'оформление'
-                        ) {
-                            return '—';
+                        const training =
+                            getTrainingReminder(student);
+
+                        if (training) {
+                            return training;
                         }
 
-                        const today = new Date();
-                        today.setHours(0,0,0,0);
-                        const start = new Date(student.theory_start_date);
-                        start.setHours(0,0,0,0);
-                        
-                        const passed = Math.floor(
-                            (today - start) / (1000 * 60 * 60 * 24)
-                        );
+                        const contract =
+                            getContractReminder(student);
 
-                        const limit =
-                            student.status === 'теория'
-                                ? 365
-                                : 1095;
-
-                        const left = limit - passed;
-
-                        // 1. Просрочен
-                        if (left < 0) {
-                            return '❌ Просрочен';
+                        if (contract) {
+                            return contract;
                         }
 
-                        // 2. Последний день
-                        if (left === 0) {
-                            return '🔴 Последний день';
-                        }
+                        // День рождения позже подключим сюда же
 
-                        // 3. Осталось меньше месяца
-                        if (left <= 30) {
-                            return `🟠 Осталось ${left} дн.`;
-                        }
-
-                        // Проверка дня рождения
-
-                        if (student.birth_date) {
-
-                            const birth = new Date(student.birth_date);
-
-                            const birthday = new Date(today);
-
-                            birthday.setMonth(birth.getMonth());
-                            birthday.setDate(birth.getDate());
-
-                            birthday.setHours(0, 0, 0, 0);
-
-                            // Если день рождения уже прошёл в этом году,
-                            // считаем следующий год
-
-                            if (birthday < today) {
-                                birthday.setFullYear(today.getFullYear() + 1);
-                            }
-
-                            const diffDays = Math.ceil(
-                                (birthday - today) /
-                                (1000 * 60 * 60 * 24)
-                            );
-
-                            if (diffDays === 0) {
-                                return '🎂 Сегодня День рождения';
-                            }
-
-                            if (diffDays === 3) {
-                                return '🎂 Через 3 дня День рождения';
-                            }
-
-                            if (diffDays === 10) {
-                                return '🎂 Через 10 дней День рождения';
-                            }
-
-                        }
-
-                        // 4. Пока всё хорошо
-                        return `🟢 ${left} дн.`;
+                        return '—';
                     }
-
                     
                     function getPaymentStatus(student) {
 
