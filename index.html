@@ -539,11 +539,12 @@
             <p>
                 Назначение<br>
                 <select id="payment-type">
-                    <option value="Теория">Теория</option>
-                    <option value="Вождение">Вождение</option>
-                    <option value="Продление договора">Продление договора</option>
-                    <option value="Экзамен">Экзамен</option>
-                    <option value="Другое">Другое</option>
+                    <option>Теория</option>
+                    <option>Вождение</option>
+                    <option>Продление договора</option>
+                    <option>Пересдача теории</option>
+                    <option>Пересдача вождения</option>
+                    <option>Другое</option>
                 </select>
             </p>
             
@@ -581,7 +582,7 @@
 
     <script>
 
-        const BUILD_VERSION = '2026-06-30 22:40';
+        const BUILD_VERSION = '2026-07-01 08:00';
 
         document.title =
             'CRM Автошкола [' + BUILD_VERSION + ']';
@@ -1995,6 +1996,15 @@
 
             document.getElementById('payment-method').selectedIndex = 0;
 
+            document.getElementById('paid-total').textContent =
+                paid.toFixed(2) + ' €';
+
+            document.getElementById('left-total').textContent =
+                left.toFixed(2) + ' €';
+
+            document.getElementById('extra-total').textContent =
+                extra.toFixed(2) + ' €';
+
             await loadPayments(window.currentStudentId);
 
             alert('Платёж добавлен');
@@ -2023,6 +2033,31 @@
 
                 return;
             }
+
+            const coursePayments = data.filter(p =>
+                p.purpose === 'Теория' ||
+                p.purpose === 'Вождение'
+            );
+
+            const extraPayments = data.filter(p =>
+                !['Теория', 'Вождение'].includes(p.purpose)
+            );
+
+            const paid = coursePayments.reduce(
+                (sum, p) => sum + Number(p.amount),
+                0
+            );
+
+            const extra = extraPayments.reduce(
+                (sum, p) => sum + Number(p.amount),
+                0
+            );
+
+            const coursePrice =
+                Number(document.getElementById('modal-course-price').value) || 0;
+
+            const left =
+                Math.max(coursePrice - paid, 0);
 
             document.getElementById('payments-list').innerHTML =
                 data.map(payment => `
