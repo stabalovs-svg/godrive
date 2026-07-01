@@ -621,7 +621,7 @@
 
     <script>
 
-        const BUILD_VERSION = '2026-07-01 13:40';
+        const BUILD_VERSION = '2026-07-01 13:55';
 
         document.title =
             'CRM Автошкола [' + BUILD_VERSION + ']';
@@ -2059,6 +2059,31 @@
 
         }
 
+        function getPurposeIcon(purpose) {
+
+            switch (purpose) {
+
+                case 'Теория':
+                    return '📘';
+
+                case 'Вождение':
+                    return '🚗';
+
+                case 'Продление договора':
+                    return '📄';
+
+                case 'Пересдача теории':
+                    return '📝';
+
+                case 'Пересдача вождения':
+                    return '🚦';
+
+                default:
+                    return '📦';
+            }
+
+        }
+
         async function loadPayments(studentId) {
 
             const { data, error } = await supabaseClient
@@ -2123,7 +2148,7 @@
 
                         <span>${new Date(payment.payment_date).toLocaleDateString('ru-RU')}</span>
 
-                        <span>${payment.purpose}</span>
+                        <span>${getPurposeIcon(payment.purpose)} ${payment.purpose}</span>
 
                         <span>${Number(payment.amount).toFixed(2)} €</span>
 
