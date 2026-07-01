@@ -622,7 +622,7 @@
 
     <script>
 
-        const BUILD_VERSION = '2026-07-01 22:35';
+        const BUILD_VERSION = '2026-07-01 22:40';
 
         document.title =
             'CRM Автошкола [' + BUILD_VERSION + ']';
@@ -1007,9 +1007,6 @@
 
                         const contract = getContractReminder(student);
                         if (contract) return contract;
-
-                        const birthday = getBirthdayReminder(student);
-                        if (birthday) return birthday;
 
                         return '—';
                     }
