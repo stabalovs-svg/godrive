@@ -622,7 +622,7 @@
 
     <script>
 
-        const BUILD_VERSION = '2026-07-01 23:05';
+        const BUILD_VERSION = '2026-07-02 18:40';
 
         document.title =
             'CRM Автошкола [' + BUILD_VERSION + ']';
@@ -731,6 +731,12 @@
 
                             await getProfile();
 
+                            if (currentRole === 'instructor') {
+
+                                await loadCurrentInstructor();
+
+                            }
+
                             await loadStudents();
                             
                         } 
@@ -833,9 +839,20 @@
                     console.log('START QUERY');
 
                 
-                    const result = await supabaseClient
-                        .from('students')
-                        .select('*');
+                    let query =
+                        supabaseClient
+                            .from('students')
+                            .select('*');
+
+                    if (currentRole === 'instructor') {
+
+                        query = query.or(
+                            `instructor_id.is.null,instructor_id.eq.${window.currentInstructor.id}`
+                        );
+
+                    }
+
+                    const result = await query;
 
                     const instructorsResult = await supabaseClient
                         .from('instructors')
@@ -1452,7 +1469,11 @@
 
                 if (!error && data) {
                     currentRole = data.role;
-                }
+                
+                    if (currentRole === 'instructor') {
+                        await loadCurrentInstructor();
+                    }
+                }    
 
             } catch (e) {
 
@@ -1464,6 +1485,22 @@
             console.log('PROFILE 8');
 
             setRoleUI();
+        }
+
+        async function loadCurrentInstructor() {
+
+            const { data } = await supabaseClient
+                .from('instructors')
+                .select('id, full_name')
+                .eq('auth_user_id', currentUser.id)
+                .single();
+
+            window.currentInstructor = data || null;
+
+            console.log(
+                'CURRENT INSTRUCTOR',
+                window.currentInstructor
+            );
         }
 
         function setRoleUI() {
