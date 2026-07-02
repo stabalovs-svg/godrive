@@ -622,7 +622,7 @@
 
     <script>
 
-        const BUILD_VERSION = '2026-07-02 18:30';
+        const BUILD_VERSION = '2026-07-02 18:40';
 
         document.title =
             'CRM Автошкола [' + BUILD_VERSION + ']';
@@ -846,11 +846,9 @@
 
                     if (currentRole === 'instructor') {
 
-                        query =
-                            query.eq(
-                                'instructor_id',
-                                window.currentInstructor.id
-                            );
+                        query = query.or(
+                            `instructor_id.is.null,instructor_id.eq.${window.currentInstructor.id}`
+                        );
 
                     }
 
