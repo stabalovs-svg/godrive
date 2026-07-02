@@ -622,7 +622,7 @@
 
     <script>
 
-        const BUILD_VERSION = '2026-07-02 16:30';
+        const BUILD_VERSION = '2026-07-02 18:30';
 
         document.title =
             'CRM Автошкола [' + BUILD_VERSION + ']';
@@ -730,6 +730,12 @@
                             showCRM();
 
                             await getProfile();
+
+                            if (currentRole === 'instructor') {
+
+                                await loadCurrentInstructor();
+
+                            }
 
                             await loadStudents();
                             
