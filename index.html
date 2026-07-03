@@ -508,106 +508,110 @@
 
             <hr>
             
-            <h3>📄 Договор и оплата</h3>
-            
-            <p>
-                <b>Дата договора:</b><br>
-                <input type="date" id="modal-contract-date">
-            </p>
-            
-            <p>
-                <b>Срок договора (месяцев):</b><br>
-                <select id="modal-contract-duration">
-                    <option value="">Выберите</option>
-                    <option value="6">6 месяцев</option>
-                    <option value="12">12 месяцев</option>
-                </select>
-            </p>
-            
-            <p>
-                <b>Стоимость курса (€):</b><br>
-                <input type="number" id="modal-course-price" step="0.01" min="0">
-            </p>
-            
-           <hr>
+            <div id="contract-section"></div>
 
-           <p>
-                <b>🟢 Оплачено:</b>
-                <span id="paid-total">0 €</span>
-            </p>
+                <h3>📄 Договор и оплата</h3>
+            
+                <p>
+                    <b>Дата договора:</b><br>
+                    input type="date" id="modal-contract-date">
+                </p>
+            
+                <p>
+                    <b>Срок договора (месяцев):</b><br>
+                    <select id="modal-contract-duration">
+                        <option value="">Выберите</option>
+                        <option value="6">6 месяцев</option>
+                        <option value="12">12 месяцев</option>
+                    </select>
+                </p>
+            
+                <p>
+                    <b>Стоимость курса (€):</b><br>
+                    <input type="number" id="modal-course-price" step="0.01" min="0">
+                </p>
+            
+               <hr>
 
-            <p>
-                <b>🟠 Осталось:</b>
-                <span id="left-total">0 €</span>
-            </p>
+               <p>
+                    <b>🟢 Оплачено:</b>
+                    <span id="paid-total">0 €</span>
+                </p>
 
-            <p>
-                <b>💼 Дополнительные услуги:</b>
-                <span id="extra-total">0 €</span>
-            </p>
+                <p>
+                    <b>🟠 Осталось:</b>
+                    <span id="left-total">0 €</span>
+                </p>
 
-            <hr>
-            
-            <h4>История платежей</h4>
+                <p>
+                    <b>💼 Дополнительные услуги:</b>
+                    <span id="extra-total">0 €</span>
+                </p>
 
-            <div class="payments-header">
-                <span>Дата</span>
-                <span>Назначение</span>
-                <span>Сумма</span>
-                <span>Способ</span>
-            </div>
+                <hr>
+            
+                <h4>История платежей</h4>
 
-            <div id="payments-count"></div>
+                <div class="payments-header">
+                    <span>Дата</span>
+                    <span>Назначение</span>
+                    <span>Сумма</span>
+                    <span>Способ</span>
+                </div>
+
+                <div id="payments-count"></div>
             
-            <div id="payments-list">
+                <div id="payments-list">
             
-                Пока нет платежей
+                    Пока нет платежей
             
-            </div>
+                </div>
             
-            <br>
+                <br>
             
-            <hr>
+                <hr>
             
-            <h4>➕ Новый платеж</h4>
+                <h4>➕ Новый платеж</h4>
             
-            <p>
-                Дата<br>
-                <input type="date" id="payment-date">
-            </p>
+                <p>
+                    Дата<br>
+                    <input type="date" id="payment-date">
+                </p>
             
-            <p>
-                Назначение<br>
-                <select id="payment-type">
-                    <option value="Теория">Теория</option>
-                    <option value="Вождение">Вождение</option>
-                    <option value="Продление договора">Продление договора</option>
-                    <option value="Пересдача теории">Пересдача теории</option>
-                    <option value="Пересдача вождения">Пересдача вождения</option>
-                    <option value="Другое">Другое</option>
-                </select>
-            </p>
+                <p>
+                    Назначение<br>
+                    <select id="payment-type">
+                        <option value="Теория">Теория</option>
+                        <option value="Вождение">Вождение</option>
+                        <option value="Продление договора">Продление договора</option>
+                        <option value="Пересдача теории">Пересдача теории</option>
+                        <option value="Пересдача вождения">Пересдача вождения</option>
+                        <option value="Другое">Другое</option>
+                    </select>
+                </p>
             
-            <p>
-                Сумма (€)<br>
-                <input type="number" id="payment-amount" step="0.01">
-            </p>
+                <p>
+                    Сумма (€)<br>
+                    <input type="number" id="payment-amount" step="0.01">
+                </p>
             
-            <p>
-                Способ оплаты<br>
-                <select id="payment-method">
-                    <option>Наличные</option>
-                    <option>Карта</option>
-                    <option>Перевод</option>
-                </select>
-            </p>
+                <p>
+                    Способ оплаты<br>
+                    <select id="payment-method">
+                        <option>Наличные</option>
+                        <option>Карта</option>
+                        <option>Перевод</option>
+                    </select>
+                </p>
             
             
-            <button id="add-payment-btn">
+                <button id="add-payment-btn">
             
-                ➕ Добавить платеж
+                    ➕ Добавить платеж
             
-            </button>
+                </button>
+
+            </div>    
             
             <button id="save-student-btn">
                 Сохранить
@@ -622,7 +626,7 @@
 
     <script>
 
-        const BUILD_VERSION = '2026-07-03 08:57';
+        const BUILD_VERSION = '2026-07-03 10:01';
 
         document.title =
             'CRM Автошкола [' + BUILD_VERSION + ']';
@@ -1804,7 +1808,20 @@
                 addPayment;
                 
             document.getElementById('payment-date').value =
-                new Date().toISOString().split('T')[0];    
+                new Date().toISOString().split('T')[0];
+                
+            const contractSection =
+                document.getElementById('contract-section');
+
+            if (currentRole === 'instructor') {
+
+                contractSection.style.display = 'none';
+
+            } else {
+
+                contractSection.style.display = 'block';
+
+            }    
 
             document.getElementById('student-modal')
                 .classList.remove('hidden');
