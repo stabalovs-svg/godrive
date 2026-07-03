@@ -622,7 +622,7 @@
 
     <script>
 
-        const BUILD_VERSION = '2026-07-02 18:40';
+        const BUILD_VERSION = '2026-07-03 08:35';
 
         document.title =
             'CRM Автошкола [' + BUILD_VERSION + ']';
@@ -824,6 +824,9 @@
                     'CURRENT USER',
                     currentUser?.id
                 );
+
+                console.log('ROLE =', currentRole);
+                console.log('INSTRUCTOR =', window.currentInstructor);
 
                 console.log('loadStudents called, supabaseClient:', !!supabaseClient);
                 
@@ -1489,11 +1492,15 @@
 
         async function loadCurrentInstructor() {
 
+            console.log('LOAD CURRENT INSTRUCTOR');
+
             const { data } = await supabaseClient
                 .from('instructors')
                 .select('id, full_name')
                 .eq('auth_user_id', currentUser.id)
                 .single();
+
+            console.log('CURRENT INSTRUCTOR =', data);    
 
             window.currentInstructor = data || null;
 
