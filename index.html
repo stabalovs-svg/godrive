@@ -626,7 +626,7 @@
 
     <script>
 
-        const BUILD_VERSION = '2026-07-03 10:50';
+        const BUILD_VERSION = '2026-07-03 11:15';
 
         document.title =
             'CRM Автошкола [' + BUILD_VERSION + ']';
@@ -1781,8 +1781,76 @@
             document.getElementById('modal-birth').value =
                 student.birth_date || '';
 
-            document.getElementById('modal-status').value =
-                student.status || '';
+            const statusSelect =
+                document.getElementById('modal-status');
+
+            if (currentRole === 'instructor') {
+
+                statusSelect.innerHTML = '';
+
+                const current = student.status;
+
+                if (
+                    current === 'Вождение'
+                ) {
+
+                    statusSelect.add(
+                        new Option('Вождение', 'Вождение')
+                    );
+
+                    statusSelect.add(
+                        new Option(
+                            'Вождение экзамен',
+                            'Вождение экзамен'
+                        )
+                    );
+
+                }
+
+                else if (
+                    current === 'Вождение экзамен'
+                ) {
+
+                    statusSelect.add(
+                        new Option(
+                            'Вождение экзамен',
+                            'Вождение экзамен'
+                        )
+                    );
+
+                    statusSelect.add(
+                        new Option(
+                            'Вождение сдано',
+                            'Вождение сдано'
+                        )
+                    );
+
+                }
+
+                else {
+
+                    statusSelect.add(
+                        new Option(current, current)
+                    );
+
+                }
+
+            }
+            else {
+
+                statusSelect.innerHTML = `
+                    <option>Оформление</option>
+                    <option>Теория</option>
+                    <option>Теория сдана</option>
+                    <option>Вождение</option>
+                    <option>Вождение экзамен</option>
+                    <option>Вождение сдано</option>
+    `            ;
+
+            }
+
+            statusSelect.value =
+                student.status;
 
             document.getElementById('modal-notes').value =
                 student.notes || '';
