@@ -626,7 +626,7 @@
 
     <script>
 
-        const BUILD_VERSION = '2026-07-03 19:10';
+        const BUILD_VERSION = '2026-07-03 20:50';
 
         document.title =
             'CRM Автошкола [' + BUILD_VERSION + ']';
@@ -1793,37 +1793,37 @@
                 const current = student.status;
 
                 if (
-                    current === 'Вождение'
+                    current === 'вождение'
                 ) {
 
                     statusSelect.add(
-                        new Option('Вождение', 'Вождение')
+                        new Option('Вождение', 'вождение')
                     );
 
                     statusSelect.add(
                         new Option(
                             'Вождение экзамен',
-                            'Вождение экзамен'
+                            'вождение экзамен'
                         )
                     );
 
                 }
 
                 else if (
-                    current === 'Вождение экзамен'
+                    current === 'вождение экзамен'
                 ) {
 
                     statusSelect.add(
                         new Option(
                             'Вождение экзамен',
-                            'Вождение экзамен'
+                            'вождение экзамен'
                         )
                     );
 
                     statusSelect.add(
                         new Option(
                             'Вождение сдано',
-                            'Вождение сдано'
+                            'вождение сдано'
                         )
                     );
 
@@ -1832,22 +1832,28 @@
                 else {
 
                     statusSelect.add(
-                        new Option(current, current)
+                        new Option(
+                            current.charAt(0).toUpperCase() + current.slice(1),
+                            current
+                        )
                     );
 
                 }
 
+                statusSelect.value = current;
+
             }
+
             else {
 
                 statusSelect.innerHTML = `
-                    <option>Оформление</option>
-                    <option>Теория</option>
-                    <option>Теория сдана</option>
-                    <option>Вождение</option>
-                    <option>Вождение экзамен</option>
-                    <option>Вождение сдано</option>
-    `            ;
+                <option value="оформление">Оформление</option>
+                <option value="теория">Теория</option>
+                <option value="теория сдана">Теория сдана</option>
+                <option value="вождение">Вождение</option>
+                <option value="вождение экзамен">Вождение экзамен</option>
+                <option value="вождение сдано">Вождение сдано</option>
+`                ;
 
             }
 
