@@ -622,7 +622,7 @@
 
     <script>
 
-        const BUILD_VERSION = '2026-07-03 08:35';
+        const BUILD_VERSION = '2026-07-03 08:57';
 
         document.title =
             'CRM Автошкола [' + BUILD_VERSION + ']';
@@ -1476,7 +1476,16 @@
                     if (currentRole === 'instructor') {
                         await loadCurrentInstructor();
                     }
-                }    
+                }
+                
+                else {
+
+                    console.error(
+                        'PROFILE NOT FOUND FOR USER',
+                        currentUser.id
+                    );
+
+                }
 
             } catch (e) {
 
