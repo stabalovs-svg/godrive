@@ -626,7 +626,7 @@
 
     <script>
 
-        const BUILD_VERSION = '2026-07-03 10:17';
+        const BUILD_VERSION = '2026-07-03 10:50';
 
         document.title =
             'CRM Автошкола [' + BUILD_VERSION + ']';
@@ -1787,7 +1787,62 @@
             document.getElementById('modal-notes').value =
                 student.notes || '';
 
-            document.getElementById('modal-instructor').value =
+            const instructorSelect =
+                document.getElementById('modal-instructor');
+
+            if (currentRole === 'instructor') {
+
+                const currentId = student.instructor_id;
+
+                instructorSelect.innerHTML = '';
+
+                // Не назначен
+                instructorSelect.add(
+                    new Option('Не назначен', '')
+                );
+
+                // Сам инструктор
+                instructorSelect.add(
+                    new Option(
+                        window.currentInstructor.full_name,
+                        window.currentInstructor.id
+                    )
+                );
+
+                // Если ученик принадлежит другому инструктору —
+                // показываем его имя, но менять не даем
+
+                if (
+                    currentId &&
+                    currentId !== window.currentInstructor.id
+                ) {
+
+                    const another = instructors.find(
+                        i => i.id === currentId
+                    );
+
+                    if (another) {
+
+                        instructorSelect.add(
+                            new Option(
+                                another.full_name,
+                                another.id
+                            )
+                        );
+
+                    }
+
+                    instructorSelect.disabled = true;
+
+                } else {
+
+                    instructorSelect.disabled = false;
+
+                }
+
+            }    
+
+            instructorSelect.value =
                 student.instructor_id || '';
 
             document.getElementById('modal-contract-date').value =
