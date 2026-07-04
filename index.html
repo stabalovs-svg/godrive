@@ -626,7 +626,7 @@
 
     <script>
 
-        const BUILD_VERSION = '2026-07-04 23:48';
+        const BUILD_VERSION = '2026-07-05 00:05';
 
             // =========================
             // GoDrive CRM constants
@@ -716,6 +716,45 @@
             const left = limit - passed;
 
             return `🟢 ${left} дн.`;
+        }
+
+        function getTrainingReminder(student) {
+
+            if (
+                !student.theory_start_date ||
+                student.status === APP.STATUS.NEW
+            ) {
+                return null;
+            }
+
+            const today = new Date();
+            today.setHours(0, 0, 0, 0);
+
+            const start = new Date(student.theory_start_date);
+            start.setHours(0, 0, 0, 0);
+
+            const passed = Math.floor(
+                (today - start) / (1000 * 60 * 60 * 24)
+            );
+
+            const limit =
+                student.status === APP.STATUS.THEORY
+                    ? APP.LIMITS.THEORY_DAYS
+                    : APP.LIMITS.DRIVING_DAYS;
+
+            const left = limit - passed;
+
+            if (left < 0)
+                return '❌ Просрочен';
+
+            if (left === 0)
+                return '🔴 Последний день';
+
+            if (left <= 30)
+                return `🟠 Осталось ${left} дн.`;
+
+            return null;
+
         }
 
 
@@ -1031,46 +1070,7 @@
                     }
 
                     setStatus('Данные загружены.');
-                    
-
-                    function getTrainingReminder(student) {
-
-                        if (
-                            !student.theory_start_date ||
-                            student.status === APP.STATUS.NEW
-                        ) {
-                            return null;
-                        }
-
-                        const today = new Date();
-                        today.setHours(0, 0, 0, 0);
-
-                        const start = new Date(student.theory_start_date);
-                        start.setHours(0, 0, 0, 0);
-
-                        const passed = Math.floor(
-                            (today - start) / (1000 * 60 * 60 * 24)
-                        );
-
-                        const limit =
-                            student.status === APP.STATUS.THEORY
-                                ? APP.LIMITS.THEORY_DAYS
-                                : APP.LIMITS.DRIVING_DAYS;
-
-                        const left = limit - passed;
-
-                        if (left < 0)
-                            return '❌ Просрочен';
-
-                        if (left === 0)
-                            return '🔴 Последний день';
-
-                        if (left <= 30)
-                            return `🟠 Осталось ${left} дн.`;
-
-                        return null;
-
-                    }
+                                        
 
                     function getContractReminder(student) {
 
