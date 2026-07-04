@@ -626,7 +626,7 @@
 
     <script>
 
-        const BUILD_VERSION = '2026-07-04 20:40';
+        const BUILD_VERSION = '2026-07-04 21:50';
 
             // =========================
             // GoDrive CRM constants
@@ -638,13 +638,6 @@
             MANAGER: 'manager',
             INSTRUCTOR: 'instructor',
             ACCOUNTANT: 'accountant'
-
-        };
-
-        const CONTRACT = {
-
-            THEORY_DAYS: 365,
-            DRIVING_DAYS: 1095
 
         };
 
@@ -667,8 +660,11 @@
             },
 
             LIMITS: {
+
                 THEORY_DAYS: 365,
-                FULL_COURSE_DAYS: 1095
+
+                DRIVING_DAYS: 1095
+
             }
 
         };
@@ -1034,8 +1030,8 @@
 
                         const limit =
                             student.status === APP.STATUS.THEORY
-                                ? CONTRACT.THEORY_DAYS
-                                : CONTRACT.DRIVING_DAYS;
+                                ? APP.LIMITS.THEORY_DAYS
+                                : APP.LIMITS.DRIVING_DAYS;
 
                         const left = limit - passed;
 
@@ -1150,8 +1146,8 @@
 
                         const limit =
                             student.status === APP.STATUS.THEORY
-                                ? CONTRACT.THEORY_DAYS
-                                : CONTRACT.DRIVING_DAYS;
+                                ? APP.LIMITS.THEORY_DAYS
+                                : APP.LIMITS.DRIVING_DAYS;
 
                         const left = limit - passed;
 
@@ -1233,8 +1229,8 @@
 
                         const limit =
                             student.status === APP.STATUS.THEORY
-                                ? CONTRACT.THEORY_DAYS
-                                : CONTRACT.DRIVING_DAYS;
+                                ? APP.LIMITS.THEORY_DAYS
+                                : APP.LIMITS.DRIVING_DAYS;
 
                         const left = limit - passed;
 
