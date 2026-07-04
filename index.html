@@ -626,7 +626,7 @@
 
     <script>
 
-        const BUILD_VERSION = '2026-07-04 22:23';
+        const BUILD_VERSION = '2026-07-04 23:37';
 
             // =========================
             // GoDrive CRM constants
@@ -660,6 +660,35 @@
             }
 
         };
+
+        function getStatusClass(status) {
+
+            switch ((status || '').toLowerCase()) {
+
+                case APP.STATUS.NEW:
+                    return 'status-new';
+
+                case APP.STATUS.THEORY:
+                    return 'status-theory';
+
+                case APP.STATUS.THEORY_PASSED:
+                    return 'status-theory-passed';
+
+                case APP.STATUS.DRIVING:
+                    return 'status-driving';
+
+                case APP.STATUS.DRIVING_EXAM:
+                    return 'status-driving-exam';
+
+                case APP.STATUS.DRIVING_PASSED:
+                    return 'status-driving-passed';
+
+                default:
+                    return '';
+            }
+
+        }
+
 
         function isAdmin() {
 
@@ -973,33 +1002,7 @@
                     }
 
                     setStatus('Данные загружены.');
-                    function getStatusClass(status) {
-
-                        switch ((status || '').toLowerCase()) {
-
-                            case APP.STATUS.NEW:
-                                return 'status-new';
-
-                            case APP.STATUS.THEORY:
-                                return 'status-theory';
-
-                            case APP.STATUS.THEORY_PASSED:
-                                return 'status-theory-passed';
-
-                            case APP.STATUS.DRIVING:
-                                return 'status-driving';
-
-                            case APP.STATUS.DRIVING_EXAM:
-                                return 'status-driving-exam';
-
-                            case APP.STATUS.DRIVING_PASSED:
-                                return 'status-driving-passed';
-
-                            default:
-                                return '';
-                        }
-
-                    }
+                    
 
                     function getTrainingReminder(student) {
 
