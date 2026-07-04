@@ -641,21 +641,35 @@
 
         };
 
-        const STATUS = {
-
-            NEW: 'оформление',
-            THEORY: 'теория',
-            THEORY_OK: 'теория сдана',
-            DRIVING: 'вождение',
-            EXAM: 'вождение экзамен',
-            PASSED: 'вождение сдано'
-
-        };
-
         const CONTRACT = {
 
             THEORY_DAYS: 365,
             DRIVING_DAYS: 1095
+
+        };
+
+        const APP = {
+
+            ROLES: {
+                ADMIN: 'admin',
+                MANAGER: 'manager',
+                INSTRUCTOR: 'instructor',
+                ACCOUNTANT: 'accountant'
+            },
+
+            STATUS: {
+                NEW: 'оформление',
+                THEORY: 'теория',
+                THEORY_PASSED: 'теория сдана',
+                DRIVING: 'вождение',
+                DRIVING_EXAM: 'вождение экзамен',
+                DRIVING_PASSED: 'вождение сдано'
+            },
+
+            LIMITS: {
+                THEORY_DAYS: 365,
+                FULL_COURSE_DAYS: 1095
+            }
 
         };
 
@@ -1268,8 +1282,8 @@
                             // Теория
 
                             if (
-                                student.status === "теория" ||
-                                student.status === "теория сдана"
+                                student.status === APP.STATUS.THEORY ||
+                                student.status === APP.STATUS.THEORY_OK
                             ) {
                                 dashboard.theory++;
                             }
@@ -1794,6 +1808,7 @@
             await loadStudents();
         }
         
+
         async function openStudentCard(e) {
 
             console.log('OPEN STUDENT CARD');
@@ -1848,42 +1863,44 @@
                 const current = student.status;
 
                 if (
-                    current === 'вождение'
+                    current === APP.STATUS.DRIVING
                 ) {
 
                     statusSelect.add(
-                        new Option('Вождение', 'вождение')
+                        new Option(
+                            'Вождение',
+                            APP.STATUS.DRIVING
+                        )
                     );
 
                     statusSelect.add(
                         new Option(
                             'Вождение экзамен',
-                            'вождение экзамен'
+                            APP.STATUS.DRIVING_EXAM
                         )
                     );
 
                 }
 
                 else if (
-                    current === 'вождение экзамен'
+                    current === APP.STATUS.DRIVING_EXAM
                 ) {
 
                     statusSelect.add(
                         new Option(
                             'Вождение экзамен',
-                            'вождение экзамен'
+                            APP.STATUS.DRIVING_EXAM
                         )
                     );
 
                     statusSelect.add(
                         new Option(
                             'Вождение сдано',
-                            'вождение сдано'
+                            APP.STATUS.DRIVING_PASSED
                         )
                     );
 
                 }
-
                 else {
 
                     statusSelect.add(
@@ -1902,17 +1919,17 @@
             else {
 
                 statusSelect.innerHTML = `
-                <option value="${STATUS.NEW}">Оформление</option>
+                <option value="${APP.STATUS.NEW}">Оформление</option>
 
-                <option value="${STATUS.THEORY}">Теория</option>
+                <option value="${APP.STATUS.THEORY}">Теория</option>
 
-                <option value="${STATUS.THEORY_OK}">Теория сдана</option>
+                <option value="${APP.STATUS.THEORY_PASSED}">Теория сдана</option>
 
-                <option value="${STATUS.DRIVING}">Вождение</option>
+                <option value="${APP.STATUS.DRIVING}">Вождение</option>
 
-                <option value="${STATUS.EXAM}">Вождение экзамен</option>
+                <option value="${APP.STATUS.DRIVING_EXAM}">Вождение экзамен</option>
 
-                <option value="${STATUS.PASSED}">Вождение сдано</option>
+                <option value="${APP.STATUS.DRIVING_PASSED}">Вождение сдано</option>
 `                ;
 
             }
