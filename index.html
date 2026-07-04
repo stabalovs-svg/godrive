@@ -626,7 +626,62 @@
 
     <script>
 
-        const BUILD_VERSION = '2026-07-03 20:50';
+        const BUILD_VERSION = '2026-07-04 13:40';
+
+            // =========================
+            // GoDrive CRM constants
+            // =========================
+
+        const ROLES = {
+
+            ADMIN: 'admin',
+            MANAGER: 'manager',
+            INSTRUCTOR: 'instructor',
+            ACCOUNTANT: 'accountant'
+
+        };
+
+        const STATUS = {
+
+            NEW: 'оформление',
+            THEORY: 'теория',
+            THEORY_OK: 'теория сдана',
+            DRIVING: 'вождение',
+            EXAM: 'вождение экзамен',
+            PASSED: 'вождение сдано'
+
+        };
+
+        const CONTRACT = {
+
+            THEORY_DAYS: 365,
+            DRIVING_DAYS: 1095
+
+        };
+
+        function isAdmin() {
+
+            return currentRole === ROLES.ADMIN;
+
+        }
+
+        function isManager() {
+
+            return currentRole === ROLES.MANAGER;
+
+        }
+
+        function isInstructor() {
+
+            return currentRole === ROLES.INSTRUCTOR;
+
+        }
+
+        function isAccountant() {
+
+            return currentRole === ROLES.ACCOUNTANT;
+
+        }
 
         document.title =
             'CRM Автошкола [' + BUILD_VERSION + ']';
@@ -920,22 +975,22 @@
 
                         switch ((status || '').toLowerCase()) {
 
-                            case 'оформление':
+                            case STATUS.NEW:
                                 return 'status-new';
 
-                            case 'теория':
+                            case STATUS.THEORY:
                                 return 'status-theory';
 
-                            case 'теория сдана':
+                            case STATUS.THEORY_OK:
                                 return 'status-theory-passed';
 
-                            case 'вождение':
+                            case STATUS.DRIVING:
                                 return 'status-driving';
 
-                            case 'вождение экзамен':
+                            case STATUS.EXAM:
                                 return 'status-driving-exam';
 
-                            case 'вождение сдано':
+                            case STATUS.PASSED:
                                 return 'status-driving-passed';
 
                             default:
@@ -948,7 +1003,7 @@
 
                         if (
                             !student.theory_start_date ||
-                            student.status === 'оформление'
+                            student.status === STATUS.NEW
                         ) {
                             return null;
                         }
@@ -964,9 +1019,9 @@
                         );
 
                         const limit =
-                            student.status === 'теория'
-                                ? 365
-                                : 1095;
+                            student.status === STATUS.THEORY
+                                ? CONTRACT.THEORY_DAYS
+                                : CONTRACT.DRIVING_DAYS;
 
                         const left = limit - passed;
 
@@ -1064,7 +1119,7 @@
 
                         if (
                             !student.theory_start_date ||
-                            student.status === "оформление"
+                            student.status === STATUS.NEW
                         ) {
                             return "—";
                         }
@@ -1080,9 +1135,9 @@
                         );
 
                         const limit =
-                            student.status === "теория"
-                                ? 365
-                                : 1095;
+                            student.status === STATUS.THEORY
+                                ? CONTRACT.THEORY_DAYS
+                                : CONTRACT.DRIVING_DAYS;
 
                         const left = limit - passed;
 
@@ -1147,7 +1202,7 @@
 
                         if (
                             !student.theory_start_date ||
-                            student.status === 'оформление'
+                            student.status === STATUS.NEW
                         ) {
                             return '';
                         }
@@ -1163,9 +1218,9 @@
                         );
 
                         const limit =
-                            student.status === 'теория'
-                                ? 365
-                                : 1095;
+                            student.status === STATUS.THEORY
+                                ? CONTRACT.THEORY_DAYS
+                                : CONTRACT.DRIVING_DAYS;
 
                         const left = limit - passed;
 
@@ -1222,9 +1277,9 @@
                             // Практика
 
                             if (
-                                student.status === "вождение" ||
-                                student.status === "вождение экзамен" ||
-                                student.status === "вождение сдано"
+                                student.status === STATUS.DRIVING ||
+                                student.status === STATUS.EXAM ||
+                                student.status === STATUS.PASSED
                             ) {
                                 dashboard.practice++;
                             }
@@ -1552,7 +1607,7 @@
         `;
 
                     // Кнопка редактирования
-                    if (currentRole === 'manager' || currentRole === 'admin') {
+                    if (isManager() || isAdmin()) {
 
                         actionsTd.innerHTML += `
                 <button class="edit-btn">
@@ -1562,7 +1617,7 @@
                     }
 
                     // Кнопка удаления
-                    if (currentRole === 'manager') {
+                    if (isManager()) {
 
                         actionsTd.innerHTML += `
                 <button class="delete-btn">
@@ -1696,8 +1751,8 @@
 
             if (
                 oldStudent &&
-                oldStudent.status === 'оформление' &&
-                updateData.status === 'теория' &&
+                oldStudent.status === STATUS.NEW &&
+                updateData.status === STATUS.THEORY &&
                 !oldStudent.theory_start_date
             ) {
 
@@ -1786,7 +1841,7 @@
             const statusSelect =
                 document.getElementById('modal-status');
 
-            if (currentRole === 'instructor') {
+            if (isInstructor()) {
 
                 statusSelect.innerHTML = '';
 
@@ -1847,12 +1902,17 @@
             else {
 
                 statusSelect.innerHTML = `
-                <option value="оформление">Оформление</option>
-                <option value="теория">Теория</option>
-                <option value="теория сдана">Теория сдана</option>
-                <option value="вождение">Вождение</option>
-                <option value="вождение экзамен">Вождение экзамен</option>
-                <option value="вождение сдано">Вождение сдано</option>
+                <option value="${STATUS.NEW}">Оформление</option>
+
+                <option value="${STATUS.THEORY}">Теория</option>
+
+                <option value="${STATUS.THEORY_OK}">Теория сдана</option>
+
+                <option value="${STATUS.DRIVING}">Вождение</option>
+
+                <option value="${STATUS.EXAM}">Вождение экзамен</option>
+
+                <option value="${STATUS.PASSED}">Вождение сдано</option>
 `                ;
 
             }
