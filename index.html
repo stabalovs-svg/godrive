@@ -626,7 +626,7 @@
 
     <script>
 
-        const BUILD_VERSION = '2026-07-03 20:50';
+        const BUILD_VERSION = '2026-07-04 14:30';
 
             // =========================
             // GoDrive CRM constants
@@ -790,7 +790,7 @@
 
                             await getProfile();
 
-                            if (currentRole === 'instructor') {
+                            if (isInstructor()) {
 
                                 await loadCurrentInstructor();
 
@@ -906,7 +906,7 @@
                             .from('students')
                             .select('*');
 
-                    if (currentRole === 'instructor') {
+                    if (isInstructor()) {
 
                         query = query.or(
                             `instructor_id.is.null,instructor_id.eq.${window.currentInstructor.id}`
@@ -975,22 +975,22 @@
 
                         switch ((status || '').toLowerCase()) {
 
-                            case 'оформление':
+                            case STATUS.NEW:
                                 return 'status-new';
 
-                            case 'теория':
+                            case STATUS.THEORY:
                                 return 'status-theory';
 
-                            case 'теория сдана':
+                            case STATUS.THEORY_OK:
                                 return 'status-theory-passed';
 
-                            case 'вождение':
+                            case STATUS.DRIVING:
                                 return 'status-driving';
 
-                            case 'вождение экзамен':
+                            case STATUS.EXAM:
                                 return 'status-driving-exam';
 
-                            case 'вождение сдано':
+                            case STATUS.PASSED:
                                 return 'status-driving-passed';
 
                             default:
@@ -1003,7 +1003,7 @@
 
                         if (
                             !student.theory_start_date ||
-                            student.status === 'оформление'
+                            student.status === STATUS.NEW
                         ) {
                             return null;
                         }
@@ -1019,9 +1019,9 @@
                         );
 
                         const limit =
-                            student.status === 'теория'
-                                ? 365
-                                : 1095;
+                            student.status === STATUS.THEORY
+                                ? CONTRACT.THEORY_DAYS
+                                : CONTRACT.DRIVING_DAYS;
 
                         const left = limit - passed;
 
@@ -1119,7 +1119,7 @@
 
                         if (
                             !student.theory_start_date ||
-                            student.status === "оформление"
+                            student.status === STATUS.NEW
                         ) {
                             return "—";
                         }
@@ -1135,9 +1135,9 @@
                         );
 
                         const limit =
-                            student.status === "теория"
-                                ? 365
-                                : 1095;
+                            student.status === STATUS.THEORY
+                                ? CONTRACT.THEORY_DAYS
+                                : CONTRACT.DRIVING_DAYS;
 
                         const left = limit - passed;
 
@@ -1202,7 +1202,7 @@
 
                         if (
                             !student.theory_start_date ||
-                            student.status === 'оформление'
+                            student.status === STATUS.NEW
                         ) {
                             return '';
                         }
@@ -1218,9 +1218,9 @@
                         );
 
                         const limit =
-                            student.status === 'теория'
-                                ? 365
-                                : 1095;
+                            student.status === STATUS.THEORY
+                                ? CONTRACT.THEORY_DAYS
+                                : CONTRACT.DRIVING_DAYS;
 
                         const left = limit - passed;
 
@@ -1277,9 +1277,9 @@
                             // Практика
 
                             if (
-                                student.status === "вождение" ||
-                                student.status === "вождение экзамен" ||
-                                student.status === "вождение сдано"
+                                student.status === STATUS.DRIVING ||
+                                student.status === STATUS.EXAM ||
+                                student.status === STATUS.PASSED
                             ) {
                                 dashboard.practice++;
                             }
@@ -1532,7 +1532,7 @@
                 if (!error && data) {
                     currentRole = data.role;
                 
-                    if (currentRole === 'instructor') {
+                    if (isInstructor()) {
                         await loadCurrentInstructor();
                     }
                 }
@@ -1581,7 +1581,7 @@
         function setRoleUI() {
             // Показываем форму добавления только менеджеру и админу
             const addContainer = document.getElementById('add-student-container');
-            if (currentRole === 'manager' || currentRole === 'admin') {
+            if (isManager() || isAdmin()) {
                 addContainer.style.display = 'block';
             } else {
                 addContainer.style.display = 'none';
@@ -1607,7 +1607,7 @@
         `;
 
                     // Кнопка редактирования
-                    if (currentRole === 'manager' || currentRole === 'admin') {
+                    if (isManager() || isAdmin()) {
 
                         actionsTd.innerHTML += `
                 <button class="edit-btn">
@@ -1617,7 +1617,7 @@
                     }
 
                     // Кнопка удаления
-                    if (currentRole === 'manager') {
+                    if (isManager()) {
 
                         actionsTd.innerHTML += `
                 <button class="delete-btn">
@@ -1751,8 +1751,8 @@
 
             if (
                 oldStudent &&
-                oldStudent.status === 'оформление' &&
-                updateData.status === 'теория' &&
+                oldStudent.status === STATUS.NEW &&
+                updateData.status === STATUS.THEORY &&
                 !oldStudent.theory_start_date
             ) {
 
@@ -1841,7 +1841,7 @@
             const statusSelect =
                 document.getElementById('modal-status');
 
-            if (currentRole === 'instructor') {
+            if (isInstructor()) {
 
                 statusSelect.innerHTML = '';
 
@@ -1902,12 +1902,17 @@
             else {
 
                 statusSelect.innerHTML = `
-                <option value="оформление">Оформление</option>
-                <option value="теория">Теория</option>
-                <option value="теория сдана">Теория сдана</option>
-                <option value="вождение">Вождение</option>
-                <option value="вождение экзамен">Вождение экзамен</option>
-                <option value="вождение сдано">Вождение сдано</option>
+                <option value="${STATUS.NEW}">Оформление</option>
+
+                <option value="${STATUS.THEORY}">Теория</option>
+
+                <option value="${STATUS.THEORY_OK}">Теория сдана</option>
+
+                <option value="${STATUS.DRIVING}">Вождение</option>
+
+                <option value="${STATUS.EXAM}">Вождение экзамен</option>
+
+                <option value="${STATUS.PASSED}">Вождение сдано</option>
 `                ;
 
             }
@@ -1921,7 +1926,7 @@
             const instructorSelect =
                 document.getElementById('modal-instructor');
 
-            if (currentRole === 'instructor') {
+            if (isInstructor()) {
 
                 const currentId = student.instructor_id;
 
@@ -1999,7 +2004,7 @@
             const contractSection =
                 document.getElementById('contract-section');
 
-            if (currentRole === 'instructor') {
+            if (isInstructor()) {
 
                 contractSection.style.display = 'none';
 
