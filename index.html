@@ -626,7 +626,7 @@
 
     <script>
 
-        const BUILD_VERSION = '2026-07-04 23:37';
+        const BUILD_VERSION = '2026-07-04 23:48';
 
             // =========================
             // GoDrive CRM constants
@@ -687,6 +687,35 @@
                     return '';
             }
 
+        }
+
+        function getTrainingDays(student) {
+
+            if (
+                !student.theory_start_date ||
+                student.status === APP.STATUS.NEW
+            ) {
+                return "—";
+            }
+
+            const today = new Date();
+            today.setHours(0, 0, 0, 0);
+
+            const start = new Date(student.theory_start_date);
+            start.setHours(0, 0, 0, 0);
+
+            const passed = Math.floor(
+                (today - start) / (1000 * 60 * 60 * 24)
+            );
+
+            const limit =
+                student.status === APP.STATUS.THEORY
+                    ? APP.LIMITS.THEORY_DAYS
+                    : APP.LIMITS.DRIVING_DAYS;
+
+            const left = limit - passed;
+
+            return `🟢 ${left} дн.`;
         }
 
 
@@ -1120,34 +1149,7 @@
                         return null;
                     }
 
-                    function getTrainingDays(student) {
-
-                        if (
-                            !student.theory_start_date ||
-                            student.status === APP.STATUS.NEW
-                        ) {
-                            return "—";
-                        }
-
-                        const today = new Date();
-                        today.setHours(0, 0, 0, 0);
-
-                        const start = new Date(student.theory_start_date);
-                        start.setHours(0, 0, 0, 0);
-
-                        const passed = Math.floor(
-                            (today - start) / (1000 * 60 * 60 * 24)
-                        );
-
-                        const limit =
-                            student.status === APP.STATUS.THEORY
-                                ? APP.LIMITS.THEORY_DAYS
-                                : APP.LIMITS.DRIVING_DAYS;
-
-                        const left = limit - passed;
-
-                        return `🟢 ${left} дн.`;
-                    }
+                    
 
                     function getDeadlineInfo(student) {
 
