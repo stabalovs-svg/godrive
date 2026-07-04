@@ -626,7 +626,7 @@
 
     <script>
 
-        const BUILD_VERSION = '2026-07-04 19:50';
+        const BUILD_VERSION = '2026-07-04 20:27';
 
             // =========================
             // GoDrive CRM constants
@@ -638,17 +638,6 @@
             MANAGER: 'manager',
             INSTRUCTOR: 'instructor',
             ACCOUNTANT: 'accountant'
-
-        };
-
-        const STATUS = {
-
-            NEW: 'оформление',
-            THEORY: 'теория',
-            THEORY_OK: 'теория сдана',
-            DRIVING: 'вождение',
-            EXAM: 'вождение экзамен',
-            PASSED: 'вождение сдано'
 
         };
 
@@ -1000,22 +989,22 @@
 
                         switch ((status || '').toLowerCase()) {
 
-                            case STATUS.NEW:
+                            case APP.STATUS.NEW:
                                 return 'status-new';
 
-                            case STATUS.THEORY:
+                            case APP.STATUS.THEORY:
                                 return 'status-theory';
 
-                            case STATUS.THEORY_OK:
+                            case APP.STATUS.THEORY_PASSED:
                                 return 'status-theory-passed';
 
-                            case STATUS.DRIVING:
+                            case APP.STATUS.DRIVING:
                                 return 'status-driving';
 
-                            case STATUS.EXAM:
+                            case APP.STATUS.DRIVING_EXAM:
                                 return 'status-driving-exam';
 
-                            case STATUS.PASSED:
+                            case APP.STATUS.DRIVING_PASSED:
                                 return 'status-driving-passed';
 
                             default:
@@ -1028,7 +1017,7 @@
 
                         if (
                             !student.theory_start_date ||
-                            student.status === STATUS.NEW
+                            student.status === APP.STATUS.NEW
                         ) {
                             return null;
                         }
@@ -1044,7 +1033,7 @@
                         );
 
                         const limit =
-                            student.status === STATUS.THEORY
+                            student.status === APP.STATUS.THEORY
                                 ? CONTRACT.THEORY_DAYS
                                 : CONTRACT.DRIVING_DAYS;
 
@@ -1144,7 +1133,7 @@
 
                         if (
                             !student.theory_start_date ||
-                            student.status === STATUS.NEW
+                            student.status === APP.STATUS.NEW
                         ) {
                             return "—";
                         }
@@ -1227,7 +1216,7 @@
 
                         if (
                             !student.theory_start_date ||
-                            student.status === STATUS.NEW
+                            student.status === APP.STATUS.NEW
                         ) {
                             return '';
                         }
@@ -1243,7 +1232,7 @@
                         );
 
                         const limit =
-                            student.status === STATUS.THEORY
+                            student.status === APP.STATUS.THEORY
                                 ? CONTRACT.THEORY_DAYS
                                 : CONTRACT.DRIVING_DAYS;
 
@@ -1294,7 +1283,7 @@
 
                             if (
                                 student.status === APP.STATUS.THEORY ||
-                                student.status === APP.STATUS.THEORY_OK
+                                student.status === APP.STATUS.THEORY_PASSED
                             ) {
                                 dashboard.theory++;
                             }
@@ -1302,9 +1291,9 @@
                             // Практика
 
                             if (
-                                student.status === STATUS.DRIVING ||
-                                student.status === STATUS.EXAM ||
-                                student.status === STATUS.PASSED
+                                student.status === APP.STATUS.DRIVING ||
+                                student.status === APP.STATUS.DRIVING_EXAM ||
+                                student.status === APP.STATUS.DRIVING_PASSED
                             ) {
                                 dashboard.practice++;
                             }
@@ -1776,8 +1765,8 @@
 
             if (
                 oldStudent &&
-                oldStudent.status === STATUS.NEW &&
-                updateData.status === STATUS.THEORY &&
+                oldStudent.status === APP.STATUS.NEW &&
+                updateData.status === APP.STATUS.THEORY &&
                 !oldStudent.theory_start_date
             ) {
 
