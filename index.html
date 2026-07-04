@@ -626,7 +626,7 @@
 
     <script>
 
-        const BUILD_VERSION = '2026-07-04 13:40';
+        const BUILD_VERSION = '2026-07-04 14:30';
 
             // =========================
             // GoDrive CRM constants
@@ -790,7 +790,7 @@
 
                             await getProfile();
 
-                            if (currentRole === 'instructor') {
+                            if (isInstructor()) {
 
                                 await loadCurrentInstructor();
 
@@ -906,7 +906,7 @@
                             .from('students')
                             .select('*');
 
-                    if (currentRole === 'instructor') {
+                    if (isInstructor()) {
 
                         query = query.or(
                             `instructor_id.is.null,instructor_id.eq.${window.currentInstructor.id}`
@@ -1532,7 +1532,7 @@
                 if (!error && data) {
                     currentRole = data.role;
                 
-                    if (currentRole === 'instructor') {
+                    if (isInstructor()) {
                         await loadCurrentInstructor();
                     }
                 }
@@ -1581,7 +1581,7 @@
         function setRoleUI() {
             // Показываем форму добавления только менеджеру и админу
             const addContainer = document.getElementById('add-student-container');
-            if (currentRole === 'manager' || currentRole === 'admin') {
+            if (isManager() || isAdmin()) {
                 addContainer.style.display = 'block';
             } else {
                 addContainer.style.display = 'none';
@@ -1926,7 +1926,7 @@
             const instructorSelect =
                 document.getElementById('modal-instructor');
 
-            if (currentRole === 'instructor') {
+            if (isInstructor()) {
 
                 const currentId = student.instructor_id;
 
@@ -2004,7 +2004,7 @@
             const contractSection =
                 document.getElementById('contract-section');
 
-            if (currentRole === 'instructor') {
+            if (isInstructor()) {
 
                 contractSection.style.display = 'none';
 
