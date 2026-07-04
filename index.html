@@ -626,20 +626,12 @@
 
     <script>
 
-        const BUILD_VERSION = '2026-07-04 21:50';
+        const BUILD_VERSION = '2026-07-04 22:23';
 
             // =========================
             // GoDrive CRM constants
             // =========================
 
-        const ROLES = {
-
-            ADMIN: 'admin',
-            MANAGER: 'manager',
-            INSTRUCTOR: 'instructor',
-            ACCOUNTANT: 'accountant'
-
-        };
 
         const APP = {
 
@@ -671,25 +663,25 @@
 
         function isAdmin() {
 
-            return currentRole === ROLES.ADMIN;
+            return currentRole === APP.ROLES.ADMIN;
 
         }
 
         function isManager() {
 
-            return currentRole === ROLES.MANAGER;
+            return currentRole === APP.ROLES.MANAGER;
 
         }
 
         function isInstructor() {
 
-            return currentRole === ROLES.INSTRUCTOR;
+            return currentRole === APP.ROLES.INSTRUCTOR;
 
         }
 
         function isAccountant() {
 
-            return currentRole === ROLES.ACCOUNTANT;
+            return currentRole === APP.ROLES.ACCOUNTANT;
 
         }
 
