@@ -626,7 +626,7 @@
 
     <script>
 
-        const BUILD_VERSION = '2026-07-05 20:08';
+        const BUILD_VERSION = '2026-07-05 22:47';
 
             // =========================
             // GoDrive CRM constants
@@ -890,7 +890,116 @@
             return '';
         }
 
-                    
+        function calculateDashboard(data) {
+
+            const dashboard = {
+
+                total: 0,
+
+                theory: 0,
+
+                practice: 0,
+
+                attention: 0,
+
+                birthdays: [],
+
+                birthdayCount: 0
+
+            };
+
+            dashboard.total = data.length;
+
+            const today = new Date();
+
+            today.setHours(0, 0, 0, 0);
+
+            data.forEach(student => {
+
+                // Теория
+
+                if (
+                    student.status === APP.STATUS.THEORY ||
+                    student.status === APP.STATUS.THEORY_PASSED
+                ) {
+                    dashboard.theory++;
+                }
+
+                // Практика
+
+                if (
+                    student.status === APP.STATUS.DRIVING ||
+                    student.status === APP.STATUS.DRIVING_EXAM ||
+                    student.status === APP.STATUS.DRIVING_PASSED
+                ) {
+                    dashboard.practice++;
+                }
+
+                // Требуют внимания
+
+                const info = getDeadlineInfo(student);
+
+                if (
+                    info.startsWith("❌") ||
+                    info.startsWith("🔴") ||
+                    info.startsWith("🟠")
+                ) {
+                    dashboard.attention++;
+                }
+
+                // Дни рождения
+
+                if (student.birth_date) {
+
+                    const birth = new Date(student.birth_date);
+
+                    const birthday = new Date(today);
+
+                    birthday.setMonth(birth.getMonth());
+
+                    birthday.setDate(birth.getDate());
+
+                    birthday.setHours(0, 0, 0, 0);
+
+                    if (birthday < today) {
+
+                        birthday.setFullYear(today.getFullYear() + 1);
+
+                    }
+
+                    const diff = Math.ceil(
+                        (birthday - today) / (1000 * 60 * 60 * 24)
+                    );
+
+                    if (
+                        diff === 0 ||
+                        diff === 3 ||
+                        diff === 10
+                    ) {
+
+                        dashboard.birthdayCount++;
+
+                        dashboard.birthdays.push({
+
+                            name: student.full_name,
+
+                            diff
+
+                        });
+
+                    }
+
+                }
+
+            });
+
+            dashboard.birthdays.sort(
+                (a, b) => a.diff - b.diff
+            );
+
+            return dashboard;
+
+        }            
                     
         function getPaymentStatus(student, payments) {
 
@@ -1246,118 +1355,7 @@
 
                     setStatus('Данные загружены.');
                                                             
-                    
-                                                            
-                    function calculateDashboard(data) {
-
-                        const dashboard = {
-
-                            total: 0,
-
-                            theory: 0,
-
-                            practice: 0,
-
-                            attention: 0,
-
-                            birthdays: [],
-
-                            birthdayCount: 0
-
-                        };
-
-                        dashboard.total = data.length;
-
-                        const today = new Date();
-
-                        today.setHours(0, 0, 0, 0);
-
-                        data.forEach(student => {
-
-                            // Теория
-
-                            if (
-                                student.status === APP.STATUS.THEORY ||
-                                student.status === APP.STATUS.THEORY_PASSED
-                            ) {
-                                dashboard.theory++;
-                            }
-
-                            // Практика
-
-                            if (
-                                student.status === APP.STATUS.DRIVING ||
-                                student.status === APP.STATUS.DRIVING_EXAM ||
-                                student.status === APP.STATUS.DRIVING_PASSED
-                            ) {
-                                dashboard.practice++;
-                            }
-
-                            // Требуют внимания
-
-                            const info = getDeadlineInfo(student);
-
-                            if (
-                                info.startsWith("❌") ||
-                                info.startsWith("🔴") ||
-                                info.startsWith("🟠")
-                            ) {
-                                dashboard.attention++;
-                            }
-
-                            // Дни рождения
-
-                            if (student.birth_date) {
-
-                                const birth = new Date(student.birth_date);
-
-                                const birthday = new Date(today);
-
-                                birthday.setMonth(birth.getMonth());
-
-                                birthday.setDate(birth.getDate());
-
-                                birthday.setHours(0, 0, 0, 0);
-
-                                if (birthday < today) {
-
-                                    birthday.setFullYear(today.getFullYear() + 1);
-
-                                }
-
-                                const diff = Math.ceil(
-                                    (birthday - today) / (1000 * 60 * 60 * 24)
-                                );
-
-                                if (
-                                    diff === 0 ||
-                                    diff === 3 ||
-                                    diff === 10
-                                ) {
-
-                                    dashboard.birthdayCount++;
-
-                                    dashboard.birthdays.push({
-
-                                        name: student.full_name,
-
-                                        diff
-
-                                    });
-
-                                }
-
-                            }
-
-                        });
-
-                        dashboard.birthdays.sort(
-                            (a, b) => a.diff - b.diff
-                        );
-
-                        return dashboard;
-
-                    }
+                                                                                                    
 
                     studentsTableBody.innerHTML = data.map(student => `
                     <tr
