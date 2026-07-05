@@ -626,7 +626,7 @@
 
     <script>
 
-        const BUILD_VERSION = '2026-07-05 15:15';
+        const BUILD_VERSION = '2026-07-05 15:25';
 
             // =========================
             // GoDrive CRM constants
@@ -757,7 +757,7 @@
 
         }
 
-        function getPaymentStatus(student) {
+        function getPaymentStatus(student, payments) {
 
             const list =
                 payments[student.id] || [];
@@ -1368,7 +1368,7 @@
                         <td class="s-phone">${student.phone || ''}</td>
                         <td class="s-email">${student.email || ''}</td>
                         <td class="s-payment">
-                            ${getPaymentStatus(student)}
+                            ${getPaymentStatus(student, payments)}
                         </td>
                         <td class="s-contract">${student.contract_number || ''}</td>
                         <td class="s-category">${student.category || ''}</td>
