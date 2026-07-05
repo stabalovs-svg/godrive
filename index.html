@@ -757,6 +757,48 @@
 
         }
 
+        function getContractReminder(student) {
+
+            if (
+                !student.contract_date ||
+                !student.contract_duration_months
+            ) {
+                return null;
+            }
+
+            const today = new Date();
+            today.setHours(0, 0, 0, 0);
+
+            const finish = new Date(student.contract_date);
+            finish.setHours(0, 0, 0, 0);
+
+            finish.setMonth(
+                finish.getMonth() +
+                Number(student.contract_duration_months)
+            );
+
+            const left = Math.floor(
+                (finish - today) /
+                (1000 * 60 * 60 * 24)
+            );
+
+            if (left < 0) {
+                return '📄 Договор закончился';
+            }
+
+            if (left === 0) {
+                return '📄 Последний день договора';
+            }
+
+            if (left <= 30) {
+                return `📄 Осталось ${left} дн.`;
+            }
+
+            return null;
+
+        }
+
+
         function getPaymentStatus(student, payments) {
 
             const list =
@@ -1110,49 +1152,7 @@
                     }
 
                     setStatus('Данные загружены.');
-                                        
-
-                    function getContractReminder(student) {
-
-                        if (
-                            !student.contract_date ||
-                            !student.contract_duration_months
-                        ) {
-                            return null;
-                        }
-
-                        const today = new Date();
-                        today.setHours(0, 0, 0, 0);
-
-                        const finish = new Date(student.contract_date);
-                        finish.setHours(0, 0, 0, 0);
-
-                        finish.setMonth(
-                            finish.getMonth() +
-                            Number(student.contract_duration_months)
-                        );
-
-                        const left = Math.floor(
-                            (finish - today) /
-                            (1000 * 60 * 60 * 24)
-                        );
-
-                        if (left < 0) {
-                            return '📄 Договор закончился';
-                        }
-
-                        if (left === 0) {
-                            return '📄 Последний день договора';
-                        }
-
-                        if (left <= 30) {
-                            return `📄 Осталось ${left} дн.`;
-                        }
-
-                        return null;
-
-                    }
-
+                                                            
                     function getBirthdayReminder(student) {
 
                         if (!student.birth_date) {
