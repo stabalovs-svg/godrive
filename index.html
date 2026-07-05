@@ -626,7 +626,7 @@
 
     <script>
 
-        const BUILD_VERSION = '2026-07-05 15:25';
+        const BUILD_VERSION = '2026-07-05 15:47';
 
             // =========================
             // GoDrive CRM constants
@@ -796,6 +796,42 @@
 
             return null;
 
+        }
+
+        function getBirthdayReminder(student) {
+
+            if (!student.birth_date) {
+                return null;
+            }
+
+            const today = new Date();
+            today.setHours(0, 0, 0, 0);
+
+            const birth = new Date(student.birth_date);
+
+            const birthday = new Date(today);
+
+            birthday.setMonth(birth.getMonth());
+            birthday.setDate(birth.getDate());
+
+            if (birthday < today) {
+                birthday.setFullYear(today.getFullYear() + 1);
+            }
+
+            const diff = Math.ceil(
+                (birthday - today) / (1000 * 60 * 60 * 24)
+            );
+
+            if (diff === 0)
+                return "🎂 Сегодня День рождения";
+
+            if (diff === 3)
+                return "🎂 Через 3 дня День рождения";
+
+            if (diff === 10)
+                return "🎂 Через 10 дней День рождения";
+
+            return null;
         }
 
 
@@ -1153,44 +1189,8 @@
 
                     setStatus('Данные загружены.');
                                                             
-                    function getBirthdayReminder(student) {
-
-                        if (!student.birth_date) {
-                            return null;
-                        }
-
-                        const today = new Date();
-                        today.setHours(0, 0, 0, 0);
-
-                        const birth = new Date(student.birth_date);
-
-                        const birthday = new Date(today);
-
-                        birthday.setMonth(birth.getMonth());
-                        birthday.setDate(birth.getDate());
-
-                        if (birthday < today) {
-                            birthday.setFullYear(today.getFullYear() + 1);
-                        }
-
-                        const diff = Math.ceil(
-                            (birthday - today) / (1000 * 60 * 60 * 24)
-                        );
-
-                        if (diff === 0)
-                            return "🎂 Сегодня День рождения";
-
-                        if (diff === 3)
-                            return "🎂 Через 3 дня День рождения";
-
-                        if (diff === 10)
-                            return "🎂 Через 10 дней День рождения";
-
-                        return null;
-                    }
-
                     
-
+                    
                     function getDeadlineInfo(student) {
 
                         const training = getTrainingReminder(student);
