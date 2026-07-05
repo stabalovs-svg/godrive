@@ -626,7 +626,7 @@
 
     <script>
 
-        const BUILD_VERSION = '2026-07-05 15:47';
+        const BUILD_VERSION = '2026-07-05 19:53';
 
             // =========================
             // GoDrive CRM constants
@@ -834,7 +834,22 @@
             return null;
         }
 
+        function getDeadlineInfo(student) {
 
+            const training = getTrainingReminder(student);
+            if (training) return training;
+
+            const contract = getContractReminder(student);
+            if (contract) return contract;
+
+            const birthday = getBirthdayReminder(student);
+            if (birthday) return birthday;
+
+            return getTrainingDays(student);
+
+        }
+                    
+                    
         function getPaymentStatus(student, payments) {
 
             const list =
@@ -1190,21 +1205,6 @@
                     setStatus('Данные загружены.');
                                                             
                     
-                    
-                    function getDeadlineInfo(student) {
-
-                        const training = getTrainingReminder(student);
-                        if (training) return training;
-
-                        const contract = getContractReminder(student);
-                        if (contract) return contract;
-
-                        const birthday = getBirthdayReminder(student);
-                        if (birthday) return birthday;
-
-                        return getTrainingDays(student);
-
-                    }
                     
                     
                     function getRowClass(student) {
