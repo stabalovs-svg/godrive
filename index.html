@@ -626,7 +626,7 @@
 
     <script>
 
-        const BUILD_VERSION = '2026-07-06 19:07';
+        const BUILD_VERSION = '2026-07-06 19:21';
 
             // =========================
             // GoDrive CRM constants
@@ -1800,6 +1800,10 @@
                 .from('students')
                 .update(updateData)
                 .eq('id', id);
+
+            if (oldStudent.status !== updateData.status) {
+                // записать событие в журнал
+            }    
 
             if (error) {
 
