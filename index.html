@@ -626,7 +626,7 @@
 
     <script>
 
-        const BUILD_VERSION = '2026-07-05 22:47';
+        const BUILD_VERSION = '2026-07-06 09:04';
 
             // =========================
             // GoDrive CRM constants
@@ -1500,7 +1500,12 @@
             });
         }
 
-            // Получаем профиль и роль текущего пользователя из таблицы profiles
+            // ======================================
+            // Users / Roles
+            // ======================================
+
+
+            // Загружает роль текущего пользователя
         async function getProfile() {
 
             console.log('PROFILE 1');
@@ -1565,6 +1570,9 @@
             setRoleUI();
         }
 
+
+            // Загружает запись инструктора,
+            // связанную с авторизованным пользователем
         async function loadCurrentInstructor() {
 
             console.log('LOAD CURRENT INSTRUCTOR');
@@ -1585,6 +1593,7 @@
             );
         }
 
+            // Настраивает интерфейс в зависимости от роли
         function setRoleUI() {
             // Показываем форму добавления только менеджеру и админу
             const addContainer = document.getElementById('add-student-container');
@@ -1595,7 +1604,8 @@
             }
             renderRowActions();
         }
-
+            
+            // Создает кнопки действий для строк таблицы
         function renderRowActions() {
 
                 document.querySelectorAll('#students-table tbody tr').forEach(tr => {
@@ -1608,10 +1618,10 @@
 
                     // Кнопка карточки есть у всех
                     actionsTd.innerHTML += `
-            <button class="card-btn">
-                Карточка
-            </button>
-        `;
+                <button class="card-btn">
+                    Карточка
+                </button>
+            `;
 
                     // Кнопка редактирования
                     if (isManager() || isAdmin()) {
@@ -1644,7 +1654,7 @@
 
                 document.querySelectorAll('.delete-btn')
                     .forEach(btn => btn.onclick = onDeleteRow);
-            }
+        }
             /*
         function attachCardButtons() {
 
@@ -1692,6 +1702,11 @@
         }
             */
 
+            // ======================================
+            // Students
+            // ======================================
+
+            // Сохраняет изменения карточки ученика
         async function saveStudent() {
 
             const id = window.currentStudentId;
@@ -1801,7 +1816,7 @@
             await loadStudents();
         }
         
-
+            // Открывает карточку ученика
         async function openStudentCard(e) {
 
             console.log('OPEN STUDENT CARD');
@@ -2027,6 +2042,8 @@
             document.getElementById('student-modal')
                 .classList.remove('hidden');
         }
+
+            // Быстрое редактирование строки таблицы
         async function onEditRow(e) {
             const tr = e.target.closest('tr');
             const id = tr.getAttribute('data-id');
@@ -2067,6 +2084,7 @@
             actionsTd.querySelector('.cancel-btn').onclick = () => loadStudents();
         }
 
+            // Удаляет ученика
         async function onDeleteRow(e) {
             if (!confirm('Удалить запись?')) return;
             const tr = e.target.closest('tr');
