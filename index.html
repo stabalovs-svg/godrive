@@ -626,7 +626,7 @@
 
     <script>
 
-        const BUILD_VERSION = '2026-07-06 18:02';
+        const BUILD_VERSION = '2026-07-06 19:07';
 
             // =========================
             // GoDrive CRM constants
@@ -2487,7 +2487,8 @@
 
                 eventType: 'payment_added',
 
-                description: 'Добавлен платеж',
+                description:
+                    `${payment.purpose} — ${payment.amount} € (${payment.payment_method})`,
 
                 newValue: payment.amount + ' €',
 
