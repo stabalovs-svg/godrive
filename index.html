@@ -626,7 +626,7 @@
 
     <script>
 
-        const BUILD_VERSION = '2026-07-06 19:51';
+        const BUILD_VERSION = '2026-07-06 20:26';
 
             // =========================
             // GoDrive CRM constants
@@ -2288,11 +2288,45 @@
                     
                    
                     try {
-                        const { data, error } = await supabaseClient.from('students').insert([{ full_name, phone, email,contract_number, category, birth_date, status, notes }]);
+                        const { data, error } = await supabaseClient
+                            .from('students')
+                            .insert([{
+                                full_name,
+                                phone,
+                                email,
+                                contract_number,
+                                category,
+                                birth_date,
+                                status,
+                                notes
+                            }])
+                            .select();
+
                         if (error) {
                             setStatus('Ошибка добавления: ' + error.message, true);
                             return;
                         }
+
+                        await addEvent({
+
+                            studentId: data[0].id,
+
+                            eventType: 'student_created',
+
+                            description: 'Создан новый ученик',
+
+                            newValue: full_name,
+
+                            metadata: {
+
+                                category: category,
+
+                                status: status
+
+                            }
+
+                        });
+
                         setStatus('Ученик добавлен.');
                         addStudentForm.reset();
                         await loadStudents();
