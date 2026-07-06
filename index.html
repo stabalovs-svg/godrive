@@ -626,7 +626,7 @@
 
     <script>
 
-        const BUILD_VERSION = '2026-07-06 17:47';
+        const BUILD_VERSION = '2026-07-06 18:02';
 
             // =========================
             // GoDrive CRM constants
@@ -2480,6 +2480,30 @@
                 alert('Ошибка: ' + error.message);
                 return;
             }
+
+            await addEvent({
+
+                studentId: window.currentStudentId,
+
+                eventType: 'payment_added',
+
+                description: 'Добавлен платеж',
+
+                newValue: payment.amount + ' €',
+
+                metadata: {
+
+                    payment_date: payment.payment_date,
+
+                    purpose: payment.purpose,
+
+                    amount: payment.amount,
+
+                    payment_method: payment.payment_method
+
+                }
+
+            });
 
             document.getElementById('payment-amount').value = '';
 
