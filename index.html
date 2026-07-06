@@ -626,7 +626,7 @@
 
     <script>
 
-        const BUILD_VERSION = '2026-07-06 09:04';
+        const BUILD_VERSION = '2026-07-06 09:55';
 
             // =========================
             // GoDrive CRM constants
@@ -2099,6 +2099,11 @@
             }
         }
 
+            // ======================================
+            // Authentication
+            // ======================================
+
+            // Проверяет наличие активной сессии
         async function checkSession() {
             if (!supabaseClient) {
                 showLogin();
@@ -2132,12 +2137,14 @@
             }
         }
 
+            // Обновляет строку состояния
         function setStatus(text, error = false) {
             if (!statusElement) return;
             statusElement.textContent = text;
             statusElement.style.color = error ? '#c00' : '#666';
         }
 
+            // Получает ссылки на элементы страницы
         function initDomElements() {
             loginBlock = document.getElementById('login-block');
             crmBlock = document.getElementById('crm-block');
@@ -2155,6 +2162,7 @@
             });
         }
 
+            // Подключает обработчики событий
         function attachEventHandlers() {
 
             console.log('ATTACH EVENT HANDLERS');
@@ -2279,7 +2287,7 @@
             }
         }
 
-        // Инициализация при загрузке страницы
+        // Запускает приложение после загрузки страницы
         async function startApp() {
             console.log('STEP 1');
 
@@ -2311,6 +2319,11 @@
 
         window.addEventListener('load', startApp);
 
+            // ======================================
+            // Table
+            // ======================================
+
+            // Сортирует таблицу по выбранному столбцу
         function sortTable(field) {
 
             const rows = Array.from(
@@ -2353,6 +2366,7 @@
             });
         }
 
+            // Подключает обработчики сортировки столбцов
         function attachSorting() {
 
             document
@@ -2388,6 +2402,11 @@
                 });
         }
 
+            // ======================================
+            // Instructors
+            // ======================================
+
+            // Загружает список инструкторов
         async function loadInstructors() {
 
             console.log('LOAD INSTRUCTORS START');
@@ -2425,6 +2444,11 @@
             console.log('INSTRUCTORS LOADED:', data.length);
         }
 
+            // ======================================
+            // Payments
+            // ======================================
+
+            // Добавляет новый платеж
         async function addPayment() {
 
             const payment = {
@@ -2468,6 +2492,7 @@
             alert('Платёж добавлен');
         }
 
+            // Возвращает значок способа оплаты
         function getPaymentIcon(method) {
 
             switch (method) {
@@ -2487,6 +2512,7 @@
 
         }
 
+            // Возвращает значок назначения платежа
         function getPurposeIcon(purpose) {
 
             switch (purpose) {
@@ -2512,7 +2538,7 @@
 
         }
 
-        
+        // Загружает историю платежей ученика
         async function loadPayments(studentId) {
 
             const { data, error } = await supabaseClient
