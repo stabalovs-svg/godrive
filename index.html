@@ -626,7 +626,7 @@
 
     <script>
 
-        const BUILD_VERSION = '2026-07-06 09:55';
+        const BUILD_VERSION = '2026-07-06 17:47';
 
             // =========================
             // GoDrive CRM constants
@@ -2614,6 +2614,58 @@
 
             document.getElementById('payments-count').textContent =
     `           Платежей: ${data.length}`;
+
+        }
+
+        async function addEvent({
+
+            studentId,
+
+            eventType,
+
+            description = '',
+
+            oldValue = '',
+
+            newValue = '',
+
+            metadata = null
+
+        }) {
+
+            if (!currentUser) {
+
+                console.error('addEvent: пользователь не авторизован');
+
+                return;
+
+            }
+
+            const { error } = await supabaseClient
+                .from('event_log')
+                .insert([{
+
+                    user_id: currentUser.id,
+
+                    student_id: studentId,
+
+                    event_type: eventType,
+
+                    description: description,
+
+                    old_value: oldValue,
+
+                    new_value: newValue,
+
+                    metadata: metadata
+
+                }]);
+
+            if (error) {
+
+                console.error('Ошибка записи события:', error);
+
+            }
 
         }
 
