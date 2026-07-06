@@ -626,7 +626,7 @@
 
     <script>
 
-        const BUILD_VERSION = '2026-07-06 19:21';
+        const BUILD_VERSION = '2026-07-06 19:51';
 
             // =========================
             // GoDrive CRM constants
@@ -1800,16 +1800,40 @@
                 .from('students')
                 .update(updateData)
                 .eq('id', id);
-
-            if (oldStudent.status !== updateData.status) {
-                // записать событие в журнал
-            }    
-
+            
             if (error) {
 
                 alert('Ошибка: ' + error.message);
                 return;
-            }
+            }    
+
+            if (oldStudent.status !== updateData.status) {
+                
+                await addEvent({
+
+                    studentId: id,
+
+                    eventType: 'status_changed',
+
+                    description:
+                        `Статус: ${oldStudent.status} → ${updateData.status}`,
+
+                    oldValue: oldStudent.status,
+
+                    newValue: updateData.status,
+
+                    metadata: {
+
+                        from: oldStudent.status,
+
+                        to: updateData.status
+
+                    }
+
+                });
+
+            }    
+
 
             alert('Сохранено');
 
