@@ -626,7 +626,7 @@
 
     <script>
 
-        const BUILD_VERSION = '2026-07-07 19:50';
+        const BUILD_VERSION = '2026-07-07 20:35';
 
             // =========================
             // GoDrive CRM constants
@@ -2835,6 +2835,31 @@
 
             document.getElementById('payments-count').textContent =
     `           Платежей: ${data.length}`;
+
+        }
+
+        async function loadEventLog(studentId) {
+
+            const { data, error } = await supabaseClient
+                .from('event_log')
+                .select('*')
+                .eq('student_id', studentId)
+                .order('created_at', {
+                    ascending: false
+                });
+
+            if (error) {
+
+                console.error(
+                    'Ошибка загрузки журнала:',
+                    error
+                );
+
+                return [];
+
+            }
+
+            return data;
 
         }
 
