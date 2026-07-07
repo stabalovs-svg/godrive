@@ -626,7 +626,7 @@
 
     <script>
 
-        const BUILD_VERSION = '2026-07-07 18:36';
+        const BUILD_VERSION = '2026-07-07 19:02';
 
             // =========================
             // GoDrive CRM constants
@@ -2858,6 +2858,44 @@
                 console.error('Ошибка записи события:', error);
 
             }
+
+        }
+
+        function getChangedFields(oldStudent, updateData) {
+
+            const changes = [];
+
+            if (oldStudent.phone !== updateData.phone) {
+
+                changes.push({
+                    field: 'Телефон',
+                    oldValue: oldStudent.phone,
+                    newValue: updateData.phone
+                });
+
+            }
+
+            if (oldStudent.email !== updateData.email) {
+
+                changes.push({
+                    field: 'Email',
+                    oldValue: oldStudent.email,
+                    newValue: updateData.email
+                });
+
+            }
+
+            if (oldStudent.notes !== updateData.notes) {
+
+                changes.push({
+                    field: 'Заметка',
+                    oldValue: oldStudent.notes,
+                    newValue: updateData.notes
+                });
+
+            }
+
+            return changes;
 
         }
 
