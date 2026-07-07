@@ -626,7 +626,7 @@
 
     <script>
 
-        const BUILD_VERSION = '2026-07-07 19:30';
+        const BUILD_VERSION = '2026-07-07 19:50';
 
             // =========================
             // GoDrive CRM constants
@@ -1785,6 +1785,30 @@
                 getChangedFields(oldStudent, updateData);
 
             console.log('CHANGED FIELDS =', changedFields);
+
+            for (const change of changedFields) {
+
+                await addEvent({
+
+                    studentId: id,
+
+                    eventType: 'student_updated',
+
+                    description: `Изменено поле "${change.field}"`,
+
+                    oldValue: change.oldValue,
+
+                    newValue: change.newValue,
+
+                    metadata: {
+
+                        field: change.field
+
+                    }
+
+                });
+
+            }
 
             if (
                 oldStudent &&
