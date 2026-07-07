@@ -626,7 +626,7 @@
 
     <script>
 
-        const BUILD_VERSION = '2026-07-07 14:55';
+        const BUILD_VERSION = '2026-07-07 18:20';
 
             // =========================
             // GoDrive CRM constants
@@ -1836,6 +1836,40 @@
                         from: oldStudent.status,
 
                         to: updateData.status
+
+                    }
+
+                });
+
+            }
+
+            if (
+                oldStudent.contract_date !== updateData.contract_date ||
+                oldStudent.contract_duration_months != updateData.contract_duration_months ||
+                oldStudent.course_price != updateData.course_price
+            ) {
+
+                await addEvent({
+
+                    studentId: id,
+
+                    eventType: 'contract_changed',
+
+                    description: 'Изменены параметры договора',
+
+                    metadata: {
+
+                        old: {
+                            contract_date: oldStudent.contract_date,
+                            contract_duration_months: oldStudent.contract_duration_months,
+                            course_price: oldStudent.course_price
+                        },
+
+                        new: {
+                            contract_date: updateData.contract_date,
+                            contract_duration_months: updateData.contract_duration_months,
+                            course_price: updateData.course_price
+                        }
 
                     }
 
