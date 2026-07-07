@@ -626,7 +626,7 @@
 
     <script>
 
-        const BUILD_VERSION = '2026-07-07 14:05';
+        const BUILD_VERSION = '2026-07-07 14:55';
 
             // =========================
             // GoDrive CRM constants
@@ -1712,9 +1712,14 @@
             const id = window.currentStudentId;
             const { data: oldStudent } = await supabaseClient
                 .from('students')
-                .select(
-                    'status, theory_start_date, instructor_id, course_price'
-                )
+                .select(`
+                    status,
+                    theory_start_date,
+                    instructor_id,
+                    course_price,
+                    contract_date,
+                    contract_duration_months
+                `)
                 .eq('id', id)
                 .single();
 
