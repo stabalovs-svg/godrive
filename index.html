@@ -621,12 +621,20 @@
                 Закрыть
             </button>
         </div>
+
+        <hr>
+
+        <h4>📜 Журнал событий</h4>
+
+        <div id="event-log-list">
+            Журнал пока не загружен
+        </div>
     
     </div>
 
     <script>
 
-        const BUILD_VERSION = '2026-07-07 21:25';
+        const BUILD_VERSION = '2026-07-07 22:15';
 
             // =========================
             // GoDrive CRM constants
@@ -2176,10 +2184,7 @@
             const events =
                 await loadEventLog(window.currentStudentId);
 
-            console.log(
-                'EVENT LOG =',
-                events
-            );
+            renderEventLog(events);
 
             document.getElementById('save-student-btn').onclick = 
                 saveStudent;
@@ -2868,6 +2873,43 @@
             }
 
             return data;
+
+        }
+
+        function renderEventLog(events) {
+
+            const container =
+                document.getElementById('event-log-list');
+
+            if (!container) return;
+
+            if (!events.length) {
+
+                container.innerHTML =
+                    'Событий пока нет';
+
+                return;
+            }
+
+            container.innerHTML = events.map(event => `
+
+                <div style="padding:8px 0; border-bottom:1px solid #eee;">
+
+                    <div>
+                        <b>${event.description || event.event_type}</b>
+                    </div>
+
+                    <div style="font-size:13px; color:#666;">
+                        ${new Date(event.created_at).toLocaleString('ru-RU')}
+                    </div>
+
+                    <div style="font-size:13px; color:#444;">
+                        ${event.old_value || ''} ${event.old_value || event.new_value ? '→' : ''} ${event.new_value || ''}
+                    </div>
+
+                </div>
+
+            `).join('');
 
         }
 
