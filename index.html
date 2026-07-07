@@ -626,7 +626,7 @@
 
     <script>
 
-        const BUILD_VERSION = '2026-07-07 18:20';
+        const BUILD_VERSION = '2026-07-07 18:36';
 
             // =========================
             // GoDrive CRM constants
@@ -1718,7 +1718,10 @@
                     instructor_id,
                     course_price,
                     contract_date,
-                    contract_duration_months
+                    contract_duration_months,
+                    phone,
+                    email,
+                    notes
                 `)
                 .eq('id', id)
                 .single();
