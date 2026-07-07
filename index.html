@@ -626,7 +626,7 @@
 
     <script>
 
-        const BUILD_VERSION = '2026-07-06 20:26';
+        const BUILD_VERSION = '2026-07-07 08:37';
 
             // =========================
             // GoDrive CRM constants
@@ -2302,6 +2302,10 @@
                             }])
                             .select();
 
+                        console.log('INSERT RESULT');
+                        console.log(data);
+                        console.log(error);                           
+
                         if (error) {
                             setStatus('Ошибка добавления: ' + error.message, true);
                             return;
@@ -2326,6 +2330,8 @@
                             }
 
                         });
+
+                        console.log('EVENT WRITTEN');
 
                         setStatus('Ученик добавлен.');
                         addStudentForm.reset();
