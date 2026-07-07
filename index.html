@@ -626,7 +626,7 @@
 
     <script>
 
-        const BUILD_VERSION = '2026-07-07 09:05';
+        const BUILD_VERSION = '2026-07-07 12:14';
 
             // =========================
             // GoDrive CRM constants
@@ -1750,7 +1750,7 @@
                     document.getElementById('modal-instructor').value || null,    
 
                 birth_date:
-                    document.getElementById('modal-birth').value,
+                    document.getElementById('modal-birth').value || null,
 
                 status:
                     document.getElementById('modal-status')
@@ -1800,6 +1800,8 @@
                 .from('students')
                 .update(updateData)
                 .eq('id', id);
+
+            console.log('UPDATE ERROR =', error);    
             
             if (error) {
 
