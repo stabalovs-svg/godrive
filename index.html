@@ -626,7 +626,7 @@
 
     <script>
 
-        const BUILD_VERSION = '2026-07-07 20:35';
+        const BUILD_VERSION = '2026-07-07 21:25';
 
             // =========================
             // GoDrive CRM constants
@@ -2171,7 +2171,15 @@
             document.getElementById('modal-course-price').value =
                 student.course_price || '';
 
-            await loadPayments(window.currentStudentId);    
+            await loadPayments(window.currentStudentId);
+            
+            const events =
+                await loadEventLog(window.currentStudentId);
+
+            console.log(
+                'EVENT LOG =',
+                events
+            );
 
             document.getElementById('save-student-btn').onclick = 
                 saveStudent;
