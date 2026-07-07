@@ -626,7 +626,7 @@
 
     <script>
 
-        const BUILD_VERSION = '2026-07-07 12:41';
+        const BUILD_VERSION = '2026-07-07 13:06';
 
             // =========================
             // GoDrive CRM constants
@@ -1836,8 +1836,33 @@
 
                 });
 
-            }    
+            }
+                
+            if (oldStudent.instructor_id !== updateData.instructor_id) {
 
+                await addEvent({
+
+                    studentId: id,
+
+                    eventType: 'instructor_changed',
+
+                    description: 'Изменен инструктор',
+
+                    oldValue: oldStudent.instructor_id || '',
+
+                    newValue: updateData.instructor_id || '',
+
+                    metadata: {
+
+                        from: oldStudent.instructor_id,
+
+                        to: updateData.instructor_id
+
+                    }
+
+                });
+
+            }
 
             alert('Сохранено');
 
