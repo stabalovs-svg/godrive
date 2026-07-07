@@ -626,7 +626,7 @@
 
     <script>
 
-        const BUILD_VERSION = '2026-07-07 13:23';
+        const BUILD_VERSION = '2026-07-07 14:05';
 
             // =========================
             // GoDrive CRM constants
@@ -1857,6 +1857,34 @@
                         from: oldStudent.instructor_id,
 
                         to: updateData.instructor_id
+
+                    }
+
+                });
+
+            }
+
+            if (oldStudent.course_price != updateData.course_price) {
+
+                await addEvent({
+
+                    studentId: id,
+
+                    eventType: 'contract_changed',
+
+                    description: 'Изменена стоимость курса',
+
+                    oldValue: oldStudent.course_price || '',
+
+                    newValue: updateData.course_price || '',
+
+                    metadata: {
+
+                        field: 'course_price',
+
+                        from: oldStudent.course_price,
+
+                        to: updateData.course_price
 
                     }
 
