@@ -634,7 +634,7 @@
 
     <script>
 
-        const BUILD_VERSION = '2026-08-07 17:59';
+        const BUILD_VERSION = '2026-08-07 18:22';
 
             // =========================
             // GoDrive CRM constants
@@ -2903,6 +2903,18 @@
 
             });
 
+            function formatEventValue(event, value) {
+
+                if (
+                    event.event_type === 'instructor_changed'
+                ) {
+                    return instructorMap[value] || 'Не назначен';
+                }
+
+                return value || '';
+
+            }
+
             container.innerHTML = events.map(event => `
 
                 <div style="padding:8px 0; border-bottom:1px solid #eee;">
@@ -2916,7 +2928,9 @@
                     </div>
 
                     <div style="font-size:13px; color:#444;">
-                        ${event.old_value || ''} ${event.old_value || event.new_value ? '→' : ''} ${event.new_value || ''}
+                        ${formatEventValue(event, event.old_value)}
+                        ${event.old_value || event.new_value ? '→' : ''}
+                        ${formatEventValue(event, event.new_value)}
                     </div>
 
                 </div>
