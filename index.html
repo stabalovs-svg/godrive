@@ -634,7 +634,7 @@
 
     <script>
 
-        const BUILD_VERSION = '2026-08-07 07:58';
+        const BUILD_VERSION = '2026-08-07 08:31';
 
             // =========================
             // GoDrive CRM constants
@@ -2939,6 +2939,20 @@
                     return event.event_type;
 
             }
+
+        }
+
+        function getInstructorName(id) {
+
+            if (!id) {
+                return 'Не назначен';
+            }
+
+            const instructor = instructors.find(i => i.id === id);
+
+            return instructor
+                ? instructor.full_name
+                : id;
 
         }
 
