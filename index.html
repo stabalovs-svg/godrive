@@ -634,7 +634,7 @@
 
     <script>
 
-        const BUILD_VERSION = '2026-08-07 08:31';
+        const BUILD_VERSION = '2026-08-07 17:41';
 
             // =========================
             // GoDrive CRM constants
@@ -2890,6 +2890,15 @@
 
                 return;
             }
+
+            const instructorMap = {};
+
+            instructors.forEach(instructor => {
+
+                instructorMap[instructor.id] =
+                    instructor.full_name;
+
+            });
 
             container.innerHTML = events.map(event => `
 
