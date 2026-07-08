@@ -634,7 +634,7 @@
 
     <script>
 
-        const BUILD_VERSION = '2026-08-07 18:22';
+        const BUILD_VERSION = '2026-08-07 22:52';
 
             // =========================
             // GoDrive CRM constants
@@ -2654,6 +2654,24 @@
             console.log('INSTRUCTORS LOADED:', data.length);
 
             return data;
+        }
+
+        async function loadProfiles() {
+
+            const { data, error } = await supabaseClient
+                .from('profiles')
+                .select('id, full_name');
+
+            if (error) {
+
+                console.error(error);
+
+                return [];
+
+            }
+
+            return data;
+
         }
 
             // ======================================
