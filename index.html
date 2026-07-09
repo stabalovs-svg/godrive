@@ -322,6 +322,38 @@
         .payment-row span:nth-child(4){
             text-align:center;
         }
+
+        .event-item {
+            padding: 10px;
+            margin-bottom: 8px;
+            border-left: 5px solid #ccc;
+            background: #fafafa;
+            border-radius: 6px;
+        }
+
+        .event-student_created {
+            border-left-color: #4caf50;
+        }
+
+        .event-payment_added {
+            border-left-color: #2196f3;
+        }
+
+        .event-status_changed {
+            border-left-color: #ff9800;
+        }
+
+        .event-instructor_changed {
+            border-left-color: #9c27b0;
+        }
+
+        .event-contract_changed {
+            border-left-color: #795548;
+        }
+
+        .event-student_updated {
+            border-left-color: #607d8b;
+        }
         
     </style>
 </head>
@@ -634,7 +666,7 @@
 
     <script>
 
-        const BUILD_VERSION = '2026-07-09 08:31';
+        const BUILD_VERSION = '2026-07-09 09:15';
 
             // =========================
             // GoDrive CRM constants
@@ -2947,7 +2979,7 @@
 
             container.innerHTML = events.map(event => `
 
-                <div style="padding:8px 0; border-bottom:1px solid #eee;">
+                <div class="event-item event-${event.event_type}">
 
                     <div>
                         <b>${getEventTitle(event)}</b>
