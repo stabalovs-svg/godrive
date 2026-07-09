@@ -634,7 +634,7 @@
 
     <script>
 
-        const BUILD_VERSION = '2026-07-09 07:48';
+        const BUILD_VERSION = '2026-07-09 08:31';
 
             // =========================
             // GoDrive CRM constants
@@ -2924,6 +2924,15 @@
 
             });
 
+            const profileMap = {};
+
+            profiles.forEach(profile => {
+
+                profileMap[profile.id] =
+                    profile.full_name;
+
+            });
+
             function formatEventValue(event, value) {
 
                 if (
@@ -2946,6 +2955,10 @@
 
                     <div style="font-size:13px; color:#666;">
                         ${new Date(event.created_at).toLocaleString('ru-RU')}
+                    </div>
+
+                    <div style="font-size:13px; color:#555;">
+                        👤 ${profileMap[event.user_id] || event.user_id || 'Неизвестный пользователь'}
                     </div>
 
                     <div style="font-size:13px; color:#444;">
