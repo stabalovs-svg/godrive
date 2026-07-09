@@ -2560,7 +2560,11 @@
 
             if (showEventLogBtn && globalEventLogBlock) {
 
+                showEventLogBtn.type = 'button';
+
                 showEventLogBtn.onclick = () => {
+
+                    console.log('SHOW EVENT LOG CLICK');
 
                     globalEventLogBlock.classList.remove('hidden');
 
@@ -2570,7 +2574,11 @@
 
             if (closeEventLogBtn && globalEventLogBlock) {
 
+                closeEventLogBtn.type = 'button';
+
                 closeEventLogBtn.onclick = () => {
+
+                    console.log('CLOSE EVENT LOG CLICK');
 
                     globalEventLogBlock.classList.add('hidden');
 
