@@ -684,7 +684,7 @@
 
     <script>
 
-        const BUILD_VERSION = '2026-07-09 14:38';
+        const BUILD_VERSION = '2026-07-09 23:01';
 
             // =========================
             // GoDrive CRM constants
@@ -3018,10 +3018,15 @@
 
             }
 
-        function renderEventLog(events, instructors = [], profiles = []) {
+        function renderEventLog(
+            events,
+            instructors = [],
+            profiles = [],
+            containerId = 'event-log-list'
+        ) {
 
             const container =
-                document.getElementById('event-log-list');
+                document.getElementById(containerId);
 
             if (!container) return;
 
