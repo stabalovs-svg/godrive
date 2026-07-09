@@ -684,7 +684,7 @@
 
     <script>
 
-        const BUILD_VERSION = '2026-07-09 14:26';
+        const BUILD_VERSION = '2026-07-09 14:38';
 
             // =========================
             // GoDrive CRM constants
@@ -2993,6 +2993,30 @@
             return data;
 
         }
+
+        async function loadAllEvents() {
+
+                const { data, error } = await supabaseClient
+                    .from('event_log')
+                    .select('*')
+                    .order('created_at', {
+                        ascending: false
+                    });
+
+                if (error) {
+
+                    console.error(
+                        'Ошибка загрузки общего журнала:',
+                        error
+                    );
+
+                    return [];
+
+                }
+
+                return data;
+
+            }
 
         function renderEventLog(events, instructors = [], profiles = []) {
 
