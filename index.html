@@ -376,6 +376,9 @@
     <div id="crm-block" class="hidden">
         <h2>Список учеников автошколы</h2>
         <button id="logout-btn">Выйти из системы</button>
+        <button id="show-event-log-btn">
+            📜 Журнал событий
+        </button>
 
         <!-- ФОРМА ДОБАВЛЕНИЯ УЧЕНИКА -->
         <div id="add-student-container"
@@ -476,6 +479,21 @@
                 <!-- Сюда JavaScript вставит данные из базы -->
             </tbody>
         </table>
+
+        <div id="global-event-log-block" class="hidden">
+        
+            <h3>📜 Журнал событий CRM</h3>
+        
+            <button id="close-event-log-btn">
+                Закрыть журнал
+            </button>
+        
+            <div id="global-event-log-list">
+                Журнал пока не загружен
+            </div>
+        
+        </div>
+
     </div>
 
     <div id="student-modal" class="hidden">
@@ -666,7 +684,7 @@
 
     <script>
 
-        const BUILD_VERSION = '2026-07-09 09:15';
+        const BUILD_VERSION = '2026-07-09 11:23';
 
             // =========================
             // GoDrive CRM constants
