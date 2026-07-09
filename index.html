@@ -684,7 +684,7 @@
 
     <script>
 
-        const BUILD_VERSION = '2026-07-09 11:23';
+        const BUILD_VERSION = '2026-07-09 13:56';
 
             // =========================
             // GoDrive CRM constants
@@ -2548,7 +2548,38 @@
                     filterStudents
                 );
             }
+
+            const showEventLogBtn =
+                document.getElementById('show-event-log-btn');
+
+            const closeEventLogBtn =
+                document.getElementById('close-event-log-btn');
+
+            const globalEventLogBlock =
+                document.getElementById('global-event-log-block');
+
+            if (showEventLogBtn && globalEventLogBlock) {
+
+                showEventLogBtn.onclick = () => {
+
+                    globalEventLogBlock.classList.remove('hidden');
+
+                };
+
+            }
+
+            if (closeEventLogBtn && globalEventLogBlock) {
+
+                closeEventLogBtn.onclick = () => {
+
+                    globalEventLogBlock.classList.add('hidden');
+
+                };
+
+            }
         }
+
+        
 
         // Запускает приложение после загрузки страницы
         async function startApp() {
