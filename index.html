@@ -699,7 +699,7 @@
 
     <script>
 
-        const BUILD_VERSION = '2026-07-10 15:14';
+        const BUILD_VERSION = '2026-07-10 15:28';
 
             // =========================
             // GoDrive CRM constants
@@ -2566,6 +2566,20 @@
                     'input',
                     filterStudents
                 );
+            }
+
+            const eventPeriodFilter =
+                document.getElementById(
+                    'event-period-filter'
+                );
+
+            if (eventPeriodFilter) {
+
+                eventPeriodFilter.addEventListener(
+                    'change',
+                    refreshGlobalEventLog
+                );
+
             }
 
             const showEventLogBtn =
