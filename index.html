@@ -684,7 +684,7 @@
 
     <script>
 
-        const BUILD_VERSION = '2026-07-10 08:32';
+        const BUILD_VERSION = '2026-07-10 09:28';
 
             // =========================
             // GoDrive CRM constants
@@ -3095,6 +3095,15 @@
 
             });
 
+            const studentMap = {};
+
+            students.forEach(student => {
+
+                studentMap[student.id] =
+                    student.full_name;
+
+            });
+
             function formatEventValue(event, value) {
 
                 if (
@@ -3114,6 +3123,12 @@
                     <div>
                         <b>${getEventTitle(event)}</b>
                     </div>
+
+                    ${students.length ? `
+                        <div style="font-size:14px; color:#1f4e79; margin:4px 0;">
+                            👨‍🎓 ${studentMap[event.student_id] || `Ученик ID: ${event.student_id}`}
+                        </div>
+                    ` : ''}
 
                     <div style="font-size:13px; color:#666;">
                         ${new Date(event.created_at).toLocaleString('ru-RU')}
