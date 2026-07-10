@@ -713,7 +713,7 @@
 
     <script>
 
-        const BUILD_VERSION = '2026-07-10 21:17';
+        const BUILD_VERSION = '2026-07-10 21:51';
 
             // =========================
             // GoDrive CRM constants
@@ -3343,6 +3343,11 @@
             const searchText =
                 document.getElementById(
                     'event-log-search'
+                ).value;
+                
+            const userId =
+                document.getElementById(
+                    'event-user-filter'
                 ).value;    
 
             const preparedEvents =
@@ -3354,10 +3359,16 @@
                     period
                 );
 
-            const filteredEvents =
+            const searchFilteredEvents =
                 filterEventsBySearch(
                     periodFilteredEvents,
                     searchText
+                );
+
+            const filteredEvents =
+                filterEventsByEmployee(
+                    searchFilteredEvents,
+                    userId
                 );
 
             renderEventLog(
