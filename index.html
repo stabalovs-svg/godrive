@@ -483,6 +483,21 @@
         <div id="global-event-log-block" class="hidden">
         
             <h3>📜 Журнал событий CRM</h3>
+
+            <div class="event-log-filters">
+            
+                <label for="event-period-filter">
+                    Период:
+                </label>
+            
+                <select id="event-period-filter">
+                    <option value="all">Все записи</option>
+                    <option value="today">Сегодня</option>
+                    <option value="7days">Последние 7 дней</option>
+                    <option value="30days">Последние 30 дней</option>
+                </select>
+            
+            </div>
         
             <button id="close-event-log-btn">
                 Закрыть журнал
@@ -684,7 +699,7 @@
 
     <script>
 
-        const BUILD_VERSION = '2026-07-10 09:28';
+        const BUILD_VERSION = '2026-07-10 10:15';
 
             // =========================
             // GoDrive CRM constants
