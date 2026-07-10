@@ -699,7 +699,7 @@
 
     <script>
 
-        const BUILD_VERSION = '2026-07-10 14:52';
+        const BUILD_VERSION = '2026-07-10 15:14';
 
             // =========================
             // GoDrive CRM constants
@@ -2599,22 +2599,7 @@ eventLogStudents =
                     allEvents =
                         await loadAllEvents();
 
-                    const period =
-                        document.getElementById('event-period-filter').value;
-
-                    const filteredEvents =
-                        filterEventsByPeriod(
-                            allEvents,
-                            period
-                        );
-
-                    renderEventLog(
-                        filteredEvents,
-                        eventLogInstructors,
-                        eventLogProfiles,
-                        'global-event-log-list',
-                        eventLogStudents
-                    );
+                    refreshGlobalEventLog();
 
                     globalEventLogBlock.scrollIntoView({
                         behavior: 'smooth',
@@ -3219,7 +3204,7 @@ eventLogStudents =
 
         }
 
-    /*    function refreshGlobalEventLog() {
+        function refreshGlobalEventLog() {
 
             const period =
                 document.getElementById(
@@ -3234,13 +3219,13 @@ eventLogStudents =
 
             renderEventLog(
                 filteredEvents,
-                instructors,
-                profiles,
+                eventLogInstructors,
+                eventLogProfiles,
                 'global-event-log-list',
-                students
+                eventLogStudents
             );
 
-        }   */
+        }   
 
         function getEventTitle(event) {
 
