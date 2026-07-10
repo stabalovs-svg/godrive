@@ -699,7 +699,7 @@
 
     <script>
 
-        const BUILD_VERSION = '2026-07-10 12:24';
+        const BUILD_VERSION = '2026-07-10 14:52';
 
             // =========================
             // GoDrive CRM constants
@@ -1174,6 +1174,9 @@
         let currentUser = null;
         let currentRole = null; // 'manager' | 'admin' | 'instructor'
         let allEvents = [];
+        let eventLogInstructors = [];
+        let eventLogProfiles = [];
+        let eventLogStudents = [];
         let crmInitialized = false;
         let authRecoveryStarted = false;
         let loginBlock = null;
@@ -2584,14 +2587,14 @@
 
                     globalEventLogBlock.classList.remove('hidden');
 
-                    const instructors =
-                        await loadInstructors();
+                    eventLogInstructors =
+    await loadInstructors();
 
-                    const profiles =
-                        await loadProfiles();
+eventLogProfiles =
+    await loadProfiles();
 
-                    const students =
-                        await loadStudentNames();    
+eventLogStudents =
+    await loadStudentNames();    
 
                     allEvents =
                         await loadAllEvents();
@@ -2607,10 +2610,10 @@
 
                     renderEventLog(
                         filteredEvents,
-                        instructors,
-                        profiles,
+                        eventLogInstructors,
+                        eventLogProfiles,
                         'global-event-log-list',
-                        students
+                        eventLogStudents
                     );
 
                     globalEventLogBlock.scrollIntoView({
@@ -3215,6 +3218,29 @@
             });
 
         }
+
+    /*    function refreshGlobalEventLog() {
+
+            const period =
+                document.getElementById(
+                    'event-period-filter'
+                ).value;
+
+            const filteredEvents =
+                filterEventsByPeriod(
+                    allEvents,
+                    period
+                );
+
+            renderEventLog(
+                filteredEvents,
+                instructors,
+                profiles,
+                'global-event-log-list',
+                students
+            );
+
+        }   */
 
         function getEventTitle(event) {
 
