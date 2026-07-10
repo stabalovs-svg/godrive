@@ -705,7 +705,7 @@
 
     <script>
 
-        const BUILD_VERSION = '2026-07-10 16:23';
+        const BUILD_VERSION = '2026-07-10 16:55';
 
             // =========================
             // GoDrive CRM constants
@@ -3251,6 +3251,29 @@ eventLogStudents =
                     title.includes(searchText);
 
             });
+
+        }
+
+        function prepareEvents(events) {
+
+            return events.map(event => ({
+
+                ...event,
+
+                student_name:
+                    eventLogStudents.find(
+                        student => student.id === event.student_id
+                    )?.full_name || '',
+
+                user_name:
+                    eventLogProfiles.find(
+                        profile => profile.id === event.user_id
+                    )?.full_name || '',
+
+                event_title:
+                    getEventTitle(event)
+
+            }));
 
         }
 
