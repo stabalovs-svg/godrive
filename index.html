@@ -713,7 +713,7 @@
 
     <script>
 
-        const BUILD_VERSION = '2026-07-10 20:16';
+        const BUILD_VERSION = '2026-07-10 20:51';
 
             // =========================
             // GoDrive CRM constants
@@ -2630,13 +2630,35 @@
                     globalEventLogBlock.classList.remove('hidden');
 
                     eventLogInstructors =
-    await loadInstructors();
+                        await loadInstructors();
 
-eventLogProfiles =
-    await loadProfiles();
+                    eventLogProfiles =
+                        await loadProfiles();
 
-eventLogStudents =
-    await loadStudentNames();    
+                    const employeeFilter =
+                        document.getElementById(
+                            'event-user-filter'
+                        );
+
+                    if (employeeFilter) {
+
+                        employeeFilter.innerHTML =
+                            '<option value="">Все сотрудники</option>';
+
+                        eventLogProfiles.forEach(profile => {
+
+                            employeeFilter.innerHTML += `
+                                <option value="${profile.id}">
+                                    ${profile.full_name}
+                                </option>
+                            `;
+
+                        });
+
+                    }    
+
+                    eventLogStudents =
+                        await loadStudentNames();    
 
                     allEvents =
                         await loadAllEvents();
