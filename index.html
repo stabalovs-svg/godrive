@@ -699,7 +699,7 @@
 
     <script>
 
-        const BUILD_VERSION = '2026-07-10 12:11';
+        const BUILD_VERSION = '2026-07-10 12:24';
 
             // =========================
             // GoDrive CRM constants
@@ -1173,6 +1173,7 @@
         let supabaseClient = null;
         let currentUser = null;
         let currentRole = null; // 'manager' | 'admin' | 'instructor'
+        let allEvents = [];
         let crmInitialized = false;
         let authRecoveryStarted = false;
         let loginBlock = null;
@@ -2592,7 +2593,7 @@
                     const students =
                         await loadStudentNames();    
 
-                    const events =
+                    allEvents =
                         await loadAllEvents();
 
                     const period =
@@ -2600,7 +2601,7 @@
 
                     const filteredEvents =
                         filterEventsByPeriod(
-                            events,
+                            allEvents,
                             period
                         );
 
