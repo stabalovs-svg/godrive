@@ -699,7 +699,7 @@
 
     <script>
 
-        const BUILD_VERSION = '2026-07-10 10:15';
+        const BUILD_VERSION = '2026-07-10 11:55';
 
             // =========================
             // GoDrive CRM constants
@@ -3162,6 +3162,47 @@
                 </div>
 
             `).join('');
+
+        }
+
+        function filterEventsByPeriod(events, period) {
+
+            if (period === 'all') {
+                return events;
+            }
+
+            const now = new Date();
+
+            return events.filter(event => {
+
+                const eventDate =
+                    new Date(event.created_at);
+
+                const diffDays =
+                    (now - eventDate) / (1000 * 60 * 60 * 24);
+
+                switch (period) {
+
+                    case 'today':
+
+                        return diffDays < 1 &&
+                            eventDate.getDate() === now.getDate();
+
+                    case '7days':
+
+                        return diffDays <= 7;
+
+                    case '30days':
+
+                        return diffDays <= 30;
+
+                    default:
+
+                        return true;
+
+                }
+
+            });
 
         }
 
