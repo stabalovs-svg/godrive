@@ -751,7 +751,7 @@
 
     <script>
 
-        const BUILD_VERSION = '2026-07-11 13:33';
+        const BUILD_VERSION = '2026-07-11 23:14';
 
             // =========================
             // GoDrive CRM constants
@@ -1876,6 +1876,7 @@
                 .select(`
                     status,
                     theory_start_date,
+                    completed_at,
                     instructor_id,
                     course_price,
                     contract_date,
@@ -1985,6 +1986,17 @@
                     'THEORY START DATE =',
                     updateData.theory_start_date
                 );
+            }
+
+            if (
+                oldStudent &&
+                updateData.status === APP.STATUS.DRIVING_PASSED &&
+                !oldStudent.completed_at
+            ) {
+
+                updateData.completed_at =
+                    new Date().toISOString().split('T')[0];
+
             }
 
             console.log('SAVE ID =', id);
