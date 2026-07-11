@@ -727,7 +727,7 @@
 
     <script>
 
-        const BUILD_VERSION = '2026-07-11 10:22';
+        const BUILD_VERSION = '2026-07-11 11:55';
 
             // =========================
             // GoDrive CRM constants
@@ -1708,6 +1708,24 @@
                 addContainer.style.display = 'none';
             }
             renderRowActions();
+
+            const eventLogButton =
+                document.getElementById('show-event-log-btn');
+
+            if (eventLogButton) {
+
+                if (isInstructor()) {
+
+                    eventLogButton.style.display = 'none';
+
+                } else {
+
+                    eventLogButton.style.display = '';
+
+                }
+
+            }
+
         }
             
             // Создает кнопки действий для строк таблицы
