@@ -751,7 +751,7 @@
 
     <script>
 
-        const BUILD_VERSION = '2026-07-11 13:12';
+        const BUILD_VERSION = '2026-07-11 13:33';
 
             // =========================
             // GoDrive CRM constants
@@ -948,13 +948,16 @@
             );
 
             if (diff === 0)
-                return "🎂 Сегодня День рождения";
+                return '🎉 Сегодня День рождения';
+
+            if (diff === 1)
+                return '🎂 Завтра День рождения';
+
+            if (diff === 2)
+                return '🎂 Через 2 дня День рождения';
 
             if (diff === 3)
-                return "🎂 Через 3 дня День рождения";
-
-            if (diff === 10)
-                return "🎂 Через 10 дней День рождения";
+                return '🎂 Через 3 дня День рождения';
 
             return null;
         }
@@ -1098,8 +1101,9 @@
 
                     if (
                         diff === 0 ||
-                        diff === 3 ||
-                        diff === 10
+                        diff === 1 ||
+                        diff === 2 ||
+                        diff === 3
                     ) {
 
                         dashboard.birthdayCount++;
