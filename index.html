@@ -512,6 +512,20 @@
             <select id="event-user-filter">
                 <option value="">Все сотрудники</option>
             </select>
+
+            <label for="event-type-filter">
+                Событие:
+            </label>
+            
+            <select id="event-type-filter">
+                <option value="">Все события</option>
+                <option value="student_created">Создание ученика</option>
+                <option value="payment_added">Платежи</option>
+                <option value="status_changed">Изменения статуса</option>
+                <option value="instructor_changed">Изменения инструктора</option>
+                <option value="contract_changed">Изменения договора</option>
+                <option value="student_updated">Изменения данных</option>
+            </select>
         
             <button id="close-event-log-btn">
                 Закрыть журнал
@@ -713,7 +727,7 @@
 
     <script>
 
-        const BUILD_VERSION = '2026-07-10 22:00';
+        const BUILD_VERSION = '2026-07-11 08:37';
 
             // =========================
             // GoDrive CRM constants
