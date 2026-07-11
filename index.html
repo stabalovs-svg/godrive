@@ -727,7 +727,7 @@
 
     <script>
 
-        const BUILD_VERSION = '2026-07-11 10:08';
+        const BUILD_VERSION = '2026-07-11 10:22';
 
             // =========================
             // GoDrive CRM constants
@@ -2618,6 +2618,20 @@
             if (eventUserFilter) {
 
                 eventUserFilter.addEventListener(
+                    'change',
+                    refreshGlobalEventLog
+                );
+
+            }
+
+            const eventTypeFilter =
+                document.getElementById(
+                    'event-type-filter'
+                );
+
+            if (eventTypeFilter) {
+
+                eventTypeFilter.addEventListener(
                     'change',
                     refreshGlobalEventLog
                 );
