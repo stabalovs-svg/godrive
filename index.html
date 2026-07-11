@@ -544,6 +544,10 @@
         <div class="modal-content">
     
             <h3>Карточка ученика</h3>
+
+            <button id="close-modal-top" type="button">
+                Закрыть
+            </button>
             
             <p>
                 <b>ФИО:</b><br>
@@ -732,7 +736,7 @@
 
     <script>
 
-        const BUILD_VERSION = '2026-07-11 12:28';
+        const BUILD_VERSION = '2026-07-11 12:49';
 
             // =========================
             // GoDrive CRM constants
@@ -2804,6 +2808,21 @@
                     document.getElementById('student-modal')
                         .classList.add('hidden');
                 };
+            }
+
+            const closeTopBtn =
+                document.getElementById('close-modal-top');
+
+            if (closeTopBtn) {
+
+                closeTopBtn.onclick = () => {
+
+                    document
+                        .getElementById('student-modal')
+                        .classList.add('hidden');
+
+                };
+
             }
         }
 
