@@ -354,6 +354,21 @@
         .event-student_updated {
             border-left-color: #607d8b;
         }
+
+        .student-name-btn {
+            padding: 0;
+            border: none;
+            background: none;
+            color: #1f4e79;
+            font: inherit;
+            font-weight: 600;
+            text-align: left;
+            cursor: pointer;
+        }
+
+        .student-name-btn:hover {
+            text-decoration: underline;
+        }
         
     </style>
 </head>
@@ -736,7 +751,7 @@
 
     <script>
 
-        const BUILD_VERSION = '2026-07-11 12:49';
+        const BUILD_VERSION = '2026-07-11 13:12';
 
             // =========================
             // GoDrive CRM constants
@@ -1476,7 +1491,14 @@
                         data-id="${student.id}"
                         class="${getRowClass(student)}"
                     >
-                        <td class="s-full_name">${student.full_name || ''}</td>
+                        <td class="s-full_name">
+                            <button
+                                type="button"
+                                class="student-name-btn"
+                            >
+                                ${student.full_name || ''}
+                            </button>
+                        </td>
                         <td class="s-phone">${student.phone || ''}</td>
                         <td class="s-email">${student.email || ''}</td>
                         <td class="s-payment">
@@ -1780,6 +1802,9 @@
 
                 document.querySelectorAll('.card-btn')
                     .forEach(btn => btn.onclick = openStudentCard);
+
+                document.querySelectorAll('.student-name-btn')
+                    .forEach(btn => btn.onclick = openStudentCard);    
 
                 document.querySelectorAll('.edit-btn')
                     .forEach(btn => btn.onclick = onEditRow);
