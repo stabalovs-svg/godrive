@@ -774,7 +774,7 @@
 
     <script>
 
-        const BUILD_VERSION = '2026-07-12 20:22';
+        const BUILD_VERSION = '2026-07-12 23:02';
 
             // =========================
             // GoDrive CRM constants
@@ -1153,6 +1153,64 @@
                 'AUTO ARCHIVE CANDIDATES',
                 candidates
             );
+
+        }
+
+        async function archiveStudentAutomatically(
+            studentId,
+            reason
+        ) {
+
+            const { error } =
+                await supabaseClient
+                    .from('students')
+                    .update({
+
+                        archived: true,
+
+                        archived_at:
+                            new Date().toISOString(),
+
+                        archive_reason:
+                            reason
+
+                    })
+                    .eq('id', studentId);
+
+            if (error) {
+
+                console.error(
+                    'AUTO ARCHIVE UPDATE ERROR',
+                    error
+                );
+
+                return false;
+
+            }
+
+            await addEvent({
+
+                studentId: studentId,
+
+                eventType: 'student_archived',
+
+                description:
+                    'Ученик автоматически отправлен в архив',
+
+                newValue:
+                    reason,
+
+                metadata: {
+
+                    mode: 'automatic',
+
+                    reason: reason
+
+                }
+
+            });
+
+            return true;
 
         }
 
