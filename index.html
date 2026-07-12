@@ -759,7 +759,7 @@
 
     <script>
 
-        const BUILD_VERSION = '2026-07-12 14:52';
+        const BUILD_VERSION = '2026-07-12 15:22';
 
             // =========================
             // GoDrive CRM constants
@@ -2780,6 +2780,29 @@
                     'input',
                     filterStudents
                 );
+            }
+
+            const archiveToggleBtn =
+                document.getElementById(
+                    'archive-toggle-btn'
+                );
+
+            if (archiveToggleBtn) {
+
+                archiveToggleBtn.onclick = async () => {
+
+                    showArchivedStudents =
+                        !showArchivedStudents;
+
+                    archiveToggleBtn.textContent =
+                        showArchivedStudents
+                            ? '👥 Активные'
+                            : '📦 Архив';
+
+                    await loadStudents();
+
+                };
+
             }
 
             const eventPeriodFilter =
