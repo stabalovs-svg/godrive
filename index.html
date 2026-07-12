@@ -756,7 +756,7 @@
 
     <script>
 
-        const BUILD_VERSION = '2026-07-12 08:37';
+        const BUILD_VERSION = '2026-07-12 09:03';
 
             // =========================
             // GoDrive CRM constants
@@ -2149,6 +2149,71 @@
 
             await loadStudents();
         }
+
+        async function archiveStudent() {
+
+            if (
+                !confirm(
+                    'Отправить ученика в архив?'
+                )
+            ) {
+                return;
+            }
+
+            const id =
+                window.currentStudentId;
+
+            const { error } =
+                await supabaseClient
+                    .from('students')
+                    .update({
+
+                        archived: true,
+
+                        archived_at:
+                            new Date().toISOString(),
+
+                        archive_reason:
+                            'manual'
+
+                    })
+                    .eq('id', id);
+
+            if (error) {
+
+                alert(error.message);
+
+                return;
+
+            }
+
+            await addEvent({
+
+                studentId: id,
+
+                eventType: 'student_archived',
+
+                description:
+                    'Ученик отправлен в архив',
+
+                newValue:
+                    'manual'
+
+            });
+
+            alert(
+                'Ученик отправлен в архив'
+            );
+
+            document
+                .getElementById(
+                    'student-modal'
+                )
+                .classList.add('hidden');
+
+            await loadStudents();
+
+        }
         
             // Открывает карточку ученика
         async function openStudentCard(e) {
@@ -2889,6 +2954,19 @@
                 };
 
             }
+
+            const archiveStudentBtn =
+                document.getElementById(
+                    'archive-student-btn'
+                );
+
+            if (archiveStudentBtn) {
+
+                archiveStudentBtn.onclick =
+                    archiveStudent;
+
+            }
+
         }
 
         window.addEventListener('load', startApp);
