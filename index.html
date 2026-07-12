@@ -774,7 +774,7 @@
 
     <script>
 
-        const BUILD_VERSION = '2026-07-12 23:02';
+        const BUILD_VERSION = '2026-07-12 23:24';
 
             // =========================
             // GoDrive CRM constants
@@ -1152,6 +1152,38 @@
             console.log(
                 'AUTO ARCHIVE CANDIDATES',
                 candidates
+            );
+
+            if (candidates.length === 0) {
+
+                alert(
+                    'Нет учеников для автоматического архивирования.'
+                );
+
+                return;
+
+            }
+
+            const message =
+                candidates
+                    .map(student =>
+                        `${student.full_name}\nПричина: ${getArchiveReasonTitle(
+                            student.reason
+                        )
+                        }`
+                    )
+                    .join('\n\n');
+
+            if (
+                !confirm(
+                    `Найдено кандидатов: ${candidates.length}\n\n${message}\n\nАрхивировать автоматически?`
+                )
+            ) {
+                return;
+            }
+
+            console.log(
+                'AUTO ARCHIVE CONFIRMED'
             );
 
         }
@@ -4023,6 +4055,26 @@
 
                 default:
                     return event.event_type;
+
+            }
+
+        }
+
+        function getArchiveReasonTitle(reason) {
+
+            switch (reason) {
+
+                case 'completed':
+                    return 'Прошло 30 дней после окончания обучения';
+
+                case 'expired':
+                    return 'Истёк срок обучения';
+
+                case 'manual':
+                    return 'Ручной архив';
+
+                default:
+                    return reason || '';
 
             }
 
