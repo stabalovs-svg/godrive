@@ -771,7 +771,7 @@
 
     <script>
 
-        const BUILD_VERSION = '2026-07-12 17:28';
+        const BUILD_VERSION = '2026-07-12 18:20';
 
             // =========================
             // GoDrive CRM constants
@@ -1036,6 +1036,72 @@
             }
 
             return '';
+        }
+
+        function getAutomaticArchiveReason(student) {
+
+            if (!student || student.archived) {
+                return null;
+            }
+
+            const today = new Date();
+            today.setHours(0, 0, 0, 0);
+
+
+            // 1. Прошло 30 дней после успешного окончания обучения
+
+            if (student.completed_at) {
+
+                const completedDate =
+                    new Date(student.completed_at);
+
+                completedDate.setHours(0, 0, 0, 0);
+
+                const archiveDate =
+                    new Date(completedDate);
+
+                archiveDate.setDate(
+                    archiveDate.getDate() + 30
+                );
+
+                if (today >= archiveDate) {
+                    return 'completed';
+                }
+
+            }
+
+
+            // 2. Закончился допустимый срок обучения
+
+            if (
+                !student.theory_start_date ||
+                student.status === APP.STATUS.NEW
+            ) {
+                return null;
+            }
+
+            const startDate =
+                new Date(student.theory_start_date);
+
+            startDate.setHours(0, 0, 0, 0);
+
+            const passedDays =
+                Math.floor(
+                    (today - startDate) /
+                    (1000 * 60 * 60 * 24)
+                );
+
+            const limitDays =
+                student.status === APP.STATUS.THEORY
+                    ? APP.LIMITS.THEORY_DAYS
+                    : APP.LIMITS.DRIVING_DAYS;
+
+            if (passedDays > limitDays) {
+                return 'expired';
+            }
+
+            return null;
+
         }
 
         function calculateDashboard(data) {
