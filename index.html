@@ -756,7 +756,7 @@
 
     <script>
 
-        const BUILD_VERSION = '2026-07-12 09:03';
+        const BUILD_VERSION = '2026-07-12 10:09';
 
             // =========================
             // GoDrive CRM constants
@@ -1426,6 +1426,7 @@
                         supabaseClient
                             .from('students')
                             .select('*');
+                            .eq('archived', false);
 
                     if (isInstructor()) {
 
