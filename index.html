@@ -759,7 +759,7 @@
 
     <script>
 
-        const BUILD_VERSION = '2026-07-12 15:53';
+        const BUILD_VERSION = '2026-07-12 16:57';
 
             // =========================
             // GoDrive CRM constants
@@ -2222,6 +2222,71 @@
             await loadStudents();
 
         }
+
+        async function restoreStudent() {
+
+            if (
+                !confirm(
+                    'Вернуть ученика в активный список?'
+                )
+            ) {
+                return;
+            }
+
+            const id =
+                window.currentStudentId;
+
+            const { error } =
+                await supabaseClient
+                    .from('students')
+                    .update({
+
+                        archived: false,
+
+                        archived_at: null,
+
+                        archive_reason: null
+
+                    })
+                    .eq('id', id);
+
+            if (error) {
+
+                alert(
+                    'Ошибка восстановления: ' +
+                    error.message
+                );
+
+                return;
+
+            }
+
+            await addEvent({
+
+                studentId: id,
+
+                eventType: 'student_restored',
+
+                description:
+                    'Ученик восстановлен из архива',
+
+                oldValue: 'archived',
+
+                newValue: 'active'
+
+            });
+
+            alert(
+                'Ученик восстановлен'
+            );
+
+            document
+                .getElementById('student-modal')
+                .classList.add('hidden');
+
+            await loadStudents();
+
+        }
         
             // Открывает карточку ученика
         async function openStudentCard(e) {
@@ -2471,14 +2536,15 @@
 
                 }
 
-                if (archiveStudentBtn) {
+                archiveStudentBtn.textContent =
+                    student.archived
+                        ? '↩️ Восстановить'
+                        : '📦 В архив';
 
-                    archiveStudentBtn.textContent =
-                        student.archived
-                            ? '↩️ Восстановить'
-                            : '📦 В архив';
-
-                }
+                archiveStudentBtn.onclick =
+                    student.archived
+                        ? restoreStudent
+                        : archiveStudent;
 
             }
 
@@ -2995,7 +3061,7 @@
 
             }
 
-            const archiveStudentBtn =
+            /*const archiveStudentBtn =
                 document.getElementById(
                     'archive-student-btn'
                 );
@@ -3005,7 +3071,7 @@
                 archiveStudentBtn.onclick =
                     archiveStudent;
 
-            }
+            }*/
 
         }
 
