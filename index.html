@@ -759,7 +759,7 @@
 
     <script>
 
-        const BUILD_VERSION = '2026-07-12 14:06';
+        const BUILD_VERSION = '2026-07-12 14:52';
 
             // =========================
             // GoDrive CRM constants
@@ -1238,6 +1238,7 @@
         let currentUser = null;
         let currentRole = null; // 'manager' | 'admin' | 'instructor'
         let allEvents = [];
+        let showArchivedStudents = false;
         let eventLogInstructors = [];
         let eventLogProfiles = [];
         let eventLogStudents = [];
@@ -1429,7 +1430,10 @@
                         supabaseClient
                             .from('students')
                             .select('*')
-                            .eq('archived', false);
+                            .eq(
+                                'archived',
+                                showArchivedStudents
+                            );
 
                     if (isInstructor()) {
 
