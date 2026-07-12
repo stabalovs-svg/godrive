@@ -741,17 +741,22 @@
             <button id="save-student-btn">
                 Сохранить
             </button>
+
+            <button id="archive-student-btn" type="button">
+                📦 В архив
+            </button>
             
             <button id="close-modal">
                 Закрыть
             </button>
+
         </div>
             
     </div>
 
     <script>
 
-        const BUILD_VERSION = '2026-07-11 23:14';
+        const BUILD_VERSION = '2026-07-12 08:37';
 
             // =========================
             // GoDrive CRM constants
@@ -2373,6 +2378,25 @@
                     instructors,
                     profiles
                 );
+
+            }
+
+            const archiveStudentBtn =
+                document.getElementById(
+                    'archive-student-btn'
+                );
+
+            if (archiveStudentBtn) {
+
+                if (isInstructor()) {
+
+                    archiveStudentBtn.style.display = 'none';
+
+                } else {
+
+                    archiveStudentBtn.style.display = '';
+
+                }
 
             }
 
