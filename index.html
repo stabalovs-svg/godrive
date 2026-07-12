@@ -465,6 +465,9 @@
             <button id="archive-toggle-btn" type="button">
                 📦 Архив
             </button>
+            <button id="check-auto-archive-btn" type="button">
+                🧪 Проверить автоархив
+            </button>
         </div>
                         
         <table id="students-table">
@@ -771,7 +774,7 @@
 
     <script>
 
-        const BUILD_VERSION = '2026-07-12 18:20';
+        const BUILD_VERSION = '2026-07-12 20:22';
 
             // =========================
             // GoDrive CRM constants
@@ -1101,6 +1104,55 @@
             }
 
             return null;
+
+        }
+
+        async function checkStudentsForAutoArchive() {
+
+            const { data, error } =
+                await supabaseClient
+                    .from('students')
+                    .select('*')
+                    .eq('archived', false);
+
+            if (error) {
+
+                console.error(
+                    'AUTO ARCHIVE ERROR',
+                    error
+                );
+
+                return;
+
+            }
+
+            const candidates = [];
+
+            data.forEach(student => {
+
+                const reason =
+                    getAutomaticArchiveReason(student);
+
+                if (reason) {
+
+                    candidates.push({
+
+                        id: student.id,
+
+                        full_name: student.full_name,
+
+                        reason: reason
+
+                    });
+
+                }
+
+            });
+
+            console.log(
+                'AUTO ARCHIVE CANDIDATES',
+                candidates
+            );
 
         }
 
@@ -1849,6 +1901,20 @@
                     eventLogButton.style.display = '';
 
                 }
+
+            }
+
+            const checkAutoArchiveBtn =
+                document.getElementById(
+                    'check-auto-archive-btn'
+                );
+
+            if (checkAutoArchiveBtn) {
+
+                checkAutoArchiveBtn.style.display =
+                    isInstructor()
+                        ? 'none'
+                        : '';
 
             }
 
@@ -2967,6 +3033,25 @@
                             : '📦 Архив';
 
                     await loadStudents();
+
+                };
+
+            }
+                /* временная кнопка для ручной проверки автоархивации */
+            const checkAutoArchiveBtn =
+                document.getElementById(
+                    'check-auto-archive-btn'
+                );
+
+            if (checkAutoArchiveBtn) {
+
+                checkAutoArchiveBtn.onclick = async () => {
+
+                    console.log(
+                        'MANUAL AUTO ARCHIVE CHECK'
+                    );
+
+                    await checkStudentsForAutoArchive();
 
                 };
 
