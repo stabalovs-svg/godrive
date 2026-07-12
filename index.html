@@ -759,7 +759,7 @@
 
     <script>
 
-        const BUILD_VERSION = '2026-07-12 15:22';
+        const BUILD_VERSION = '2026-07-12 15:53';
 
             // =========================
             // GoDrive CRM constants
@@ -2468,6 +2468,15 @@
                 } else {
 
                     archiveStudentBtn.style.display = '';
+
+                }
+
+                if (archiveStudentBtn) {
+
+                    archiveStudentBtn.textContent =
+                        student.archived
+                            ? '↩️ Восстановить'
+                            : '📦 В архив';
 
                 }
 
