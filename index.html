@@ -563,6 +563,18 @@
     
             <h3>Карточка ученика</h3>
 
+            <div id="student-archive-banner" class="hidden" style="
+                    margin:10px 0;
+                    padding:10px;
+                    background:#fff3cd;
+                    border:1px solid #ffe69c;
+                    border-radius:6px;
+                    color:#856404;
+                    font-weight:bold;
+                ">
+                📦 Ученик находится в архиве
+            </div>
+
             <button id="close-modal-top" type="button">
                 Закрыть
             </button>
@@ -759,7 +771,7 @@
 
     <script>
 
-        const BUILD_VERSION = '2026-07-12 16:57';
+        const BUILD_VERSION = '2026-07-12 17:28';
 
             // =========================
             // GoDrive CRM constants
@@ -2548,6 +2560,20 @@
 
             }
 
+            const archiveBanner =
+                document.getElementById(
+                    'student-archive-banner'
+                );
+
+            if (archiveBanner) {
+
+                archiveBanner.classList.toggle(
+                    'hidden',
+                    !student.archived
+                );
+
+            }
+
             document.getElementById('save-student-btn').onclick = 
                 saveStudent;
 
@@ -3779,6 +3805,12 @@
 
                 case 'student_updated':
                     return '📝 Изменены данные';
+
+                case 'student_archived':
+                    return '📦 Ученик архивирован';
+
+                case 'student_restored':
+                    return '↩️ Ученик восстановлен';    
 
                 default:
                     return event.event_type;
