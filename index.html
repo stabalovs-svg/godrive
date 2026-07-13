@@ -832,7 +832,7 @@
 
     <script>
 
-        const BUILD_VERSION = '2026-07-13 22:49';
+        const BUILD_VERSION = '2026-07-13 22:56';
 
             // =========================
             // GoDrive CRM constants
@@ -3758,6 +3758,66 @@
             );
 
             return data;
+
+        }
+
+        async function saveAppSettings() {
+
+            const schoolName =
+                document.getElementById(
+                    'settings-school-name'
+                ).value.trim();
+
+            const productName =
+                document.getElementById(
+                    'settings-product-name'
+                ).value.trim();
+
+            const tagline =
+                document.getElementById(
+                    'settings-tagline'
+                ).value.trim();
+
+            const { error } =
+                await supabaseClient
+                    .from('app_settings')
+                    .update({
+
+                        school_name: schoolName,
+
+                        product_name: productName,
+
+                        tagline: tagline,
+
+                        updated_at:
+                            new Date().toISOString()
+
+                    })
+                    .eq('id', 1);
+
+            if (error) {
+
+                console.error(
+                    'SAVE SETTINGS ERROR',
+                    error
+                );
+
+                alert(
+                    'Ошибка сохранения настроек.'
+                );
+
+                return;
+
+            }
+
+            appSettings =
+                await loadAppSettings();
+
+            applyBranding();
+
+            alert(
+                'Настройки сохранены.'
+            );
 
         }
 
