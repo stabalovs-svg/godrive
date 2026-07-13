@@ -832,7 +832,7 @@
 
     <script>
 
-        const BUILD_VERSION = '2026-07-13 21:41';
+        const BUILD_VERSION = '2026-07-13 22:25';
 
             // =========================
             // GoDrive CRM constants
@@ -3274,13 +3274,22 @@
 
                 settingsBtn.onclick = () => {
 
-                    document
-                        .getElementById(
+                    const settingsModal =
+                        document.getElementById(
                             'settings-modal'
-                        )
-                        .classList.remove(
-                            'hidden'
                         );
+
+                    settingsModal.classList.remove(
+                        'hidden'
+                    );
+
+                    settingsModal.scrollIntoView({
+
+                        behavior: 'smooth',
+
+                        block: 'start'
+
+                    });
 
                 };
 
