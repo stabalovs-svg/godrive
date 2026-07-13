@@ -400,6 +400,9 @@
         <button id="show-event-log-btn">
             📜 Журнал событий
         </button>
+        <button id="settings-btn" type="button">
+            ⚙️ Настройки
+        </button>
 
         <!-- ФОРМА ДОБАВЛЕНИЯ УЧЕНИКА -->
         <div id="add-student-container"
@@ -575,6 +578,44 @@
         
         </div>
 
+    </div>
+
+    <div id="settings-modal" class="modal hidden">
+    
+        <div class="modal-content">
+    
+            <h3>
+                ⚙️ Настройки
+            </h3>
+    
+            <label>
+                Название автошколы
+            </label>
+    
+            <input id="settings-school-name" type="text">
+    
+            <label>
+                Название продукта
+            </label>
+    
+            <input id="settings-product-name" type="text">
+    
+            <label>
+                Слоган
+            </label>
+    
+            <input id="settings-tagline" type="text">
+    
+            <button id="save-settings-btn" type="button">
+                💾 Сохранить
+            </button>
+    
+            <button id="close-settings-btn" type="button">
+                Закрыть
+            </button>
+    
+        </div>
+    
     </div>
 
     <div id="student-modal" class="hidden">
@@ -791,7 +832,7 @@
 
     <script>
 
-        const BUILD_VERSION = '2026-07-13 20:02';
+        const BUILD_VERSION = '2026-07-13 20:30';
 
             // =========================
             // GoDrive CRM constants
