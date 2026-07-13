@@ -428,8 +428,15 @@
         <div class="crm-header">
         
             <div class="crm-title">
-                <h2>GoDrive CRM</h2>
-                <span>Система управления автошколой</span>
+            
+                <h2 id="crm-product-name">
+                    AutoSchool CRM
+                </h2>
+            
+                <span id="crm-school-name">
+                    GoDrive
+                </span>
+            
             </div>
         
             <div id="dashboard-bar" class="dashboard-bar">
@@ -774,7 +781,7 @@
 
     <script>
 
-        const BUILD_VERSION = '2026-07-13 11:15';
+        const BUILD_VERSION = '2026-07-13 16:02';
 
             // =========================
             // GoDrive CRM constants
@@ -2971,6 +2978,34 @@
             });
         }
 
+        function applyBranding() {
+
+            const crmProductName =
+                document.getElementById(
+                    'crm-product-name'
+                );
+
+            const crmSchoolName =
+                document.getElementById(
+                    'crm-school-name'
+                );
+
+            if (crmProductName) {
+
+                crmProductName.textContent =
+                    APP.BRAND.PRODUCT_NAME;
+
+            }
+
+            if (crmSchoolName) {
+
+                crmSchoolName.textContent =
+                    APP.BRAND.SCHOOL_NAME;
+
+            }
+
+        }
+
             // Подключает обработчики событий
         function attachEventHandlers() {
 
@@ -3322,6 +3357,7 @@
             console.log('STEP 2');
             
             initDomElements();
+            applyBranding();
             console.log('STEP 3');
 
             attachEventHandlers();
