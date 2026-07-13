@@ -781,7 +781,7 @@
 
     <script>
 
-        const BUILD_VERSION = '2026-07-13 16:02';
+        const BUILD_VERSION = '2026-07-13 16:37';
 
             // =========================
             // GoDrive CRM constants
@@ -3004,6 +3004,30 @@
 
             }
 
+            const footerProductName =
+                document.getElementById(
+                    'footer-product-name'
+                );
+
+            const footerSchoolName =
+                document.getElementById(
+                    'footer-school-name'
+                );
+
+            if (footerProductName) {
+
+                footerProductName.textContent =
+                    APP.BRAND.PRODUCT_NAME;
+
+            }
+
+            if (footerSchoolName) {
+
+                footerSchoolName.textContent =
+                    APP.BRAND.SCHOOL_NAME;
+
+            }
+
         }
 
             // Подключает обработчики событий
@@ -4254,11 +4278,21 @@
     
     <footer class="crm-footer">
     
-        GoDrive CRM v1.0.5
+        <span id="footer-product-name">
+            AutoSchool CRM
+        </span>
     
-        © 2026
-
-        Разработано специально для автошколы GoDrive
+        <span>
+            v1.0.5
+        </span>
+    
+        <span>
+            © 2026
+        </span>
+    
+        <span id="footer-school-name">
+            GoDrive
+        </span>
     
     </footer>
 </body>
