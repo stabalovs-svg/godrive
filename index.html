@@ -774,7 +774,7 @@
 
     <script>
 
-        const BUILD_VERSION = '2026-07-12 23:24';
+        const BUILD_VERSION = '2026-07-13 08:56';
 
             // =========================
             // GoDrive CRM constants
@@ -1185,6 +1185,28 @@
             console.log(
                 'AUTO ARCHIVE CONFIRMED'
             );
+
+            let archivedCount = 0;
+
+            for (const student of candidates) {
+
+                const success =
+                    await archiveStudentAutomatically(
+                        student.id,
+                        student.reason
+                    );
+
+                if (success) {
+                    archivedCount++;
+                }
+
+            }
+
+            alert(
+                `Автоматически архивировано учеников: ${archivedCount}`
+            );
+
+            await loadStudents();
 
         }
 
