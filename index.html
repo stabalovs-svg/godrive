@@ -781,7 +781,7 @@
 
     <script>
 
-        const BUILD_VERSION = '2026-07-13 16:37';
+        const BUILD_VERSION = '2026-07-13 19:24';
 
             // =========================
             // GoDrive CRM constants
@@ -3574,6 +3574,38 @@
                 return [];
 
             }
+
+            return data;
+
+        }
+
+        async function loadAppSettings() {
+
+            const { data, error } =
+                await supabaseClient
+                    .from('app_settings')
+                    .select('*')
+                    .order('id', {
+                        ascending: true
+                    })
+                    .limit(1)
+                    .single();
+
+            if (error) {
+
+                console.error(
+                    'APP SETTINGS LOAD ERROR',
+                    error
+                );
+
+                return null;
+
+            }
+
+            console.log(
+                'APP SETTINGS',
+                data
+            );
 
             return data;
 
