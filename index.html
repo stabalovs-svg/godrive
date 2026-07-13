@@ -781,7 +781,7 @@
 
     <script>
 
-        const BUILD_VERSION = '2026-07-13 19:24';
+        const BUILD_VERSION = '2026-07-13 19:40';
 
             // =========================
             // GoDrive CRM constants
@@ -1495,6 +1495,7 @@
         let currentUser = null;
         let currentRole = null; // 'manager' | 'admin' | 'instructor'
         let allEvents = [];
+        let appSettings = null;
         let showArchivedStudents = false;
         let eventLogInstructors = [];
         let eventLogProfiles = [];
@@ -2993,6 +2994,7 @@
             if (crmProductName) {
 
                 crmProductName.textContent =
+                    appSettings?.product_name ||
                     APP.BRAND.PRODUCT_NAME;
 
             }
@@ -3000,6 +3002,7 @@
             if (crmSchoolName) {
 
                 crmSchoolName.textContent =
+                    appSettings?.school_name ||
                     APP.BRAND.SCHOOL_NAME;
 
             }
@@ -3381,6 +3384,8 @@
             console.log('STEP 2');
             
             initDomElements();
+            appSettings =
+                await loadAppSettings();
             applyBranding();
             console.log('STEP 3');
 
