@@ -832,7 +832,7 @@
 
     <script>
 
-        const BUILD_VERSION = '2026-07-13 20:30';
+        const BUILD_VERSION = '2026-07-13 20:55';
 
             // =========================
             // GoDrive CRM constants
@@ -2083,6 +2083,20 @@
 
             }
 
+            const settingsBtn =
+                document.getElementById(
+                    'settings-btn'
+                );
+
+            if (settingsBtn) {
+
+                settingsBtn.style.display =
+                    isInstructor()
+                        ? 'none'
+                        : '';
+
+            }
+
             const checkAutoArchiveBtn =
                 document.getElementById(
                     'check-auto-archive-btn'
@@ -3250,6 +3264,49 @@
             } else {
                 console.warn('add student form element not found');
             }
+
+            const settingsBtn =
+                document.getElementById(
+                    'settings-btn'
+                );
+
+            if (settingsBtn) {
+
+                settingsBtn.onclick = () => {
+
+                    document
+                        .getElementById(
+                            'settings-modal'
+                        )
+                        .classList.remove(
+                            'hidden'
+                        );
+
+                };
+
+            }
+
+            const closeSettingsBtn =
+                document.getElementById(
+                    'close-settings-btn'
+                );
+
+            if (closeSettingsBtn) {
+
+                closeSettingsBtn.onclick = () => {
+
+                    document
+                        .getElementById(
+                            'settings-modal'
+                        )
+                        .classList.add(
+                            'hidden'
+                        );
+
+                };
+
+            }
+            
             const searchInput =
                 document.getElementById('student-search');
 
