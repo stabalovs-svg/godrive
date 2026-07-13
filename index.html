@@ -832,7 +832,7 @@
 
     <script>
 
-        const BUILD_VERSION = '2026-07-13 22:56';
+        const BUILD_VERSION = '2026-07-13 23:03';
 
             // =========================
             // GoDrive CRM constants
@@ -3328,6 +3328,18 @@
                         );
 
                 };
+
+            }
+
+            const saveSettingsBtn =
+                document.getElementById(
+                    'save-settings-btn'
+                );
+
+            if (saveSettingsBtn) {
+
+                saveSettingsBtn.onclick =
+                    saveAppSettings;
 
             }
             
