@@ -832,7 +832,7 @@
 
     <script>
 
-        const BUILD_VERSION = '2026-07-13 23:03';
+        const BUILD_VERSION = '2026-07-13 23:17';
 
             // =========================
             // GoDrive CRM constants
@@ -3098,6 +3098,7 @@
             if (footerProductName) {
 
                 footerProductName.textContent =
+                    appSettings?.product_name ||
                     APP.BRAND.PRODUCT_NAME;
 
             }
@@ -3105,6 +3106,7 @@
             if (footerSchoolName) {
 
                 footerSchoolName.textContent =
+                    appSettings?.school_name ||
                     APP.BRAND.SCHOOL_NAME;
 
             }
