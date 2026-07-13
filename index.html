@@ -369,6 +369,12 @@
         .student-name-btn:hover {
             text-decoration: underline;
         }
+
+        #crm-tagline {
+            margin-top: 4px;
+            color: #777;
+            font-size: 13px;
+        }
         
     </style>
 </head>
@@ -436,6 +442,10 @@
                 <span id="crm-school-name">
                     GoDrive
                 </span>
+            
+                <div id="crm-tagline">
+                    Driving School Management Platform
+                </div>
             
             </div>
         
@@ -781,7 +791,7 @@
 
     <script>
 
-        const BUILD_VERSION = '2026-07-13 19:40';
+        const BUILD_VERSION = '2026-07-13 20:02';
 
             // =========================
             // GoDrive CRM constants
@@ -3004,6 +3014,19 @@
                 crmSchoolName.textContent =
                     appSettings?.school_name ||
                     APP.BRAND.SCHOOL_NAME;
+
+            }
+
+            const crmTagline =
+                document.getElementById(
+                    'crm-tagline'
+                );
+
+            if (crmTagline) {
+
+                crmTagline.textContent =
+                    appSettings?.tagline ||
+                    'Driving School Management Platform';
 
             }
 
