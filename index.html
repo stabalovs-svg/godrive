@@ -817,6 +817,26 @@
             </label>
     
             <input id="settings-tagline" type="text">
+
+            <label>
+                Язык
+            </label>
+            
+            <select id="settings-language">
+
+                <option value="en">
+                    English
+                </option>
+            
+                <option value="ru">
+                    Русский
+                </option>
+            
+                <option value="lv">
+                    Latviešu
+                </option>
+            
+            </select>
     
             <button id="save-settings-btn" type="button">
                 💾 Сохранить
@@ -832,7 +852,7 @@
 
     <script>
 
-        const BUILD_VERSION = '2026-07-13 23:17';
+        const BUILD_VERSION = '2026-07-14 08:00';
 
             // =========================
             // GoDrive CRM constants
@@ -3300,6 +3320,11 @@
                     ).value =
                         appSettings?.tagline || '';
 
+                    document.getElementById(
+                        'settings-language'
+                    ).value =
+                        appSettings?.language || 'ru';    
+
                     settingsModal.scrollIntoView({
 
                         behavior: 'smooth',
@@ -3787,6 +3812,11 @@
                     'settings-product-name'
                 ).value.trim();
 
+            const language =
+                document.getElementById(
+                    'settings-language'
+                ).value;
+
             const tagline =
                 document.getElementById(
                     'settings-tagline'
@@ -3800,6 +3830,8 @@
                         school_name: schoolName,
 
                         product_name: productName,
+
+                        language: language,
 
                         tagline: tagline,
 
