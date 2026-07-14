@@ -864,7 +864,7 @@
 
     <script>
 
-        const BUILD_VERSION = '2026-07-14 10:59';
+        const BUILD_VERSION = '2026-07-14 11:23';
 
             // =========================
             // GoDrive CRM constants
@@ -3205,6 +3205,18 @@
         }
 
         function applyLanguage() {
+
+            console.log(
+                'APPLY LANGUAGE',
+                appSettings?.language
+            );
+
+            console.log(
+                'TRANSLATION TEST',
+                t('settings'),
+                t('save'),
+                t('close')
+            );
 
             const settingsTitle =
                 document.querySelector(
