@@ -864,7 +864,7 @@
 
     <script>
 
-        const BUILD_VERSION = '2026-07-14 10:24';
+        const BUILD_VERSION = '2026-07-14 10:59';
 
             // =========================
             // GoDrive CRM constants
@@ -3204,6 +3204,95 @@
 
         }
 
+        function applyLanguage() {
+
+            const settingsTitle =
+                document.querySelector(
+                    '#settings-modal h3'
+                );
+
+            const schoolNameLabel =
+                document.getElementById(
+                    'settings-school-name-label'
+                );
+
+            const productNameLabel =
+                document.getElementById(
+                    'settings-product-name-label'
+                );
+
+            const taglineLabel =
+                document.getElementById(
+                    'settings-tagline-label'
+                );
+
+            const languageLabel =
+                document.getElementById(
+                    'settings-language-label'
+                );
+
+            const saveSettingsBtn =
+                document.getElementById(
+                    'save-settings-btn'
+                );
+
+            const closeSettingsBtn =
+                document.getElementById(
+                    'close-settings-btn'
+                );
+
+
+            if (settingsTitle) {
+
+                settingsTitle.textContent =
+                    t('settings');
+
+            }
+
+            if (schoolNameLabel) {
+
+                schoolNameLabel.textContent =
+                    t('school_name');
+
+            }
+
+            if (productNameLabel) {
+
+                productNameLabel.textContent =
+                    t('product_name');
+
+            }
+
+            if (taglineLabel) {
+
+                taglineLabel.textContent =
+                    t('tagline');
+
+            }
+
+            if (languageLabel) {
+
+                languageLabel.textContent =
+                    t('language');
+
+            }
+
+            if (saveSettingsBtn) {
+
+                saveSettingsBtn.textContent =
+                    t('save');
+
+            }
+
+            if (closeSettingsBtn) {
+
+                closeSettingsBtn.textContent =
+                    t('close');
+
+            }
+
+        }
+
             // Подключает обработчики событий
         function attachEventHandlers() {
 
@@ -3642,6 +3731,7 @@
             appSettings =
                 await loadAppSettings();
             applyBranding();
+            applyLanguage();
             console.log('STEP 3');
 
             attachEventHandlers();
@@ -3931,6 +4021,8 @@
                 await loadAppSettings();
 
             applyBranding();
+
+            applyLanguage();
 
             alert(
                 t('settings_saved')
