@@ -796,7 +796,7 @@
 
         <div class="modal-content">
 
-            <h3>
+            <h3 id="settings-title">
                 ⚙️ Настройки
             </h3>
 
@@ -864,7 +864,7 @@
 
     <script>
 
-        const BUILD_VERSION = '2026-07-14 11:23';
+        const BUILD_VERSION = '2026-07-14 12:12';
 
             // =========================
             // GoDrive CRM constants
@@ -3219,8 +3219,8 @@
             );
 
             const settingsTitle =
-                document.querySelector(
-                    '#settings-modal h3'
+                document.getElementById(
+                    'settings-title'
                 );
 
             const schoolNameLabel =
