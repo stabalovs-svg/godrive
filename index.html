@@ -800,25 +800,21 @@
                 ⚙️ Настройки
             </h3>
     
-            <label>
+            <label id="settings-school-name-label">
                 Название автошколы
             </label>
     
             <input id="settings-school-name" type="text">
     
-            <label>
+            <label id="settings-product-name-label">
                 Название продукта
             </label>
-    
-            <input id="settings-product-name" type="text">
-    
-            <label>
+            
+            <label id="settings-tagline-label">
                 Слоган
             </label>
-    
-            <input id="settings-tagline" type="text">
-
-            <label>
+            
+            <label id="settings-language-label">
                 Язык
             </label>
             
@@ -841,7 +837,7 @@
             <button id="save-settings-btn" type="button">
                 💾 Сохранить
             </button>
-    
+            
             <button id="close-settings-btn" type="button">
                 Закрыть
             </button>
@@ -852,7 +848,7 @@
 
     <script>
 
-        const BUILD_VERSION = '2026-07-14 08:27';
+        const BUILD_VERSION = '2026-07-14 09:38';
 
             // =========================
             // GoDrive CRM constants
@@ -901,6 +897,13 @@
 
                 settings_saved:
                     'Настройки сохранены.'
+                school_name: 'Название автошколы',
+                product_name: 'Название продукта',
+                tagline: 'Слоган',
+                language: 'Язык',
+                save: '💾 Сохранить',
+                close: 'Закрыть',
+                settings: '⚙️ Системные настройки',    
 
             },
 
@@ -908,6 +911,13 @@
 
                 settings_saved:
                     'Iestatījumi saglabāti.'
+                school_name: 'Autoskolas nosaukums',
+                product_name: 'Produkta nosaukums',
+                tagline: 'Sauklis',
+                language: 'Valoda',
+                save: '💾 Saglabāt',
+                close: 'Aizvērt',
+                settings: '⚙️ Sistēmas iestatījumi',    
 
             },
 
@@ -915,6 +925,13 @@
 
                 settings_saved:
                     'Settings saved.'
+                school_name: 'Driving School Name',
+                product_name: 'Product Name',
+                tagline: 'Tagline',
+                language: 'Language',
+                save: '💾 Save',
+                close: 'Close',
+                settings: '⚙️ System Settings',    
 
             }
 
