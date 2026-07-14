@@ -383,18 +383,35 @@
 
     <!-- 1. ФОРМА ВХОДА (показывается по умолчанию) -->
     <div id="login-block">
+    
         <h2 id="login-title">
-            Вход в CRM Автошколы
+            AutoSchool CRM
         </h2>
+    
+        <div id="login-tagline">
+            Driving School Management Platform
+        </div>
+    
         <form id="login-form">
-            <input type="email" id="email" placeholder="Email" required><br><br>
-            <input type="password" id="password" placeholder="Пароль" required><br><br>
+    
+            <input type="email" id="email" placeholder="Email" autocomplete="email" required>
+    
+            <br><br>
+    
+            <input type="password" id="password" placeholder="Пароль" autocomplete="current-password" required>
+    
+            <br><br>
+    
             <button id="login-btn" type="submit">
                 Войти
             </button>
+    
         </form>
-        <div id="status" style="font-size:0.9em; color:#666; margin-top:8px;">Войдите под своим аккаунтом для
-            редактирования данных.</div>
+    
+        <div id="status" style="font-size:0.9em; color:#666; margin-top:8px;">
+            Войдите под своим аккаунтом для редактирования данных.
+        </div>
+    
     </div>
 
     <!-- 2. ИНТЕРФЕЙС CRM (скрыт до авторизации) -->
@@ -868,7 +885,7 @@
 
     <script>
 
-        const BUILD_VERSION = '2026-07-14 15:00';
+        const BUILD_VERSION = '2026-07-14 15:50';
 
             // =========================
             // GoDrive CRM constants
@@ -927,7 +944,13 @@
                 login: 'Вход',
                 email: 'Электронная почта',
                 password: 'Пароль',
-                sign_in: 'Войти',    
+                sign_in: 'Войти',
+                login: 'Вход',
+                email: 'Email',
+                password: 'Пароль',
+                sign_in: 'Войти',
+                login_hint:
+                    'Войдите под своим аккаунтом для редактирования данных.',    
 
             },
 
@@ -945,7 +968,13 @@
                 login: 'Pieteikšanās',
                 email: 'E-pasts',
                 password: 'Parole',
-                sign_in: 'Ieiet',    
+                sign_in: 'Ieiet',
+                login: 'Pieteikšanās',
+                email: 'E-pasts',
+                password: 'Parole',
+                sign_in: 'Ieiet',
+                login_hint:
+                    'Piesakieties savā kontā, lai rediģētu datus.',    
 
             },
 
@@ -963,7 +992,13 @@
                 login: 'Login',
                 email: 'Email',
                 password: 'Password',
-                sign_in: 'Sign In',    
+                sign_in: 'Sign In',
+                login: 'Login',
+                email: 'Email',
+                password: 'Password',
+                sign_in: 'Sign In',
+                login_hint:
+                    'Sign in to your account to edit data.',    
 
             }
 
