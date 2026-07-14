@@ -885,7 +885,7 @@
 
     <script>
 
-        const BUILD_VERSION = '2026-07-14 15:50';
+        const BUILD_VERSION = '2026-07-14 17:11';
 
             // =========================
             // GoDrive CRM constants
@@ -3255,12 +3255,100 @@
 
         }
 
+        function applySettingsLanguage() {
+
+            const settingsTitle =
+                document.getElementById(
+                    'settings-title'
+                );
+
+            const settingsBtn =
+                document.getElementById(
+                    'settings-btn'
+                );
+
+            const schoolNameLabel =
+                document.getElementById(
+                    'settings-school-name-label'
+                );
+
+            const productNameLabel =
+                document.getElementById(
+                    'settings-product-name-label'
+                );
+
+            const taglineLabel =
+                document.getElementById(
+                    'settings-tagline-label'
+                );
+
+            const languageLabel =
+                document.getElementById(
+                    'settings-language-label'
+                );
+
+            const saveSettingsBtn =
+                document.getElementById(
+                    'save-settings-btn'
+                );
+
+            const closeSettingsBtn =
+                document.getElementById(
+                    'close-settings-btn'
+                );
+
+            if (settingsTitle) {
+                settingsTitle.textContent =
+                    t('settings');
+            }
+
+            if (settingsBtn) {
+                settingsBtn.textContent =
+                    t('settings');
+            }
+
+            if (schoolNameLabel) {
+                schoolNameLabel.textContent =
+                    t('school_name');
+            }
+
+            if (productNameLabel) {
+                productNameLabel.textContent =
+                    t('product_name');
+            }
+
+            if (taglineLabel) {
+                taglineLabel.textContent =
+                    t('tagline');
+            }
+
+            if (languageLabel) {
+                languageLabel.textContent =
+                    t('language');
+            }
+
+            if (saveSettingsBtn) {
+                saveSettingsBtn.textContent =
+                    t('save');
+            }
+
+            if (closeSettingsBtn) {
+                closeSettingsBtn.textContent =
+                    t('close');
+            }
+
+        }
+
         function applyLanguage() {
 
             console.log(
                 'APPLY LANGUAGE',
                 appSettings?.language
             );
+
+            applySettingsLanguage();
+
+        // Здесь пока остаётся работающий код экрана входа
 
             console.log(
                 'TRANSLATION TEST',
