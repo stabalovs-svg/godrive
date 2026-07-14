@@ -852,7 +852,7 @@
 
     <script>
 
-        const BUILD_VERSION = '2026-07-14 08:00';
+        const BUILD_VERSION = '2026-07-14 08:27';
 
             // =========================
             // GoDrive CRM constants
@@ -894,6 +894,44 @@
             }
 
         };
+
+        const LANG = {
+
+            ru: {
+
+                settings_saved:
+                    'Настройки сохранены.'
+
+            },
+
+            lv: {
+
+                settings_saved:
+                    'Iestatījumi saglabāti.'
+
+            },
+
+            en: {
+
+                settings_saved:
+                    'Settings saved.'
+
+            }
+
+        };
+
+        function t(key) {
+
+            const lang =
+                appSettings?.language || 'ru';
+
+            return (
+                LANG[lang]?.[key] ??
+                LANG.ru[key] ??
+                key
+            );
+
+        }
 
         function getStatusClass(status) {
 
@@ -3862,7 +3900,7 @@
             applyBranding();
 
             alert(
-                'Настройки сохранены.'
+                t('settings_saved')
             );
 
         }
