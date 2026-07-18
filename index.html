@@ -885,7 +885,7 @@
 
     <script>
 
-        const BUILD_VERSION = '2026-07-14 17:11';
+        const BUILD_VERSION = '2026-07-14 21:40';
 
             // =========================
             // GoDrive CRM constants
@@ -968,11 +968,7 @@
                 login: 'Pieteikšanās',
                 email: 'E-pasts',
                 password: 'Parole',
-                sign_in: 'Ieiet',
-                login: 'Pieteikšanās',
-                email: 'E-pasts',
-                password: 'Parole',
-                sign_in: 'Ieiet',
+                sign_in: 'Ieiet',                
                 login_hint:
                     'Piesakieties savā kontā, lai rediģētu datus.',    
 
@@ -989,10 +985,6 @@
                 save: '💾 Save',
                 close: 'Close',
                 settings: '⚙️ System Settings',
-                login: 'Login',
-                email: 'Email',
-                password: 'Password',
-                sign_in: 'Sign In',
                 login: 'Login',
                 email: 'Email',
                 password: 'Password',
@@ -3339,6 +3331,60 @@
 
         }
 
+        function applyLoginLanguage() {
+
+            const loginTitle =
+                document.getElementById(
+                    'login-title'
+                );
+
+            const emailInput =
+                document.getElementById(
+                    'email'
+                );
+
+            const passwordInput =
+                document.getElementById(
+                    'password'
+                );
+
+            const loginBtn =
+                document.getElementById(
+                    'login-btn'
+                );
+
+            const status =
+                document.getElementById(
+                    'status'
+                );
+
+            if (loginTitle) {
+                loginTitle.textContent =
+                    t('login');
+            }
+
+            if (emailInput) {
+                emailInput.placeholder =
+                    t('email');
+            }
+
+            if (passwordInput) {
+                passwordInput.placeholder =
+                    t('password');
+            }
+
+            if (loginBtn) {
+                loginBtn.textContent =
+                    t('sign_in');
+            }
+
+            if (status && !currentUser) {
+                status.textContent =
+                    t('login_hint');
+            }
+
+        }
+
         function applyLanguage() {
 
             console.log(
@@ -3347,6 +3393,8 @@
             );
 
             applySettingsLanguage();
+
+            applyLoginLanguage();
 
         // Здесь пока остаётся работающий код экрана входа
 
