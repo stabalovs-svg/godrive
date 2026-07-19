@@ -913,7 +913,7 @@
 
     <script>
 
-        const BUILD_VERSION = '2026-07-19 23:29';
+        const BUILD_VERSION = '2026-07-20 00:52';
 
             // =========================
             // GoDrive CRM constants
@@ -1022,7 +1022,11 @@
                 theory: 'Теория',
                 practice: 'Практика',
                 attention: 'Внимание',
-                birthdays_short: 'ДР'
+                birthdays_short: 'ДР',
+                upcoming_birthdays: '🎂 Ближайшие дни рождения:',
+                birthday_today: 'Сегодня — {name}',
+                birthday_in_days: 'Через {days} дн. — {name}',
+                birthday_column: 'День рождения ↕'
 
             },
 
@@ -1085,7 +1089,11 @@
                 theory: 'Teorija',
                 practice: 'Braukšana',
                 attention: 'Uzmanību',
-                birthdays_short: 'D.d.'
+                birthdays_short: 'D.d.',
+                upcoming_birthdays: '🎂 Tuvākās dzimšanas dienas:',
+                birthday_today: 'Šodien — {name}',
+                birthday_in_days: 'Pēc {days} dienām — {name}',
+                birthday_column: 'Dzimšanas diena ↕'
             },
 
             en: {
@@ -1148,7 +1156,11 @@
                 theory: 'Theory',
                 practice: 'Practice',
                 attention: 'Attention',
-                birthdays_short: 'Birthdays'
+                birthdays_short: 'Birthdays',
+                upcoming_birthdays: '🎂 Tuvākās dzimšanas dienas:',
+                birthday_today: 'Šodien — {name}',
+                birthday_in_days: 'Pēc {days} dienām — {name}',
+                birthday_column: 'Dzimšanas diena ↕'
             },
             
         };
@@ -2185,29 +2197,43 @@
                     document.getElementById("dash-birthday").textContent =
                         `🎂 ${t('birthdays_short')}: ${dash.birthdayCount}`;
 
-                    const birthdayLine = document.getElementById("birthday-line");
+                    const birthdayLine =
+                        document.getElementById(
+                            'birthday-line'
+                        );
 
                     if (dash.birthdays.length) {
 
-                        birthdayLine.innerHTML =
-
-                            "🎂 Ближайшие дни рождения: " +
-
+                        birthdayLine.textContent =
+                            t('upcoming_birthdays') +
+                            ' ' +
                             dash.birthdays.map(b => {
 
                                 if (b.diff === 0) {
 
-                                    return `Сегодня — ${b.name}`;
+                                    return t('birthday_today')
+                                        .replace(
+                                            '{name}',
+                                            b.name
+                                        );
 
                                 }
 
-                                return `Через ${b.diff} дн. — ${b.name}`;
+                                return t('birthday_in_days')
+                                    .replace(
+                                        '{days}',
+                                        b.diff
+                                    )
+                                    .replace(
+                                        '{name}',
+                                        b.name
+                                    );
 
-                            }).join(" • ");
+                            }).join(' • ');
 
                     } else {
 
-                        birthdayLine.innerHTML = "";
+                        birthdayLine.textContent = '';
 
                     }
 
@@ -3626,6 +3652,11 @@
                     'th-actions'
                 );
 
+            const sortBirth =
+                document.getElementById(
+                    'sort-birth'
+                );    
+
             if (sortStatus) {
                 sortStatus.textContent =
                     t('status') + ' ↕';
@@ -3644,6 +3675,11 @@
             if (actionsHeader) {
                 actionsHeader.textContent =
                     t('actions');
+            }
+
+            if (sortBirth) {
+                sortBirth.textContent =
+                    t('birthday_column');
             }
 
         }
