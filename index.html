@@ -542,7 +542,9 @@
                     <th id="sort-category" style="cursor:pointer;">
                         Категория ↕
                     </th>
-                    <th>Инструктор</th>
+                    <th id="students-instructor-header">
+                        Инструктор
+                    </th
                     <th id="sort-birth" style="cursor:pointer;">
                         День рождения ↕
                     </th>
@@ -903,7 +905,7 @@
 
     <script>
 
-        const BUILD_VERSION = '2026-07-19 18:48';
+        const BUILD_VERSION = '2026-07-19 20:00';
 
             // =========================
             // GoDrive CRM constants
@@ -1001,6 +1003,9 @@
                 payment: '💰 Оплата',
                 contract: 'Договор',
                 category: 'Категория',
+                category_sort: 'Категория ↕',
+                instructor: 'Инструктор',
+                birthday_sort: 'День рождения ↕'
 
             },
 
@@ -1053,6 +1058,9 @@
                 payment: '💰 Maksājums',
                 contract: 'Līgums',
                 category: 'Kategorija',
+                category_sort: 'Kategorija ↕',
+                instructor: 'Instruktors',
+                birthday_sort: 'Dzimšanas diena ↕'
             },
 
             en: {
@@ -1104,6 +1112,9 @@
                 payment: '💰 Payment',
                 contract: 'Contract',
                 category: 'Category',
+                category_sort: 'Category ↕',
+                instructor: 'Instructor',
+                birthday_sort: 'Birthday ↕'
 
             },
             
@@ -3834,6 +3845,27 @@
                     'close-settings-btn'
                 );
 
+            const categoryHeader =
+                document.getElementById(
+                    'sort-category'
+                );
+
+            const instructorHeader =
+                document.getElementById(
+                    'students-instructor-header'
+                );
+
+            const birthdayHeader =
+                document.getElementById(
+                    'sort-birth'
+                );
+
+            
+            const settingsBtn =
+                document.getElementById(
+                    'settings-btn'
+                );
+
 
             if (settingsTitle) {
 
@@ -3841,11 +3873,6 @@
                     t('settings');
 
             }
-
-            const settingsBtn =
-                document.getElementById(
-                    'settings-btn'
-                );
 
             if (settingsBtn) {
 
@@ -3894,6 +3921,21 @@
                 closeSettingsBtn.textContent =
                     t('close');
 
+            }
+
+            if (categoryHeader) {
+                categoryHeader.textContent =
+                    t('category_sort');
+            }
+
+            if (instructorHeader) {
+                instructorHeader.textContent =
+                    t('instructor');
+            }
+
+            if (birthdayHeader) {
+                birthdayHeader.textContent =
+                    t('birthday_sort');
             }
 
         }
