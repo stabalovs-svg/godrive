@@ -416,7 +416,9 @@
 
     <!-- 2. ИНТЕРФЕЙС CRM (скрыт до авторизации) -->
     <div id="crm-block" class="hidden">
-        <h2>Список учеников автошколы</h2>
+        <h2 id="students-page-title">
+            Список учеников автошколы
+        </h2>
         <button id="logout-btn">Выйти из системы</button>
         <button id="show-event-log-btn">
             📜 Журнал событий
@@ -885,7 +887,7 @@
 
     <script>
 
-        const BUILD_VERSION = '2026-07-14 21:40';
+        const BUILD_VERSION = '2026-07-19 11:50';
 
             // =========================
             // GoDrive CRM constants
@@ -950,7 +952,10 @@
                 password: 'Пароль',
                 sign_in: 'Войти',
                 login_hint:
-                    'Войдите под своим аккаунтом для редактирования данных.',    
+                    'Войдите под своим аккаунтом для редактирования данных.',
+                students_list: 'Список учеников автошколы',
+                logout: 'Выйти из системы',
+                event_log: '📜 Журнал событий'        
 
             },
 
@@ -970,7 +975,10 @@
                 password: 'Parole',
                 sign_in: 'Ieiet',                
                 login_hint:
-                    'Piesakieties savā kontā, lai rediģētu datus.',    
+                    'Piesakieties savā kontā, lai rediģētu datus.',
+                students_list: 'Autoskolas skolēnu saraksts',
+                logout: 'Iziet no sistēmas',
+                event_log: '📜 Notikumu žurnāls'        
 
             },
 
@@ -990,7 +998,10 @@
                 password: 'Password',
                 sign_in: 'Sign In',
                 login_hint:
-                    'Sign in to your account to edit data.',    
+                    'Sign in to your account to edit data.',
+                students_list: 'Driving School Student List',
+                logout: 'Log out',
+                event_log: '📜 Event Log'        
 
             }
 
@@ -3385,6 +3396,40 @@
 
         }
 
+        function applyMenuLanguage() {
+
+            const studentsPageTitle =
+                document.getElementById(
+                    'students-page-title'
+                );
+
+            const logoutBtn =
+                document.getElementById(
+                    'logout-btn'
+                );
+
+            const showEventLogBtn =
+                document.getElementById(
+                    'show-event-log-btn'
+                );
+
+            if (studentsPageTitle) {
+                studentsPageTitle.textContent =
+                    t('students_list');
+            }
+
+            if (logoutBtn) {
+                logoutBtn.textContent =
+                    t('logout');
+            }
+
+            if (showEventLogBtn) {
+                showEventLogBtn.textContent =
+                    t('event_log');
+            }
+
+        }
+
         function applyLanguage() {
 
             console.log(
@@ -3395,6 +3440,8 @@
             applySettingsLanguage();
 
             applyLoginLanguage();
+
+            applyMenuLanguage();
 
         // Здесь пока остаётся работающий код экрана входа
 
