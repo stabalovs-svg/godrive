@@ -551,9 +551,17 @@
                     <th id="sort-status" style="cursor:pointer;">
                         Статус ↕
                     </th>
-                    <th>Срок</th>
-                    <th>Заметки</th>
-                    <th>Действия</th>
+                    <th id="th-deadline">
+                        Срок
+                    </th>
+                    
+                    <th id="th-notes">
+                        Заметки
+                    </th>
+                    
+                    <th id="th-actions">
+                        Действия
+                    </th>
                 </tr>
             </thead>
             <tbody>
@@ -905,7 +913,7 @@
 
     <script>
 
-        const BUILD_VERSION = '2026-07-19 20:00';
+        const BUILD_VERSION = '2026-07-19 21:51';
 
             // =========================
             // GoDrive CRM constants
@@ -1005,7 +1013,11 @@
                 category: 'Категория',
                 category_sort: 'Категория ↕',
                 instructor: 'Инструктор',
-                birthday_sort: 'День рождения ↕'
+                birthday_sort: 'День рождения ↕',
+                status: 'Статус',
+                deadline: 'Срок',
+                notes: 'Заметки',
+                actions: 'Действия'
 
             },
 
@@ -1060,7 +1072,11 @@
                 category: 'Kategorija',
                 category_sort: 'Kategorija ↕',
                 instructor: 'Instruktors',
-                birthday_sort: 'Dzimšanas diena ↕'
+                birthday_sort: 'Dzimšanas diena ↕',
+                status: 'Statuss',
+                deadline: 'Termiņš',
+                notes: 'Piezīmes',
+                actions: 'Darbības'
             },
 
             en: {
@@ -1114,7 +1130,11 @@
                 category: 'Category',
                 category_sort: 'Category ↕',
                 instructor: 'Instructor',
-                birthday_sort: 'Birthday ↕'
+                birthday_sort: 'Birthday ↕',
+                status: 'Status',
+                deadline: 'Deadline',
+                notes: 'Notes',
+                actions: 'Actions'
 
             },
             
@@ -3571,6 +3591,46 @@
             if (checkAutoArchiveBtn) {
                 checkAutoArchiveBtn.textContent =
                     t('check_auto_archive');
+            }
+
+            const sortStatus =
+                document.getElementById(
+                    'sort-status'
+                );
+
+            const deadlineHeader =
+                document.getElementById(
+                    'th-deadline'
+                );
+
+            const notesHeader =
+                document.getElementById(
+                    'th-notes'
+                );
+
+            const actionsHeader =
+                document.getElementById(
+                    'th-actions'
+                );
+
+            if (sortStatus) {
+                sortStatus.textContent =
+                    t('status') + ' ↕';
+            }
+
+            if (deadlineHeader) {
+                deadlineHeader.textContent =
+                    t('deadline');
+            }
+
+            if (notesHeader) {
+                notesHeader.textContent =
+                    t('notes');
+            }
+
+            if (actionsHeader) {
+                actionsHeader.textContent =
+                    t('actions');
             }
 
         }
