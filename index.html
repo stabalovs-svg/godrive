@@ -525,10 +525,20 @@
                     <th id="sort-name" style="cursor:pointer;">
                         ФИО ↕
                     </th>
-                    <th>Телефон</th>
-                    <th>email</th>
-                    <th>💰 Оплата</th>
-                    <th>Договор</th>
+                    <th id="students-phone-title">
+                        Телефон
+                    </th>
+                    
+                    <th id="students-email-title">
+                        Email
+                    </th>
+                    
+                    <th id="students-payment-title">
+                        💰 Оплата
+                    </th>
+                    <th id="contract-header">
+                        Договор
+                    </th>
                     <th id="sort-category" style="cursor:pointer;">
                         Категория ↕
                     </th>
@@ -893,7 +903,7 @@
 
     <script>
 
-        const BUILD_VERSION = '2026-07-19 17:20';
+        const BUILD_VERSION = '2026-07-19 18:48';
 
             // =========================
             // GoDrive CRM constants
@@ -984,7 +994,14 @@
                 status_theory_passed: 'Теория сдана',
                 status_driving: 'Вождение',
                 status_driving_exam: 'Вождение экзамен',
-                status_driving_passed: 'Вождение сдано'               
+                status_driving_passed: 'Вождение сдано',
+                student_name: 'ФИО ↕',
+                phone: 'Телефон',
+                email: 'Email',
+                payment: '💰 Оплата',
+                contract: 'Договор',
+                category: 'Категория',
+
             },
 
             lv: {
@@ -1029,7 +1046,13 @@
                 status_theory_passed: 'Teorija nokārtota',
                 status_driving: 'Braukšana',
                 status_driving_exam: 'Braukšanas eksāmens',
-                status_driving_passed: 'Braukšana nokārtota'
+                status_driving_passed: 'Braukšana nokārtota',
+                student_name: 'Vārds, uzvārds ↕',
+                phone: 'Tālrunis',
+                email: 'E-pasts',
+                payment: '💰 Maksājums',
+                contract: 'Līgums',
+                category: 'Kategorija',
             },
 
             en: {
@@ -1074,7 +1097,13 @@
                 status_theory_passed: 'Theory passed',
                 status_driving: 'Driving',
                 status_driving_exam: 'Driving exam',
-                status_driving_passed: 'Driving passed'
+                status_driving_passed: 'Driving passed',
+                student_name: 'Name, surname ↕',
+                phone: 'Phone',
+                email: 'Email',
+                payment: '💰 Payment',
+                contract: 'Contract',
+                category: 'Category',
 
             },
             
@@ -3535,6 +3564,60 @@
 
         }
 
+        function applyStudentsTableLanguage() {
+
+            const studentNameTitle =
+                document.getElementById(
+                    'sort-name'
+                );
+
+            const studentPhoneTitle =
+                document.getElementById(
+                    'students-phone-title'
+                );
+
+            const studentEmailTitle =
+                document.getElementById(
+                    'students-email-title'
+                );
+
+            const studentPaymentTitle =
+                document.getElementById(
+                    'students-payment-title'
+                );
+
+            const contractHeader =
+                document.getElementById(
+                    'contract-header'
+                );    
+
+            if (studentNameTitle) {
+                studentNameTitle.textContent =
+                    t('student_name');
+            }
+
+            if (studentPhoneTitle) {
+                studentPhoneTitle.textContent =
+                    t('phone');
+            }
+
+            if (studentEmailTitle) {
+                studentEmailTitle.textContent =
+                    t('email');
+            }
+
+            if (studentPaymentTitle) {
+                studentPaymentTitle.textContent =
+                    t('payment');
+            }
+
+            if (contractHeader) {
+                contractHeader.textContent =
+                    t('contract');
+            }
+
+        }
+
         function applyAddStudentLanguage() {
 
             const addStudentTitle =
@@ -3704,6 +3787,8 @@
             applySearchLanguage();
 
             applyAddStudentLanguage();
+
+            applyStudentsTableLanguage();
 
         // Здесь пока остаётся работающий код экрана входа
 
