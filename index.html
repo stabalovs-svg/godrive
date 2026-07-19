@@ -893,7 +893,7 @@
 
     <script>
 
-        const BUILD_VERSION = '2026-07-19 16:30';
+        const BUILD_VERSION = '2026-07-19 17:20';
 
             // =========================
             // GoDrive CRM constants
@@ -973,9 +973,18 @@
                 phone: 'Телефон',
                 contract_number: '№ Договора',
                 notes: 'Заметки',
-                save_to_database: 'Сохранить в базу'
+                save_to_database: 'Сохранить в базу',
                 
-                               
+                category_b: 'Категория B',
+                category_a: 'Категория A',
+                category_c: 'Категория C',
+
+                status_registration: 'Оформление',
+                status_theory: 'Теория',
+                status_theory_passed: 'Теория сдана',
+                status_driving: 'Вождение',
+                status_driving_exam: 'Вождение экзамен',
+                status_driving_passed: 'Вождение сдано'               
             },
 
             lv: {
@@ -1009,8 +1018,18 @@
                 phone: 'Tālrunis',
                 contract_number: 'Līguma Nr.',
                 notes: 'Piezīmes',
-                save_to_database: 'Saglabāt datubāzē'
-                                
+                save_to_database: 'Saglabāt datubāzē',
+
+                category_b: 'B kategorija',
+                category_a: 'A kategorija',
+                category_c: 'C kategorija',
+
+                status_registration: 'Noformēšana',
+                status_theory: 'Teorija',
+                status_theory_passed: 'Teorija nokārtota',
+                status_driving: 'Braukšana',
+                status_driving_exam: 'Braukšanas eksāmens',
+                status_driving_passed: 'Braukšana nokārtota'
             },
 
             en: {
@@ -1044,7 +1063,19 @@
                 phone: 'Phone',
                 contract_number: 'Contract No.',
                 notes: 'Notes',
-                save_to_database: 'Save to database'
+                save_to_database: 'Save to database',
+
+                category_b: 'Category B',
+                category_a: 'Category A',
+                category_c: 'Category C',
+
+                status_registration: 'Registration',
+                status_theory: 'Theory',
+                status_theory_passed: 'Theory passed',
+                status_driving: 'Driving',
+                status_driving_exam: 'Driving exam',
+                status_driving_passed: 'Driving passed'
+
             },
             
         };
@@ -3541,6 +3572,16 @@
                     'save-student-btn'
                 );
 
+            const newCategory =
+                document.getElementById(
+                    'new-category'
+                );
+
+            const newStatus =
+                document.getElementById(
+                    'new-status'
+                );    
+
             if (addStudentTitle) {
                 addStudentTitle.textContent =
                     t('add_new_student');
@@ -3574,6 +3615,41 @@
             if (saveStudentBtn) {
                 saveStudentBtn.textContent =
                     t('save_to_database');
+            }
+
+            if (newCategory) {
+
+                newCategory.options[0].textContent =
+                    t('category_b');
+
+                newCategory.options[1].textContent =
+                    t('category_a');
+
+                newCategory.options[2].textContent =
+                    t('category_c');
+
+            }
+
+            if (newStatus) {
+
+                newStatus.options[0].textContent =
+                    t('status_registration');
+
+                newStatus.options[1].textContent =
+                    t('status_theory');
+
+                newStatus.options[2].textContent =
+                    t('status_theory_passed');
+
+                newStatus.options[3].textContent =
+                    t('status_driving');
+
+                newStatus.options[4].textContent =
+                    t('status_driving_exam');
+
+                newStatus.options[5].textContent =
+                    t('status_driving_passed');
+
             }
 
         }
