@@ -887,7 +887,7 @@
 
     <script>
 
-        const BUILD_VERSION = '2026-07-19 12:17';
+        const BUILD_VERSION = '2026-07-19 12:30';
 
             // =========================
             // GoDrive CRM constants
@@ -3444,6 +3444,36 @@
             if (showEventLogBtn) {
                 showEventLogBtn.textContent =
                     t('event_log');
+            }
+
+            const studentSearch =
+                document.getElementById(
+                    'student-search'
+                );
+
+            const archiveToggleBtn =
+                document.getElementById(
+                    'archive-toggle-btn'
+                );
+
+            const checkAutoArchiveBtn =
+                document.getElementById(
+                    'check-auto-archive-btn'
+                );
+
+            if (studentSearch) {
+                studentSearch.placeholder =
+                    t('search_students');
+            }
+
+            if (archiveToggleBtn) {
+                archiveToggleBtn.textContent =
+                    t('archive');
+            }
+
+            if (checkAutoArchiveBtn) {
+                checkAutoArchiveBtn.textContent =
+                    t('check_auto_archive');
             }
 
         }
