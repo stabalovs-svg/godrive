@@ -893,7 +893,7 @@
 
     <script>
 
-        const BUILD_VERSION = '2026-07-19 16:04';
+        const BUILD_VERSION = '2026-07-19 16:30';
 
             // =========================
             // GoDrive CRM constants
@@ -968,6 +968,12 @@
                 active: '👥 Активные',
                 check_auto_archive:
                     '🧪 Проверить автоархив',
+                add_new_student: 'Добавить нового ученика',
+                student_full_name: 'ФИО ученика',
+                phone: 'Телефон',
+                contract_number: '№ Договора',
+                notes: 'Заметки',
+                save_to_database: 'Сохранить в базу'
                 
                                
             },
@@ -998,9 +1004,13 @@
                 active: '👥 Aktīvie',
                 check_auto_archive:
                     '🧪 Pārbaudīt autoarhīvu',
-                
-
-                
+                add_new_student: 'Pievienot jaunu audzēkni',
+                student_full_name: 'Audzēkņa vārds un uzvārds',
+                phone: 'Tālrunis',
+                contract_number: 'Līguma Nr.',
+                notes: 'Piezīmes',
+                save_to_database: 'Saglabāt datubāzē'
+                                
             },
 
             en: {
@@ -1028,10 +1038,15 @@
                 archive: '📦 Archive',
                 active: '👥 Active',    
                 check_auto_archive:
-                    '🧪 Check auto archive'
-
-            }
-
+                    '🧪 Check auto archive',
+                add_new_student: 'Add a new student',
+                student_full_name: 'Student full name',
+                phone: 'Phone',
+                contract_number: 'Contract No.',
+                notes: 'Notes',
+                save_to_database: 'Save to database'
+            },
+            
         };
 
         function t(key) {
@@ -3489,6 +3504,80 @@
 
         }
 
+        function applyAddStudentLanguage() {
+
+            const addStudentTitle =
+                document.getElementById(
+                    'add-student-title'
+                );
+
+            const newName =
+                document.getElementById(
+                    'new-name'
+                );
+
+            const newPhone =
+                document.getElementById(
+                    'new-phone'
+                );
+
+            const newEmail =
+                document.getElementById(
+                    'new-email'
+                );
+
+            const newContract =
+                document.getElementById(
+                    'new-contract'
+                );
+
+            const newNotes =
+                document.getElementById(
+                    'new-notes'
+                );
+
+            const saveStudentBtn =
+                document.getElementById(
+                    'save-student-btn'
+                );
+
+            if (addStudentTitle) {
+                addStudentTitle.textContent =
+                    t('add_new_student');
+            }
+
+            if (newName) {
+                newName.placeholder =
+                    t('student_full_name');
+            }
+
+            if (newPhone) {
+                newPhone.placeholder =
+                    t('phone');
+            }
+
+            if (newEmail) {
+                newEmail.placeholder =
+                    t('email');
+            }
+
+            if (newContract) {
+                newContract.placeholder =
+                    t('contract_number');
+            }
+
+            if (newNotes) {
+                newNotes.placeholder =
+                    t('notes');
+            }
+
+            if (saveStudentBtn) {
+                saveStudentBtn.textContent =
+                    t('save_to_database');
+            }
+
+        }
+
         function applySearchLanguage() {
 
             const searchInput =
@@ -3537,6 +3626,8 @@
             applyMenuLanguage();
 
             applySearchLanguage();
+
+            applyAddStudentLanguage();
 
         // Здесь пока остаётся работающий код экрана входа
 
