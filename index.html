@@ -887,7 +887,7 @@
 
     <script>
 
-        const BUILD_VERSION = '2026-07-19 12:30';
+        const BUILD_VERSION = '2026-07-19 15:44';
 
             // =========================
             // GoDrive CRM constants
@@ -958,11 +958,12 @@
                 event_log: '📜 Журнал событий',
                 search_student:
                     'Поиск по ФИО, телефону, email...',
-                archive:
-                    '📦 Архив',
+                archive: '📦 Архив',
+                active: '👥 Активные',
                 check_auto_archive:
-                    '🧪 Проверить автоархив',        
-
+                    '🧪 Проверить автоархив',
+                
+                               
             },
 
             lv: {
@@ -987,11 +988,13 @@
                 event_log: '📜 Notikumu žurnāls',
                 search_student:
                     'Meklēt pēc vārda, tālruņa vai e-pasta...',
-                archive:
-                    '📦 Arhīvs',
+                archive: '📦 Arhīvs',
+                active: '👥 Aktīvie',
                 check_auto_archive:
-                    '🧪 Pārbaudīt autoarhīvu'        
+                    '🧪 Pārbaudīt autoarhīvu',
+                
 
+                
             },
 
             en: {
@@ -1016,10 +1019,10 @@
                 event_log: '📜 Event Log',
                 search_student:
                     'Search by name, phone or email...',
-                archive:
-                    '📦 Archive',
+                archive: '📦 Archive',
+                active: '👥 Active',    
                 check_auto_archive:
-                    '🧪 Check auto archive'        
+                    '🧪 Check auto archive'
 
             }
 
@@ -3431,21 +3434,6 @@
                     'show-event-log-btn'
                 );
 
-            if (studentsPageTitle) {
-                studentsPageTitle.textContent =
-                    t('students_list');
-            }
-
-            if (logoutBtn) {
-                logoutBtn.textContent =
-                    t('logout');
-            }
-
-            if (showEventLogBtn) {
-                showEventLogBtn.textContent =
-                    t('event_log');
-            }
-
             const studentSearch =
                 document.getElementById(
                     'student-search'
@@ -3461,6 +3449,21 @@
                     'check-auto-archive-btn'
                 );
 
+            if (studentsPageTitle) {
+                studentsPageTitle.textContent =
+                    t('students_list');
+            }
+
+            if (logoutBtn) {
+                logoutBtn.textContent =
+                    t('logout');
+            }
+
+            if (showEventLogBtn) {
+                showEventLogBtn.textContent =
+                    t('event_log');
+            }
+
             if (studentSearch) {
                 studentSearch.placeholder =
                     t('search_students');
@@ -3468,7 +3471,9 @@
 
             if (archiveToggleBtn) {
                 archiveToggleBtn.textContent =
-                    t('archive');
+                    showArchivedStudents
+                        ? t('active')
+                        : t('archive');
             }
 
             if (checkAutoArchiveBtn) {
@@ -3897,8 +3902,8 @@
 
                     archiveToggleBtn.textContent =
                         showArchivedStudents
-                            ? '👥 Активные'
-                            : '📦 Архив';
+                            ? t('active')
+                            : t('archive');
 
                     await loadStudents();
 
