@@ -430,7 +430,9 @@
         <!-- ФОРМА ДОБАВЛЕНИЯ УЧЕНИКА -->
         <div id="add-student-container"
             style="display:none; background: #f9f9f9; padding: 15px; border: 1px solid #ddd; margin: 20px 0;">
-            <h3>Добавить нового ученика</h3>
+            <h3 id="add-student-title">
+                Добавить нового ученика
+            </h3>
             <form id="add-student-form">
                 <input type="text" id="new-name" placeholder="ФИО ученика" required>
                 <input type="text" id="new-phone" placeholder="Телефон">
@@ -453,7 +455,11 @@
                     <option value="вождение сдано">Вождение сдано</option>
                 </select>
                 <textarea id="new-notes" placeholder="Заметки"></textarea>
-                <button type="submit">Сохранить в базу</button>
+                <button id="save-student-btn" type="submit">
+                
+                    Сохранить в базу
+                
+                </button>
             </form>
         </div>
         
@@ -887,7 +893,7 @@
 
     <script>
 
-        const BUILD_VERSION = '2026-07-19 15:44';
+        const BUILD_VERSION = '2026-07-19 16:04';
 
             // =========================
             // GoDrive CRM constants
