@@ -913,7 +913,7 @@
 
     <script>
 
-        const BUILD_VERSION = '2026-07-19 22:27';
+        const BUILD_VERSION = '2026-07-19 23:29';
 
             // =========================
             // GoDrive CRM constants
@@ -1018,11 +1018,11 @@
                 deadline: 'Срок',
                 notes: 'Заметки',
                 actions: 'Действия',
-                dashboard_total: '👨‍🎓 Всего',
-                dashboard_theory: '📘 Теория',
-                dashboard_practice: '🚗 Практика',
-                dashboard_attention: '⚠ Внимание',
-                dashboard_birthday: '🎂 ДР'
+                total: 'Всего',
+                theory: 'Теория',
+                practice: 'Практика',
+                attention: 'Внимание',
+                birthdays_short: 'ДР'
 
             },
 
@@ -1081,11 +1081,11 @@
                 status: 'Statuss',
                 deadline: 'Termiņš',
                 notes: 'Piezīmes',
-                actions: 'Darbības', dashboard_total: '👨‍🎓 Kopā',
-                dashboard_theory: '📘 Teorija',
-                dashboard_practice: '🚗 Braukšana',
-                dashboard_attention: '⚠ Uzmanību',
-                dashboard_birthday: '🎂 Dzimšanas dienas'
+                total: 'Kopā',
+                theory: 'Teorija',
+                practice: 'Braukšana',
+                attention: 'Uzmanību',
+                birthdays_short: 'D.d.'
             },
 
             en: {
@@ -1144,12 +1144,11 @@
                 deadline: 'Deadline',
                 notes: 'Notes',
                 actions: 'Actions',
-                dashboard_total: '👨‍🎓 Total',
-                dashboard_theory: '📘 Theory',
-                dashboard_practice: '🚗 Practice',
-                dashboard_attention: '⚠ Attention',
-                dashboard_birthday: '🎂 Birthdays'
-
+                total: 'Total',
+                theory: 'Theory',
+                practice: 'Practice',
+                attention: 'Attention',
+                birthdays_short: 'Birthdays'
             },
             
         };
@@ -2149,16 +2148,16 @@
                     const dash = calculateDashboard(data);
 
                     document.getElementById("dash-total").textContent =
-                        `👨‍🎓 Всего ${dash.total}`;
+                        `👨‍🎓 ${t('total')}: ${dash.total}`;
 
                     document.getElementById("dash-theory").textContent =
-                        `📘 Теория ${dash.theory}`;
+                        `📘 ${t('theory')}: ${dash.theory}`;
 
                     document.getElementById("dash-practice").textContent =
-                        `🚗 Практика ${dash.practice}`;
+                        `🚗 ${t('practice')}: ${dash.practice}`;
 
                     document.getElementById("dash-attention").textContent =
-                        `⚠ Внимание ${dash.attention}`;
+                        `⚠ ${t('attention')}: ${dash.attention}`;
 
                     const attention =
                         document.getElementById("dash-attention");
@@ -2184,7 +2183,7 @@
                     }
 
                     document.getElementById("dash-birthday").textContent =
-                        `🎂 ДР ${dash.birthdayCount}`;
+                        `🎂 ${t('birthdays_short')}: ${dash.birthdayCount}`;
 
                     const birthdayLine = document.getElementById("birthday-line");
 
