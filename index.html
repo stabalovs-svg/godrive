@@ -887,7 +887,7 @@
 
     <script>
 
-        const BUILD_VERSION = '2026-07-19 11:50';
+        const BUILD_VERSION = '2026-07-19 12:17';
 
             // =========================
             // GoDrive CRM constants
@@ -955,7 +955,13 @@
                     'Войдите под своим аккаунтом для редактирования данных.',
                 students_list: 'Список учеников автошколы',
                 logout: 'Выйти из системы',
-                event_log: '📜 Журнал событий'        
+                event_log: '📜 Журнал событий',
+                search_student:
+                    'Поиск по ФИО, телефону, email...',
+                archive:
+                    '📦 Архив',
+                check_auto_archive:
+                    '🧪 Проверить автоархив',        
 
             },
 
@@ -978,7 +984,13 @@
                     'Piesakieties savā kontā, lai rediģētu datus.',
                 students_list: 'Autoskolas skolēnu saraksts',
                 logout: 'Iziet no sistēmas',
-                event_log: '📜 Notikumu žurnāls'        
+                event_log: '📜 Notikumu žurnāls',
+                search_student:
+                    'Meklēt pēc vārda, tālruņa vai e-pasta...',
+                archive:
+                    '📦 Arhīvs',
+                check_auto_archive:
+                    '🧪 Pārbaudīt autoarhīvu'        
 
             },
 
@@ -1001,7 +1013,13 @@
                     'Sign in to your account to edit data.',
                 students_list: 'Driving School Student List',
                 logout: 'Log out',
-                event_log: '📜 Event Log'        
+                event_log: '📜 Event Log',
+                search_student:
+                    'Search by name, phone or email...',
+                archive:
+                    '📦 Archive',
+                check_auto_archive:
+                    '🧪 Check auto archive'        
 
             }
 
@@ -3430,6 +3448,40 @@
 
         }
 
+        function applySearchLanguage() {
+
+            const searchInput =
+                document.getElementById(
+                    'student-search'
+                );
+
+            const archiveBtn =
+                document.getElementById(
+                    'archive-toggle-btn'
+                );
+
+            const checkArchiveBtn =
+                document.getElementById(
+                    'check-auto-archive-btn'
+                );
+
+            if (searchInput) {
+                searchInput.placeholder =
+                    t('search_student');
+            }
+
+            if (archiveBtn) {
+                archiveBtn.textContent =
+                    t('archive');
+            }
+
+            if (checkArchiveBtn) {
+                checkArchiveBtn.textContent =
+                    t('check_auto_archive');
+            }
+
+        }
+
         function applyLanguage() {
 
             console.log(
@@ -3442,6 +3494,8 @@
             applyLoginLanguage();
 
             applyMenuLanguage();
+
+            applySearchLanguage();
 
         // Здесь пока остаётся работающий код экрана входа
 
