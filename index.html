@@ -913,7 +913,7 @@
 
     <script>
 
-        const BUILD_VERSION = '2026-07-20 00:52';
+        const BUILD_VERSION = '2026-07-20 14:02';
 
             // =========================
             // GoDrive CRM constants
@@ -1026,7 +1026,10 @@
                 upcoming_birthdays: '🎂 Ближайшие дни рождения:',
                 birthday_today: 'Сегодня — {name}',
                 birthday_in_days: 'Через {days} дн. — {name}',
-                birthday_column: 'День рождения ↕'
+                birthday_column: 'День рождения ↕',
+                student_not_selected: 'Не выбран ученик',
+                error_prefix: 'Ошибка: ',
+                saved: 'Сохранено'
 
             },
 
@@ -1093,7 +1096,10 @@
                 upcoming_birthdays: '🎂 Tuvākās dzimšanas dienas:',
                 birthday_today: 'Šodien — {name}',
                 birthday_in_days: 'Pēc {days} dienām — {name}',
-                birthday_column: 'Dzimšanas diena ↕'
+                birthday_column: 'Dzimšanas diena ↕',
+                student_not_selected: 'Audzēknis nav izvēlēts',
+                error_prefix: 'Kļūda: ',
+                saved: 'Saglabāts'
             },
 
             en: {
@@ -1160,7 +1166,10 @@
                 upcoming_birthdays: '🎂 Tuvākās dzimšanas dienas:',
                 birthday_today: 'Šodien — {name}',
                 birthday_in_days: 'Pēc {days} dienām — {name}',
-                birthday_column: 'Dzimšanas diena ↕'
+                birthday_column: 'Dzimšanas diena ↕',
+                student_not_selected: 'No student selected',
+                error_prefix: 'Error: ',
+                saved: 'Saved'
             },
             
         };
@@ -2556,7 +2565,7 @@
                 .single();
 
             if (!id) {
-                alert('Не выбран ученик');
+                alert(t('student_not_selected'));
                 return;
             }
 
@@ -2684,7 +2693,10 @@
             
             if (error) {
 
-                alert('Ошибка: ' + error.message);
+                alert(
+                    t('error_prefix') +
+                    error.message
+                );
                 return;
             }    
 
@@ -2803,7 +2815,7 @@
 
             }
 
-            alert('Сохранено');
+            alert(t('saved'));
 
             document
                 .getElementById('student-modal')
