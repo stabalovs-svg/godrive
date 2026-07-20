@@ -912,7 +912,7 @@
 
     <script>
 
-        const BUILD_VERSION = '2026-07-20 19:50';
+        const BUILD_VERSION = '2026-07-20 22:15';
 
             // =========================
             // GoDrive CRM constants
@@ -1030,7 +1030,9 @@
                 error_prefix: 'Ошибка: ',
                 saved: 'Сохранено',
                 birth_date_sort: 'День рождения ↕',
-                student_card: 'Карточка'
+                student_card: 'Карточка',
+                edit: 'Изменить',
+                delete: 'Удалить'
 
             },
 
@@ -1103,7 +1105,9 @@
                 error_prefix: 'Kļūda: ',
                 saved: 'Saglabāts',
                 birth_date_sort: 'Dzimšanas diena ↕',
-                student_card: 'Kartīte'
+                student_card: 'Kartīte',
+                edit: 'Redigāt',
+                delete: 'Dzezt'
             },
 
             en: {
@@ -1175,7 +1179,9 @@
                 error_prefix: 'Error: ',
                 saved: 'Saved',
                 birth_date_sort: 'Birthday ↕',
-                student_card: 'Student card'
+                student_card: 'Student card',
+                edit: 'Edit',
+                delete: 'Delete'
             },
             
         };
@@ -2447,12 +2453,20 @@
 
         }
             
-            // Создает кнопки действий для строк таблицы
+            // Создает кнопки действий для строк таблицы (Исправленная функция целиком)
+
         function renderRowActions() {
 
-                document.querySelectorAll('#students-table tbody tr').forEach(tr => {
+            document
+                .querySelectorAll(
+                    '#students-table tbody tr'
+                )
+                .forEach(tr => {
 
-                    const actionsTd = tr.querySelector('.s-actions');
+                    const actionsTd =
+                        tr.querySelector(
+                            '.s-actions'
+                        );
 
                     if (!actionsTd) return;
 
@@ -2460,45 +2474,67 @@
 
                     // Кнопка карточки есть у всех
                     actionsTd.innerHTML += `
-                <button class="student-card-btn">
-                    ${t('student_card')}
-                </button>
-            `;
+                        <button class="card-btn">
+                            ${t('student_card')}
+                        </button>
+                    `;
 
                     // Кнопка редактирования
                     if (isManager() || isAdmin()) {
 
                         actionsTd.innerHTML += `
-                <button class="edit-btn">
-                    Изменить
-                </button>
-            `;
+                            <button class="edit-btn">
+                                ${t('edit')}
+                            </button>
+                        `;
                     }
 
                     // Кнопка удаления
                     if (isManager()) {
 
                         actionsTd.innerHTML += `
-                <button class="delete-btn">
-                    Удалить
-                </button>
-            `;
+                            <button class="delete-btn">
+                                ${t('delete')}
+                            </button>
+                        `;
                     }
+
                 });
 
-                // обработчики кнопок
+            document
+                .querySelectorAll('.card-btn')
+                .forEach(
+                    btn =>
+                        btn.onclick =
+                            openStudentCard
+                );
 
-                document.querySelectorAll('.card-btn')
-                    .forEach(btn => btn.onclick = openStudentCard);
+            document
+                .querySelectorAll(
+                    '.student-name-btn'
+                )
+                .forEach(
+                    btn =>
+                        btn.onclick =
+                            openStudentCard
+                );
 
-                document.querySelectorAll('.student-name-btn')
-                    .forEach(btn => btn.onclick = openStudentCard);    
+            document
+                .querySelectorAll('.edit-btn')
+                .forEach(
+                    btn =>
+                        btn.onclick =
+                            onEditRow
+                );
 
-                document.querySelectorAll('.edit-btn')
-                    .forEach(btn => btn.onclick = onEditRow);
+            document
+                .querySelectorAll('.delete-btn')
+                .forEach(
+                    btn =>
+                        btn.onclick =
+                            onDeleteRow
+                );
 
-                document.querySelectorAll('.delete-btn')
-                    .forEach(btn => btn.onclick = onDeleteRow);
         }
             /*
         function attachCardButtons() {
