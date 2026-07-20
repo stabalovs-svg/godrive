@@ -912,7 +912,7 @@
 
     <script>
 
-        const BUILD_VERSION = '2026-07-20 22:15';
+        const BUILD_VERSION = '2026-07-20 22:42';
 
             // =========================
             // GoDrive CRM constants
@@ -3957,11 +3957,21 @@
                 appSettings?.language
             );
 
-            applySettingsLanguage();
-
+            
             applyLoginLanguage();
 
+            applySettingsLanguage();
+
             applyMenuLanguage();
+
+            if (
+                typeof loadStudents === 'function' &&
+                !document
+                    .getElementById('crm-block')
+                    ?.classList.contains('hidden')
+            ) {
+                loadStudents();
+            }
 
             applySearchLanguage();
 
