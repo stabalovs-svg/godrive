@@ -911,7 +911,7 @@
 
     <script>
 
-        const BUILD_VERSION = '2026-07-20 16:59';
+        const BUILD_VERSION = '2026-07-20 17:30';
 
             // =========================
             // GoDrive CRM constants
@@ -1027,7 +1027,8 @@
                 birthday_column: 'День рождения',
                 student_not_selected: 'Не выбран ученик',
                 error_prefix: 'Ошибка: ',
-                saved: 'Сохранено'
+                saved: 'Сохранено',
+                birth_date_sort: 'День рождения ↕'
 
             },
 
@@ -1097,7 +1098,8 @@
                 birthday_column: 'Dzimšanas diena',
                 student_not_selected: 'Audzēknis nav izvēlēts',
                 error_prefix: 'Kļūda: ',
-                saved: 'Saglabāts'
+                saved: 'Saglabāts',
+                birth_date_sort: 'Dzimšanas diena ↕'
             },
 
             en: {
@@ -1167,7 +1169,8 @@
                 birthday_column: 'Birthday',
                 student_not_selected: 'No student selected',
                 error_prefix: 'Error: ',
-                saved: 'Saved'
+                saved: 'Saved',
+                birth_date_sort: 'Birthday ↕'
             },
             
         };
@@ -3610,6 +3613,11 @@
                     'check-auto-archive-btn'
                 );
 
+            const sortBirth =
+                document.getElementById(
+                    'sort-birth'
+                );    
+
             if (studentsPageTitle) {
                 studentsPageTitle.textContent =
                     t('students_list');
@@ -3642,6 +3650,11 @@
                     t('check_auto_archive');
             }
 
+            if (sortBirth) {
+                sortBirth.textContent =
+                    t('birth_date_sort');
+            }
+
             const sortStatus =
                 document.getElementById(
                     'sort-status'
@@ -3661,11 +3674,7 @@
                 document.getElementById(
                     'th-actions'
                 );
-
-            const sortBirth =
-                document.getElementById(
-                    'sort-birth'
-                );    
+   
 
             if (sortStatus) {
                 sortStatus.textContent =
@@ -3687,10 +3696,6 @@
                     t('actions');
             }
 
-            if (sortBirth) {
-                sortBirth.textContent =
-                    t('birthday_column') + ' ↕';
-            }
 
         }
 
