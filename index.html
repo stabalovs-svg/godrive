@@ -455,10 +455,8 @@
                     <option value="вождение сдано">Вождение сдано</option>
                 </select>
                 <textarea id="new-notes" placeholder="Заметки"></textarea>
-                <button id="save-student-btn" type="submit">
-                
+                <button id="add-student-submit-btn" type="submit">
                     Сохранить в базу
-                
                 </button>
             </form>
         </div>
@@ -825,7 +823,7 @@
             
             </div>
             
-            <button id="save-student-btn">
+            <button id="save-student-btn" type="button">
                 Сохранить
             </button>
 
@@ -913,7 +911,7 @@
 
     <script>
 
-        const BUILD_VERSION = '2026-07-20 14:02';
+        const BUILD_VERSION = '2026-07-20 16:08';
 
             // =========================
             // GoDrive CRM constants
@@ -3782,9 +3780,9 @@
                     'new-notes'
                 );
 
-            const saveStudentBtn =
+            const addStudentSubmitBtn =
                 document.getElementById(
-                    'save-student-btn'
+                    'add-student-submit-btn'
                 );
 
             const newCategory =
@@ -3827,11 +3825,11 @@
                     t('notes');
             }
 
-            if (saveStudentBtn) {
-                saveStudentBtn.textContent =
+            if (addStudentSubmitBtn) {
+                addStudentSubmitBtn.textContent =
                     t('save_to_database');
             }
-
+            
             if (newCategory) {
 
                 newCategory.options[0].textContent =
@@ -4329,6 +4327,18 @@
                     await loadStudents();
 
                 };
+
+            }
+
+            const saveStudentBtn =
+                document.getElementById(
+                    'save-student-btn'
+                );
+
+            if (saveStudentBtn) {
+
+                saveStudentBtn.onclick =
+                    saveStudent;
 
             }
                 /* временная кнопка для ручной проверки автоархивации */
