@@ -911,7 +911,7 @@
 
     <script>
 
-        const BUILD_VERSION = '2026-07-20 17:30';
+        const BUILD_VERSION = '2026-07-20 18:05';
 
             // =========================
             // GoDrive CRM constants
@@ -1028,7 +1028,8 @@
                 student_not_selected: 'Не выбран ученик',
                 error_prefix: 'Ошибка: ',
                 saved: 'Сохранено',
-                birth_date_sort: 'День рождения ↕'
+                birth_date_sort: 'День рождения ↕',
+                student_card: 'Карточка'
 
             },
 
@@ -1099,7 +1100,8 @@
                 student_not_selected: 'Audzēknis nav izvēlēts',
                 error_prefix: 'Kļūda: ',
                 saved: 'Saglabāts',
-                birth_date_sort: 'Dzimšanas diena ↕'
+                birth_date_sort: 'Dzimšanas diena ↕',
+                student_card: 'Kartīte'
             },
 
             en: {
@@ -1170,7 +1172,8 @@
                 student_not_selected: 'No student selected',
                 error_prefix: 'Error: ',
                 saved: 'Saved',
-                birth_date_sort: 'Birthday ↕'
+                birth_date_sort: 'Birthday ↕',
+                student_card: 'Student card'
             },
             
         };
@@ -2162,7 +2165,9 @@
                         </td>
                         <td class="s-notes">${student.notes || ''}</td>
                         <td class="s-actions">
-                            <button class="card-btn">Карточка</button>
+                            <button class="card-btn">
+                                ${t('student_card')}
+                            </button>
                         </td>
                     </tr>
                 `).join('');
@@ -3650,11 +3655,6 @@
                     t('check_auto_archive');
             }
 
-            if (sortBirth) {
-                sortBirth.textContent =
-                    t('birth_date_sort');
-            }
-
             const sortStatus =
                 document.getElementById(
                     'sort-status'
@@ -3695,6 +3695,12 @@
                 actionsHeader.textContent =
                     t('actions');
             }
+
+                        if (sortBirth) {
+                sortBirth.textContent =
+                    t('birth_date_sort');
+            }
+
 
 
         }
