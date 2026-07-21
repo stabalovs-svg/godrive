@@ -708,7 +708,9 @@
             
             <div id="contract-section">
 
-                <h3>📄 Договор и оплата</h3>
+                <h3 id="contract-section-title">
+                    📄 Договор и оплата
+                </h3>
             
                 <p>
                     <b>Дата договора:</b><br>
@@ -748,7 +750,9 @@
 
                 <hr>
             
-                <h4>История платежей</h4>
+                <h4 id="payments-history-title">
+                    История платежей
+                </h4>
 
                 <div class="payments-header">
                     <span>Дата</span>
@@ -769,7 +773,9 @@
             
                 <hr>
             
-                <h4>➕ Новый платеж</h4>
+                <h4 id="new-payment-title">
+                    ➕ Новый платеж
+                </h4>
             
                 <p>
                     Дата<br>
@@ -912,7 +918,7 @@
 
     <script>
 
-        const BUILD_VERSION = '2026-07-21 16:28';
+        const BUILD_VERSION = '2026-07-21 16:57';
 
             // =========================
             // GoDrive CRM constants
@@ -1047,6 +1053,9 @@
                 close: 'Закрыть',
                 restore: '↩️ Восстановить',
                 archive: '📦 В архив',
+                contract_payment: '📄 Договор и оплата',
+                payments_history: 'История платежей',
+                new_payment: '➕ Новый платеж',
                 
 
             },
@@ -1137,6 +1146,9 @@
                 close: 'Aizvērt',
                 restore: '↩️ Atjaunot',
                 archive: '📦 Uz arhīvu',
+                contract_payment: '📄 Līgums un maksājumi',
+                payments_history: 'Maksājumu vēsture',
+                new_payment: '➕ Jauns maksājums',
                 
             },
 
@@ -1225,6 +1237,9 @@
                 cancel: 'Cancel',
                 restore: '↩️ Restore',
                 archive: '📦 Archive',
+                contract_payment: '📄 Contract & Payments',
+                payments_history: 'Payment History',
+                new_payment: '➕ New Payment',
                 
 
             },
@@ -3928,6 +3943,36 @@
             if (closeModalBtn) {
                 closeModalBtn.textContent =
                     t('close');
+            }
+
+            const contractSectionTitle =
+                document.getElementById(
+                    'contract-section-title'
+                );
+
+            if (contractSectionTitle) {
+                contractSectionTitle.textContent =
+                    t('contract_payment');
+            }
+
+            const paymentsHistoryTitle =
+                document.getElementById(
+                    'payments-history-title'
+                );
+
+            if (paymentsHistoryTitle) {
+                paymentsHistoryTitle.textContent =
+                    t('payments_history');
+            }
+
+            const newPaymentTitle =
+                document.getElementById(
+                    'new-payment-title'
+                );
+
+            if (newPaymentTitle) {
+                newPaymentTitle.textContent =
+                    t('new_payment');
             }
 
         }
