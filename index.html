@@ -756,7 +756,7 @@
                 <p>
                     <b id="extra-services-label">
                         💼 Дополнительные услуги:
-                    </b>>
+                    </b>
                     <span id="extra-total">0 €</span>
                 </p>
 
@@ -767,10 +767,21 @@
                 </h4>
 
                 <div class="payments-header">
-                    <span>Дата</span>
-                    <span>Назначение</span>
-                    <span>Сумма</span>
-                    <span>Способ</span>
+                    <span id="payments-date-header">
+                        Дата
+                    </span>
+                
+                    <span id="payments-purpose-header">
+                        Назначение
+                    </span>
+                
+                    <span id="payments-amount-header">
+                        Сумма
+                    </span>
+                
+                    <span id="payments-method-header">
+                        Способ
+                    </span>
                 </div>
 
                 <div id="payments-count"></div>
@@ -930,7 +941,7 @@
 
     <script>
 
-        const BUILD_VERSION = '2026-07-21 18:04';
+        const BUILD_VERSION = '2026-07-21 18:19';
 
             // =========================
             // GoDrive CRM constants
@@ -1075,6 +1086,10 @@
                 paid_total: '🟢 Оплачено:',
                 left_total: '🟠 Осталось:',
                 extra_services: '💼 Дополнительные услуги:',
+                payment_date: 'Дата',
+                payment_purpose: 'Назначение',
+                payment_amount: 'Сумма',
+                payment_method: 'Способ',
                 
 
             },
@@ -1175,6 +1190,10 @@
                 paid_total: '🟢 Samaksāts:',
                 left_total: '🟠 Atlikums:',
                 extra_services: '💼 Papildu pakalpojumi:',
+                payment_date: 'Datums',
+                payment_purpose: 'Mērķis',
+                payment_amount: 'Summa',
+                payment_method: 'Veids',
                 
             },
 
@@ -1273,6 +1292,10 @@
                 paid_total: '🟢 Paid:',
                 left_total: '🟠 Remaining:',
                 extra_services: '💼 Additional services:',
+                payment_date: 'Date',
+                payment_purpose: 'Purpose',
+                payment_amount: 'Amount',
+                payment_method: 'Method',
 
             },
             
@@ -4065,6 +4088,46 @@
             if (extraServicesLabel) {
                 extraServicesLabel.textContent =
                     t('extra_services');
+            }
+
+            const paymentsDateHeader =
+                document.getElementById(
+                    'payments-date-header'
+                );
+
+            const paymentsPurposeHeader =
+                document.getElementById(
+                    'payments-purpose-header'
+                );
+
+            const paymentsAmountHeader =
+                document.getElementById(
+                    'payments-amount-header'
+                );
+
+            const paymentsMethodHeader =
+                document.getElementById(
+                    'payments-method-header'
+                );
+
+            if (paymentsDateHeader) {
+                paymentsDateHeader.textContent =
+                    t('payment_date');
+            }
+
+            if (paymentsPurposeHeader) {
+                paymentsPurposeHeader.textContent =
+                    t('payment_purpose');
+            }
+
+            if (paymentsAmountHeader) {
+                paymentsAmountHeader.textContent =
+                    t('payment_amount');
+            }
+
+            if (paymentsMethodHeader) {
+                paymentsMethodHeader.textContent =
+                    t('payment_method');
             }
 
         }
