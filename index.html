@@ -983,7 +983,7 @@
 
     <script>
 
-        const BUILD_VERSION = '2026-07-21 19:57';
+        const BUILD_VERSION = '2026-07-21 20:11';
 
             // =========================
             // GoDrive CRM constants
@@ -1145,6 +1145,7 @@
                 payment_cash: 'Наличные',
                 payment_card: 'Карта',
                 payment_transfer: 'Перевод',
+                add_payment: '➕ Добавить платеж',
                 
 
             },
@@ -1262,6 +1263,7 @@
                 payment_cash: 'Skaidra nauda',
                 payment_card: 'Karte',
                 payment_transfer: 'Pārskaitījums',
+                add_payment: '➕ Pievienot maksājumu',
                 
             },
 
@@ -1377,6 +1379,7 @@
                 payment_cash: 'Cash',
                 payment_card: 'Card',
                 payment_transfer: 'Bank transfer',
+                add_payment: '➕ Add payment',
 
             },
             
@@ -4339,6 +4342,16 @@
             if (paymentTransfer) {
                 paymentTransfer.textContent =
                     t('payment_transfer');
+            }
+
+            const addPaymentBtn =
+                document.getElementById(
+                    'add-payment-btn'
+                );
+
+            if (addPaymentBtn) {
+                addPaymentBtn.textContent =
+                    t('add_payment');
             }
 
         }
