@@ -651,7 +651,7 @@
             </button>
             
             <p>
-                <b>ФИО:</b><br>
+                <b id="modal-name-label">ФИО:</b><br>
                 <input type="text" id="modal-name">
             </p>
             
@@ -912,7 +912,7 @@
 
     <script>
 
-        const BUILD_VERSION = '2026-07-21 13:39';
+        const BUILD_VERSION = '2026-07-21 13:56';
 
             // =========================
             // GoDrive CRM constants
@@ -1033,7 +1033,7 @@
                 student_card: 'Карточка',
                 edit: 'Изменить',
                 delete: 'Удалить',
-                student_name: 'ФИО',
+                student_name: 'ФИО:',
                 student_phone: 'Телефон',
                 student_email: 'E-mail',
                 student_birth_date: 'Дата рождения',
@@ -1121,7 +1121,7 @@
                 student_card: 'Kartīte',
                 edit: 'Redigāt',
                 delete: 'Dzezt',
-                student_name: 'Vārds, uzvārds',
+                student_name: 'Vārds, uzvārds:',
                 student_phone: 'Tālrunis',
                 student_email: 'E-pasts',
                 student_birth_date: 'Dzimšanas datums',
@@ -1208,7 +1208,7 @@
                 student_card: 'Card',
                 edit: 'Edit',
                 delete: 'Delete',
-                student_name: 'Full Name',
+                student_name: 'Full Name:',
                 student_phone: 'Phone',
                 student_email: 'E-mail',
                 student_birth_date: 'Birth Date',
@@ -3789,6 +3789,15 @@
                     t('student_card');
             }
 
+            const modalNameLabel =
+                document.getElementById(
+                    'modal-name-label'
+                );
+
+            if (modalNameLabel) {
+                modalNameLabel.textContent =
+                    t('student_name');
+            }
 
         }
 
