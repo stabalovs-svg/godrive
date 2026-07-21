@@ -858,17 +858,19 @@
                     <br>
                 
                     <select id="payment-method">
-                        <option>
+                    
+                        <option id="payment-method-cash" value="Наличные">
                             Наличные
                         </option>
-                
-                        <option>
+                    
+                        <option id="payment-method-card" value="Карта">
                             Карта
                         </option>
-                
-                        <option>
+                    
+                        <option id="payment-method-transfer" value="Перевод">
                             Перевод
                         </option>
+                    
                     </select>
                 </p>
             
@@ -981,7 +983,7 @@
 
     <script>
 
-        const BUILD_VERSION = '2026-07-21 19:34';
+        const BUILD_VERSION = '2026-07-21 19:57';
 
             // =========================
             // GoDrive CRM constants
@@ -1140,6 +1142,9 @@
                 purpose_theory_retake: 'Пересдача теории',
                 purpose_driving_retake: 'Пересдача вождения',
                 purpose_other: 'Другое',
+                payment_cash: 'Наличные',
+                payment_card: 'Карта',
+                payment_transfer: 'Перевод',
                 
 
             },
@@ -1254,6 +1259,9 @@
                 purpose_theory_retake: 'Teorijas eksāmena atkārtošana',
                 purpose_driving_retake: 'Braukšanas eksāmena atkārtošana',
                 purpose_other: 'Cits',
+                payment_cash: 'Skaidra nauda',
+                payment_card: 'Karte',
+                payment_transfer: 'Pārskaitījums',
                 
             },
 
@@ -1366,6 +1374,9 @@
                 purpose_theory_retake: 'Theory exam retake',
                 purpose_driving_retake: 'Driving exam retake',
                 purpose_other: 'Other',
+                payment_cash: 'Cash',
+                payment_card: 'Card',
+                payment_transfer: 'Bank transfer',
 
             },
             
@@ -4298,6 +4309,36 @@
             if (paymentPurposeOther) {
                 paymentPurposeOther.textContent =
                     t('purpose_other');
+            }
+
+            const paymentCash =
+                document.getElementById(
+                    'payment-method-cash'
+                );
+
+            const paymentCard =
+                document.getElementById(
+                    'payment-method-card'
+                );
+
+            const paymentTransfer =
+                document.getElementById(
+                    'payment-method-transfer'
+                );
+
+            if (paymentCash) {
+                paymentCash.textContent =
+                    t('payment_cash');
+            }
+
+            if (paymentCard) {
+                paymentCard.textContent =
+                    t('payment_card');
+            }
+
+            if (paymentTransfer) {
+                paymentTransfer.textContent =
+                    t('payment_transfer');
             }
 
         }
