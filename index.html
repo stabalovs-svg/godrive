@@ -816,27 +816,27 @@
                     <br>
                 
                     <select id="payment-type">
-                        <option value="Теория">
+                        <option id="payment-purpose-theory" value="Теория">
                             Теория
                         </option>
-                
-                        <option value="Вождение">
+                    
+                        <option id="payment-purpose-driving" value="Вождение">
                             Вождение
                         </option>
-                
-                        <option value="Продление договора">
+                    
+                        <option id="payment-purpose-contract-extension" value="Продление договора">
                             Продление договора
                         </option>
-                
-                        <option value="Пересдача теории">
+                    
+                        <option id="payment-purpose-theory-retake" value="Пересдача теории">
                             Пересдача теории
                         </option>
-                
-                        <option value="Пересдача вождения">
+                    
+                        <option id="payment-purpose-driving-retake" value="Пересдача вождения">
                             Пересдача вождения
                         </option>
-                
-                        <option value="Другое">
+                    
+                        <option id="payment-purpose-other" value="Другое">
                             Другое
                         </option>
                     </select>
@@ -981,7 +981,7 @@
 
     <script>
 
-        const BUILD_VERSION = '2026-07-21 18:54';
+        const BUILD_VERSION = '2026-07-21 19:34';
 
             // =========================
             // GoDrive CRM constants
@@ -1134,6 +1134,12 @@
                 payment_purpose_label: 'Назначение',
                 payment_amount_label: 'Сумма (€)',
                 payment_method_label: 'Способ оплаты',
+                purpose_theory: 'Теория',
+                purpose_driving: 'Вождение',
+                purpose_contract_extension: 'Продление договора',
+                purpose_theory_retake: 'Пересдача теории',
+                purpose_driving_retake: 'Пересдача вождения',
+                purpose_other: 'Другое',
                 
 
             },
@@ -1242,6 +1248,12 @@
                 payment_purpose_label: 'Mērķis',
                 payment_amount_label: 'Summa (€)',
                 payment_method_label: 'Maksājuma veids',
+                purpose_theory: 'Teorija',
+                purpose_driving: 'Braukšana',
+                purpose_contract_extension: 'Līguma pagarināšana',
+                purpose_theory_retake: 'Teorijas eksāmena atkārtošana',
+                purpose_driving_retake: 'Braukšanas eksāmena atkārtošana',
+                purpose_other: 'Cits',
                 
             },
 
@@ -1348,6 +1360,12 @@
                 payment_purpose_label: 'Purpose',
                 payment_amount_label: 'Amount (€)',
                 payment_method_label: 'Payment method',
+                purpose_theory: 'Theory',
+                purpose_driving: 'Driving',
+                purpose_contract_extension: 'Contract extension',
+                purpose_theory_retake: 'Theory exam retake',
+                purpose_driving_retake: 'Driving exam retake',
+                purpose_other: 'Other',
 
             },
             
@@ -4220,6 +4238,66 @@
             if (paymentMethodLabel) {
                 paymentMethodLabel.textContent =
                     t('payment_method_label');
+            }
+
+            const paymentPurposeTheory =
+                document.getElementById(
+                    'payment-purpose-theory'
+                );
+
+            const paymentPurposeDriving =
+                document.getElementById(
+                    'payment-purpose-driving'
+                );
+
+            const paymentPurposeContractExtension =
+                document.getElementById(
+                    'payment-purpose-contract-extension'
+                );
+
+            const paymentPurposeTheoryRetake =
+                document.getElementById(
+                    'payment-purpose-theory-retake'
+                );
+
+            const paymentPurposeDrivingRetake =
+                document.getElementById(
+                    'payment-purpose-driving-retake'
+                );
+
+            const paymentPurposeOther =
+                document.getElementById(
+                    'payment-purpose-other'
+                );
+
+            if (paymentPurposeTheory) {
+                paymentPurposeTheory.textContent =
+                    t('purpose_theory');
+            }
+
+            if (paymentPurposeDriving) {
+                paymentPurposeDriving.textContent =
+                    t('purpose_driving');
+            }
+
+            if (paymentPurposeContractExtension) {
+                paymentPurposeContractExtension.textContent =
+                    t('purpose_contract_extension');
+            }
+
+            if (paymentPurposeTheoryRetake) {
+                paymentPurposeTheoryRetake.textContent =
+                    t('purpose_theory_retake');
+            }
+
+            if (paymentPurposeDrivingRetake) {
+                paymentPurposeDrivingRetake.textContent =
+                    t('purpose_driving_retake');
+            }
+
+            if (paymentPurposeOther) {
+                paymentPurposeOther.textContent =
+                    t('purpose_other');
             }
 
         }
