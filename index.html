@@ -713,12 +713,16 @@
                 </h3>
             
                 <p>
-                    <b>Дата договора:</b><br>
+                    <b id="contract-date-label">
+                        Дата договора:
+                    </b><br>
                     <input type="date" id="modal-contract-date">
                 </p>
             
                 <p>
-                    <b>Срок договора (месяцев):</b><br>
+                    <b id="contract-duration-label">
+                        Срок договора:
+                    </b><br>
                     <select id="modal-contract-duration">
                         <option value="">Выберите</option>
                         <option value="6">6 месяцев</option>
@@ -727,24 +731,32 @@
                 </p>
             
                 <p>
-                    <b>Стоимость курса (€):</b><br>
+                    <b id="course-price-label">
+                        Стоимость курса:
+                    </b><br>
                     <input type="number" id="modal-course-price" step="0.01" min="0">
                 </p>
             
                <hr>
 
                <p>
-                    <b>🟢 Оплачено:</b>
+                    <b id="paid-total-label">
+                        🟢 Оплачено:
+                    </b>
                     <span id="paid-total">0 €</span>
                 </p>
 
                 <p>
-                    <b>🟠 Осталось:</b>
+                    <b id="left-total-label">
+                        🟠 Осталось:
+                    </b>
                     <span id="left-total">0 €</span>
                 </p>
 
                 <p>
-                    <b>💼 Дополнительные услуги:</b>
+                    <b id="extra-services-label">
+                        💼 Дополнительные услуги:
+                    </b>>
                     <span id="extra-total">0 €</span>
                 </p>
 
@@ -918,7 +930,7 @@
 
     <script>
 
-        const BUILD_VERSION = '2026-07-21 17:37';
+        const BUILD_VERSION = '2026-07-21 18:04';
 
             // =========================
             // GoDrive CRM constants
@@ -1057,6 +1069,12 @@
                 payments_history: 'История платежей',
                 new_payment: '➕ Новый платеж',
                 no_payments: 'Пока нет платежей',
+                contract_date: 'Дата договора:',
+                contract_duration: 'Срок договора:',
+                course_price: 'Стоимость курса:',
+                paid_total: '🟢 Оплачено:',
+                left_total: '🟠 Осталось:',
+                extra_services: '💼 Дополнительные услуги:',
                 
 
             },
@@ -1151,6 +1169,12 @@
                 payments_history: 'Maksājumu vēsture',
                 new_payment: '➕ Jauns maksājums',
                 no_payments: 'Pagaidām nav maksājumu',
+                contract_date: 'Līguma datums:',
+                contract_duration: 'Līguma termiņš:',
+                course_price: 'Kursa cena:',
+                paid_total: '🟢 Samaksāts:',
+                left_total: '🟠 Atlikums:',
+                extra_services: '💼 Papildu pakalpojumi:',
                 
             },
 
@@ -1243,6 +1267,12 @@
                 payments_history: 'Payment History',
                 new_payment: '➕ New Payment',
                 no_payments: 'No payments yet',
+                contract_date: 'Contract date:',
+                contract_duration: 'Contract duration:',
+                course_price: 'Course price:',
+                paid_total: '🟢 Paid:',
+                left_total: '🟠 Remaining:',
+                extra_services: '💼 Additional services:',
 
             },
             
@@ -3975,6 +4005,66 @@
             if (newPaymentTitle) {
                 newPaymentTitle.textContent =
                     t('new_payment');
+            }
+
+            const contractDateLabel =
+                document.getElementById(
+                    'contract-date-label'
+                );
+
+            const contractDurationLabel =
+                document.getElementById(
+                    'contract-duration-label'
+                );
+
+            const coursePriceLabel =
+                document.getElementById(
+                    'course-price-label'
+                );
+
+            const paidTotalLabel =
+                document.getElementById(
+                    'paid-total-label'
+                );
+
+            const leftTotalLabel =
+                document.getElementById(
+                    'left-total-label'
+                );
+
+            const extraServicesLabel =
+                document.getElementById(
+                    'extra-services-label'
+                );
+
+            if (contractDateLabel) {
+                contractDateLabel.textContent =
+                    t('contract_date');
+            }
+
+            if (contractDurationLabel) {
+                contractDurationLabel.textContent =
+                    t('contract_duration');
+            }
+
+            if (coursePriceLabel) {
+                coursePriceLabel.textContent =
+                    t('course_price');
+            }
+
+            if (paidTotalLabel) {
+                paidTotalLabel.textContent =
+                    t('paid_total');
+            }
+
+            if (leftTotalLabel) {
+                leftTotalLabel.textContent =
+                    t('left_total');
+            }
+
+            if (extraServicesLabel) {
+                extraServicesLabel.textContent =
+                    t('extra_services');
             }
 
         }
