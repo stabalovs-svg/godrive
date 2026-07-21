@@ -656,22 +656,22 @@
             </p>
             
             <p>
-                <b>Телефон:</b><br>
+                <b id="modal-phone-label">Телефон:</b><br>
                 <input type="text" id="modal-phone">
             </p>
             
             <p>
-                <b>Email:</b><br>
+                <b id="modal-email-label">Email:</b><br>
                 <input type="email" id="modal-email">
             </p>
             
             <p>
-                <b>Договор:</b><br>
+                <b id="modal-contract-label">Договор:</b><br>
                 <input type="text" id="modal-contract">
             </p>
             
             <p>
-                <b>Категория:</b><br>
+                <b id="modal-category-label">Категория:</b><br>
                 <input type="text" id="modal-category">
             </p>
 
@@ -912,7 +912,7 @@
 
     <script>
 
-        const BUILD_VERSION = '2026-07-21 13:56';
+        const BUILD_VERSION = '2026-07-21 14:19';
 
             // =========================
             // GoDrive CRM constants
@@ -1034,11 +1034,11 @@
                 edit: 'Изменить',
                 delete: 'Удалить',
                 student_name: 'ФИО:',
-                student_phone: 'Телефон',
-                student_email: 'E-mail',
+                student_phone: 'Телефон:',
+                student_email: 'E-mail:',
                 student_birth_date: 'Дата рождения',
-                student_contract: 'Договор',
-                student_category: 'Категория',
+                student_contract: 'Договор:',
+                student_category: 'Категория:',
                 student_status: 'Статус',
                 student_instructor: 'Инструктор',
                 student_notes: 'Примечания',
@@ -3797,6 +3797,46 @@
             if (modalNameLabel) {
                 modalNameLabel.textContent =
                     t('student_name');
+            }
+
+            const modalPhoneLabel =
+                document.getElementById(
+                    'modal-phone-label'
+                );
+
+            if (modalPhoneLabel) {
+                modalPhoneLabel.textContent =
+                    t('student_phone');
+            }
+
+            const modalEmailLabel =
+                document.getElementById(
+                    'modal-email-label'
+                );
+
+            if (modalEmailLabel) {
+                modalEmailLabel.textContent =
+                    t('student_email');
+            }
+
+            const modalContractLabel =
+                document.getElementById(
+                    'modal-contract-label'
+                );
+
+            if (modalContractLabel) {
+                modalContractLabel.textContent =
+                    t('student_contract');
+            }
+
+            const modalCategoryLabel =
+                document.getElementById(
+                    'modal-category-label'
+                );
+
+            if (modalCategoryLabel) {
+                modalCategoryLabel.textContent =
+                    t('student_category');
             }
 
         }
