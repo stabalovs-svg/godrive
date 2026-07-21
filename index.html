@@ -912,7 +912,7 @@
 
     <script>
 
-        const BUILD_VERSION = '2026-07-21 14:39';
+        const BUILD_VERSION = '2026-07-21 14:49';
 
             // =========================
             // GoDrive CRM constants
@@ -1045,6 +1045,7 @@
                 save: 'Сохранить',
                 cancel: 'Отмена',
                 close: 'Закрыть',
+                archive: '📦 В архив',
                 
 
             },
@@ -1133,6 +1134,7 @@
                 save: 'Saglabāt',
                 cancel: 'Atcelt',
                 close: 'Aizvērt',
+                archive: '📦 Arhīvā',
                 
             },
 
@@ -1220,6 +1222,7 @@
                 save: 'Save',
                 cancel: 'Cancel',
                 close: 'Close',
+                archive: '📦 Archive',
                 
 
             },
@@ -3883,6 +3886,46 @@
             if (modalNotesLabel) {
                 modalNotesLabel.textContent =
                     t('student_notes');
+            }
+
+            const closeModalTopBtn =
+                document.getElementById(
+                    'close-modal-top'
+                );
+
+            if (closeModalTopBtn) {
+                closeModalTopBtn.textContent =
+                    t('close');
+            }
+
+            const saveStudentBtn =
+                document.getElementById(
+                    'save-student-btn'
+                );
+
+            if (saveStudentBtn) {
+                saveStudentBtn.textContent =
+                    t('save');
+            }
+
+            const archiveStudentBtn =
+                document.getElementById(
+                    'archive-student-btn'
+                );
+
+            if (archiveStudentBtn) {
+                archiveStudentBtn.textContent =
+                    t('archive');
+            }
+
+            const closeModalBtn =
+                document.getElementById(
+                    'close-modal'
+                );
+
+            if (closeModalBtn) {
+                closeModalBtn.textContent =
+                    t('close');
             }
 
         }
