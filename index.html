@@ -801,36 +801,76 @@
                 </h4>
             
                 <p>
-                    Дата<br>
+                    <span id="payment-date-label">
+                        Дата
+                    </span>
+                    <br>
+                
                     <input type="date" id="payment-date">
                 </p>
-            
+                
                 <p>
-                    Назначение<br>
+                    <span id="payment-purpose-label">
+                        Назначение
+                    </span>
+                    <br>
+                
                     <select id="payment-type">
-                        <option value="Теория">Теория</option>
-                        <option value="Вождение">Вождение</option>
-                        <option value="Продление договора">Продление договора</option>
-                        <option value="Пересдача теории">Пересдача теории</option>
-                        <option value="Пересдача вождения">Пересдача вождения</option>
-                        <option value="Другое">Другое</option>
+                        <option value="Теория">
+                            Теория
+                        </option>
+                
+                        <option value="Вождение">
+                            Вождение
+                        </option>
+                
+                        <option value="Продление договора">
+                            Продление договора
+                        </option>
+                
+                        <option value="Пересдача теории">
+                            Пересдача теории
+                        </option>
+                
+                        <option value="Пересдача вождения">
+                            Пересдача вождения
+                        </option>
+                
+                        <option value="Другое">
+                            Другое
+                        </option>
                     </select>
                 </p>
-            
+                
                 <p>
-                    Сумма (€)<br>
+                    <span id="payment-amount-label">
+                        Сумма (€)
+                    </span>
+                    <br>
+                
                     <input type="number" id="payment-amount" step="0.01">
                 </p>
-            
+                
                 <p>
-                    Способ оплаты<br>
+                    <span id="payment-method-label">
+                        Способ оплаты
+                    </span>
+                    <br>
+                
                     <select id="payment-method">
-                        <option>Наличные</option>
-                        <option>Карта</option>
-                        <option>Перевод</option>
+                        <option>
+                            Наличные
+                        </option>
+                
+                        <option>
+                            Карта
+                        </option>
+                
+                        <option>
+                            Перевод
+                        </option>
                     </select>
                 </p>
-            
             
                 <button id="add-payment-btn">
             
@@ -941,7 +981,7 @@
 
     <script>
 
-        const BUILD_VERSION = '2026-07-21 18:19';
+        const BUILD_VERSION = '2026-07-21 18:54';
 
             // =========================
             // GoDrive CRM constants
@@ -1090,6 +1130,10 @@
                 payment_purpose: 'Назначение',
                 payment_amount: 'Сумма',
                 payment_method: 'Способ',
+                payment_date_label: 'Дата',
+                payment_purpose_label: 'Назначение',
+                payment_amount_label: 'Сумма (€)',
+                payment_method_label: 'Способ оплаты',
                 
 
             },
@@ -1194,6 +1238,10 @@
                 payment_purpose: 'Mērķis',
                 payment_amount: 'Summa',
                 payment_method: 'Veids',
+                payment_date_label: 'Datums',
+                payment_purpose_label: 'Mērķis',
+                payment_amount_label: 'Summa (€)',
+                payment_method_label: 'Maksājuma veids',
                 
             },
 
@@ -1296,6 +1344,10 @@
                 payment_purpose: 'Purpose',
                 payment_amount: 'Amount',
                 payment_method: 'Method',
+                payment_date_label: 'Date',
+                payment_purpose_label: 'Purpose',
+                payment_amount_label: 'Amount (€)',
+                payment_method_label: 'Payment method',
 
             },
             
@@ -4128,6 +4180,46 @@
             if (paymentsMethodHeader) {
                 paymentsMethodHeader.textContent =
                     t('payment_method');
+            }
+
+            const paymentDateLabel =
+                document.getElementById(
+                    'payment-date-label'
+                );
+
+            const paymentPurposeLabel =
+                document.getElementById(
+                    'payment-purpose-label'
+                );
+
+            const paymentAmountLabel =
+                document.getElementById(
+                    'payment-amount-label'
+                );
+
+            const paymentMethodLabel =
+                document.getElementById(
+                    'payment-method-label'
+                );
+
+            if (paymentDateLabel) {
+                paymentDateLabel.textContent =
+                    t('payment_date_label');
+            }
+
+            if (paymentPurposeLabel) {
+                paymentPurposeLabel.textContent =
+                    t('payment_purpose_label');
+            }
+
+            if (paymentAmountLabel) {
+                paymentAmountLabel.textContent =
+                    t('payment_amount_label');
+            }
+
+            if (paymentMethodLabel) {
+                paymentMethodLabel.textContent =
+                    t('payment_method_label');
             }
 
         }
