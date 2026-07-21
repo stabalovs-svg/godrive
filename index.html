@@ -912,7 +912,7 @@
 
     <script>
 
-        const BUILD_VERSION = '2026-07-20 22:42';
+        const BUILD_VERSION = '2026-07-21 08:10';
 
             // =========================
             // GoDrive CRM constants
@@ -1032,7 +1032,8 @@
                 birth_date_sort: 'День рождения ↕',
                 student_card: 'Карточка',
                 edit: 'Изменить',
-                delete: 'Удалить'
+                delete: 'Удалить',
+                student_card: 'Карточка ученика',
 
             },
 
@@ -1107,7 +1108,8 @@
                 birth_date_sort: 'Dzimšanas diena ↕',
                 student_card: 'Kartīte',
                 edit: 'Redigāt',
-                delete: 'Dzezt'
+                delete: 'Dzezt',
+                student_card: 'Audzēkņa kartīte',
             },
 
             en: {
@@ -1181,7 +1183,9 @@
                 birth_date_sort: 'Birthday ↕',
                 student_card: 'Card',
                 edit: 'Edit',
-                delete: 'Delete'
+                delete: 'Delete',
+                student_card: 'Student Card',
+
             },
             
         };
@@ -3739,6 +3743,15 @@
                     t('birth_date_sort');
             }
 
+            const studentCardTitle =
+                document.getElementById(
+                    'student-card-title'
+                );
+
+            if (studentCardTitle) {
+                studentCardTitle.textContent =
+                    t('student_card');
+            }
 
 
         }
