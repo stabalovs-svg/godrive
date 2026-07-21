@@ -446,29 +446,30 @@
                 </select>
 
                 <input type="date" id="new-birth">
-                <select id="modal-status">
                 
-                    <option id="modal-status-registration" value="Оформление">
+                <select id="new-status">
+                
+                    <option id="new-status-registration" value="Оформление">
                         Оформление
                     </option>
                 
-                    <option id="modal-status-theory" value="Теория">
+                    <option id="new-status-theory" value="Теория">
                         Теория
                     </option>
                 
-                    <option id="modal-status-theory-passed" value="Теория сдана">
+                    <option id="new-status-theory-passed" value="Теория сдана">
                         Теория сдана
                     </option>
                 
-                    <option id="modal-status-driving" value="Вождение">
+                    <option id="new-status-driving" value="Вождение">
                         Вождение
                     </option>
                 
-                    <option id="modal-status-driving-exam" value="Вождение экзамен">
+                    <option id="new-status-driving-exam" value="Вождение экзамен">
                         Вождение экзамен
                     </option>
                 
-                    <option id="modal-status-driving-passed" value="Вождение сдано">
+                    <option id="new-status-driving-passed" value="Вождение сдано">
                         Вождение сдано
                     </option>
                 
@@ -1002,7 +1003,7 @@
 
     <script>
 
-        const BUILD_VERSION = '2026-07-21 20:31';
+        const BUILD_VERSION = '2026-07-21 21:56';
 
             // =========================
             // GoDrive CRM constants
@@ -4373,65 +4374,84 @@
                     t('add_payment');
             }
 
-            const modalStatusRegistration =
-                document.getElementById(
-                    'modal-status-registration'
-                );
+            
+            const statusOptions = [
 
-            const modalStatusTheory =
-                document.getElementById(
-                    'modal-status-theory'
-                );
+                {
+                    id: 'new-status-registration',
+                    key: 'status_registration'
+                },
 
-            const modalStatusTheoryPassed =
-                document.getElementById(
-                    'modal-status-theory-passed'
-                );
+                {
+                    id: 'new-status-theory',
+                    key: 'status_theory'
+                },
 
-            const modalStatusDriving =
-                document.getElementById(
-                    'modal-status-driving'
-                );
+                {
+                    id: 'new-status-theory-passed',
+                    key: 'status_theory_passed'
+                },
 
-            const modalStatusDrivingExam =
-                document.getElementById(
-                    'modal-status-driving-exam'
-                );
+                {
+                    id: 'new-status-driving',
+                    key: 'status_driving'
+                },
 
-            const modalStatusDrivingPassed =
-                document.getElementById(
-                    'modal-status-driving-passed'
-                );
+                {
+                    id: 'new-status-driving-exam',
+                    key: 'status_driving_exam'
+                },
 
-            if (modalStatusRegistration) {
-                modalStatusRegistration.textContent =
-                    t('status_registration');
-            }
+                {
+                    id: 'new-status-driving-passed',
+                    key: 'status_driving_passed'
+                },
 
-            if (modalStatusTheory) {
-                modalStatusTheory.textContent =
-                    t('status_theory');
-            }
+                {
+                    id: 'modal-status-registration',
+                    key: 'status_registration'
+                },
 
-            if (modalStatusTheoryPassed) {
-                modalStatusTheoryPassed.textContent =
-                    t('status_theory_passed');
-            }
+                {
+                    id: 'modal-status-theory',
+                    key: 'status_theory'
+                },
 
-            if (modalStatusDriving) {
-                modalStatusDriving.textContent =
-                    t('status_driving');
-            }
+                {
+                    id: 'modal-status-theory-passed',
+                    key: 'status_theory_passed'
+                },
 
-            if (modalStatusDrivingExam) {
-                modalStatusDrivingExam.textContent =
-                    t('status_driving_exam');
-            }
+                {
+                    id: 'modal-status-driving',
+                    key: 'status_driving'
+                },
 
-            if (modalStatusDrivingPassed) {
-                modalStatusDrivingPassed.textContent =
-                    t('status_driving_passed');
-            }
+                {
+                    id: 'modal-status-driving-exam',
+                    key: 'status_driving_exam'
+                },
+
+                {
+                    id: 'modal-status-driving-passed',
+                    key: 'status_driving_passed'
+                }
+
+            ];
+
+            statusOptions.forEach(item => {
+
+                const option =
+                    document.getElementById(
+                        item.id
+                    );
+
+                if (option) {
+                    option.textContent =
+                        t(item.key);
+                }
+
+            });
 
         }
 
