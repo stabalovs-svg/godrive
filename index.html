@@ -918,7 +918,7 @@
 
     <script>
 
-        const BUILD_VERSION = '2026-07-21 17:19';
+        const BUILD_VERSION = '2026-07-21 17:37';
 
             // =========================
             // GoDrive CRM constants
@@ -1056,6 +1056,7 @@
                 contract_payment: '📄 Договор и оплата',
                 payments_history: 'История платежей',
                 new_payment: '➕ Новый платеж',
+                no_payments: 'Пока нет платежей',
                 
 
             },
@@ -1149,6 +1150,7 @@
                 contract_payment: '📄 Līgums un maksājumi',
                 payments_history: 'Maksājumu vēsture',
                 new_payment: '➕ Jauns maksājums',
+                no_payments: 'Pagaidām nav maksājumu',
                 
             },
 
@@ -1240,7 +1242,7 @@
                 contract_payment: '📄 Contract & Payments',
                 payments_history: 'Payment History',
                 new_payment: '➕ New Payment',
-                
+                no_payments: 'No payments yet',
 
             },
             
@@ -5259,8 +5261,8 @@
 
             if (!data.length) {
 
-                document.getElementById('payments-list').innerHTML =
-                    'Пока нет платежей';
+                document.getElementById('payments-list').textContent =
+                    t('no_payments');
 
                 return;
             }
