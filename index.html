@@ -446,13 +446,32 @@
                 </select>
 
                 <input type="date" id="new-birth">
-                <select id="new-status">
-                    <option value="оформление">Оформление</option>
-                    <option value="теория">Теория</option>
-                    <option value="теория сдана">Теория сдана</option>
-                    <option value="вождение">Вождение</option>
-                    <option value="вождение экзамен">Вождение экзамен</option>
-                    <option value="вождение сдано">Вождение сдано</option>
+                <select id="modal-status">
+                
+                    <option id="modal-status-registration" value="Оформление">
+                        Оформление
+                    </option>
+                
+                    <option id="modal-status-theory" value="Теория">
+                        Теория
+                    </option>
+                
+                    <option id="modal-status-theory-passed" value="Теория сдана">
+                        Теория сдана
+                    </option>
+                
+                    <option id="modal-status-driving" value="Вождение">
+                        Вождение
+                    </option>
+                
+                    <option id="modal-status-driving-exam" value="Вождение экзамен">
+                        Вождение экзамен
+                    </option>
+                
+                    <option id="modal-status-driving-passed" value="Вождение сдано">
+                        Вождение сдано
+                    </option>
+                
                 </select>
                 <textarea id="new-notes" placeholder="Заметки"></textarea>
                 <button id="add-student-submit-btn" type="submit">
@@ -983,7 +1002,7 @@
 
     <script>
 
-        const BUILD_VERSION = '2026-07-21 20:11';
+        const BUILD_VERSION = '2026-07-21 20:31';
 
             // =========================
             // GoDrive CRM constants
@@ -4352,6 +4371,66 @@
             if (addPaymentBtn) {
                 addPaymentBtn.textContent =
                     t('add_payment');
+            }
+
+            const modalStatusRegistration =
+                document.getElementById(
+                    'modal-status-registration'
+                );
+
+            const modalStatusTheory =
+                document.getElementById(
+                    'modal-status-theory'
+                );
+
+            const modalStatusTheoryPassed =
+                document.getElementById(
+                    'modal-status-theory-passed'
+                );
+
+            const modalStatusDriving =
+                document.getElementById(
+                    'modal-status-driving'
+                );
+
+            const modalStatusDrivingExam =
+                document.getElementById(
+                    'modal-status-driving-exam'
+                );
+
+            const modalStatusDrivingPassed =
+                document.getElementById(
+                    'modal-status-driving-passed'
+                );
+
+            if (modalStatusRegistration) {
+                modalStatusRegistration.textContent =
+                    t('status_registration');
+            }
+
+            if (modalStatusTheory) {
+                modalStatusTheory.textContent =
+                    t('status_theory');
+            }
+
+            if (modalStatusTheoryPassed) {
+                modalStatusTheoryPassed.textContent =
+                    t('status_theory_passed');
+            }
+
+            if (modalStatusDriving) {
+                modalStatusDriving.textContent =
+                    t('status_driving');
+            }
+
+            if (modalStatusDrivingExam) {
+                modalStatusDrivingExam.textContent =
+                    t('status_driving_exam');
+            }
+
+            if (modalStatusDrivingPassed) {
+                modalStatusDrivingPassed.textContent =
+                    t('status_driving_passed');
             }
 
         }
