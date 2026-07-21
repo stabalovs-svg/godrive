@@ -918,7 +918,7 @@
 
     <script>
 
-        const BUILD_VERSION = '2026-07-21 16:57';
+        const BUILD_VERSION = '2026-07-21 17:19';
 
             // =========================
             // GoDrive CRM constants
@@ -989,7 +989,7 @@
                 event_log: '📜 Журнал событий',
                 search_student:
                     'Поиск по ФИО, телефону, email...',
-                archive: '📦 Архив',
+                archive_section: '📦 Архив',
                 active: '👥 Активные',
                 check_auto_archive:
                     '🧪 Проверить автоархив',
@@ -1082,7 +1082,7 @@
                 event_log: '📜 Notikumu žurnāls',
                 search_student:
                     'Meklēt pēc vārda, tālruņa vai e-pasta...',
-                archive: '📦 Arhīvs',
+                archive_section: '📦 Arhīvs',
                 active: '👥 Aktīvie',
                 check_auto_archive:
                     '🧪 Pārbaudīt autoarhīvu',
@@ -1174,7 +1174,7 @@
                 event_log: '📜 Event Log',
                 search_student:
                     'Search by name, phone or email...',
-                archive: '📦 Archive',
+                archive_section: '📦 Archive',
                 active: '👥 Active',    
                 check_auto_archive:
                     '🧪 Check auto archive',
@@ -3745,7 +3745,7 @@
                 archiveToggleBtn.textContent =
                     showArchivedStudents
                         ? t('active')
-                        : t('archive');
+                        : t('archive_section');
             }
 
             if (checkAutoArchiveBtn) {
