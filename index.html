@@ -912,7 +912,7 @@
 
     <script>
 
-        const BUILD_VERSION = '2026-07-21 14:19';
+        const BUILD_VERSION = '2026-07-21 14:31';
 
             // =========================
             // GoDrive CRM constants
@@ -3774,10 +3774,16 @@
                     t('actions');
             }
 
-                        if (sortBirth) {
+            if (sortBirth) {
                 sortBirth.textContent =
                     t('birth_date_sort');
             }
+
+            
+
+        }
+
+        function applyStudentCardLanguage() {
 
             const studentCardTitle =
                 document.getElementById(
@@ -4061,6 +4067,8 @@
             applySettingsLanguage();
 
             applyMenuLanguage();
+
+            applyStudentCardLanguage();
 
             if (
                 typeof loadStudents === 'function' &&
