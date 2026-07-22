@@ -1073,7 +1073,7 @@
 
     <script>
 
-        const BUILD_VERSION = '2026-07-22 18:43';
+        const BUILD_VERSION = '2026-07-22 19:00';
 
             // =========================
             // GoDrive CRM constants
@@ -1248,7 +1248,42 @@
                 event_student_updated: '📝 Изменены данные',
                 event_student_archived: '📦 Ученик архивирован',
                 event_student_restored: '↩️ Ученик восстановлен',
-                crm_event_log: 'Журнал событий CRM', 
+                crm_event_log: 'Журнал событий CRM',
+                period: 'Период:',
+                search: 'Поиск:',
+                employee: 'Сотрудник:',
+                event: 'Событие:',
+
+                all_records: 'Все записи',
+                today: 'Сегодня',
+                last_7_days: 'Последние 7 дней',
+                last_30_days: 'Последние 30 дней',
+
+                all_events: 'Все события',
+
+                event_student_created_short:
+                    'Создание ученика',
+
+                event_payment_added_short:
+                    'Платежи',
+
+                event_status_changed_short:
+                    'Изменения статуса',
+
+                event_instructor_changed_short:
+                    'Изменения инструктора',
+
+                event_contract_changed_short:
+                    'Изменения договора',
+
+                event_student_updated_short:
+                    'Изменения данных',
+
+                search_event_placeholder:
+                    'Ученик, сотрудник, событие...',
+
+                close_event_log:
+                    'Закрыть журнал', 
                 
 
             },
@@ -1380,6 +1415,41 @@
                 event_student_archived: '📦 Audzēknis arhivēts',
                 event_student_restored: '↩️ Audzēknis atjaunots',
                 crm_event_log: 'CRM notikumu žurnāls',
+                period: 'Periods:',
+                search: 'Meklēšana:',
+                employee: 'Darbinieks:',
+                event: 'Notikums:',
+
+                all_records: 'Visi ieraksti',
+                today: 'Šodien',
+                last_7_days: 'Pēdējās 7 dienas',
+                last_30_days: 'Pēdējās 30 dienas',
+
+                all_events: 'Visi notikumi',
+
+                event_student_created_short:
+                    'Studenta izveide',
+
+                event_payment_added_short:
+                    'Maksājumi',
+
+                event_status_changed_short:
+                    'Statusa izmaiņas',
+
+                event_instructor_changed_short:
+                    'Instruktora izmaiņas',
+
+                event_contract_changed_short:
+                    'Līguma izmaiņas',
+
+                event_student_updated_short:
+                    'Datu izmaiņas',
+
+                search_event_placeholder:
+                    'Students, darbinieks, notikums...',
+
+                close_event_log:
+                    'Aizvērt žurnālu',
                 
             },
 
@@ -1509,6 +1579,41 @@
                 event_student_archived: '📦 Student archived',
                 event_student_restored: '↩️ Student restored',
                 crm_event_log: 'CRM Event Log',
+                period: 'Period:',
+                search: 'Search:',
+                employee: 'Employee:',
+                event: 'Event:',
+
+                all_records: 'All records',
+                today: 'Today',
+                last_7_days: 'Last 7 days',
+                last_30_days: 'Last 30 days',
+
+                all_events: 'All events',
+
+                event_student_created_short:
+                    'Student creation',
+
+                event_payment_added_short:
+                    'Payments',
+
+                event_status_changed_short:
+                    'Status changes',
+
+                event_instructor_changed_short:
+                    'Instructor changes',
+
+                event_contract_changed_short:
+                    'Contract changes',
+
+                event_student_updated_short:
+                    'Data changes',
+
+                search_event_placeholder:
+                    'Student, employee, event...',
+
+                close_event_log:
+                    'Close event log',
 
             },
             
@@ -4046,6 +4151,168 @@
                 document.getElementById(
                     'global-event-log-title'
                 );
+
+            const eventPeriodLabel =
+                document.getElementById(
+                    'event-period-label'
+                );
+
+            const eventSearchLabel =
+                document.getElementById(
+                    'event-search-label'
+                );
+
+            const eventUserLabel =
+                document.getElementById(
+                    'event-user-label'
+                );
+
+            const eventTypeLabel =
+                document.getElementById(
+                    'event-type-label'
+                );
+
+            const eventPeriodAll =
+                document.getElementById(
+                    'event-period-all'
+                );
+
+            const eventPeriodToday =
+                document.getElementById(
+                    'event-period-today'
+                );
+
+            const eventPeriod7Days =
+                document.getElementById(
+                    'event-period-7days'
+                );
+
+            const eventPeriod30Days =
+                document.getElementById(
+                    'event-period-30days'
+                );
+
+            const eventTypeAll =
+                document.getElementById(
+                    'event-type-all'
+                );
+
+            const eventTypeStudentCreated =
+                document.getElementById(
+                    'event-type-student-created'
+                );
+
+            const eventTypePaymentAdded =
+                document.getElementById(
+                    'event-type-payment-added'
+                );
+
+            const eventTypeStatusChanged =
+                document.getElementById(
+                    'event-type-status-changed'
+                );
+
+            const eventTypeInstructorChanged =
+                document.getElementById(
+                    'event-type-instructor-changed'
+                );
+
+            const eventTypeContractChanged =
+                document.getElementById(
+                    'event-type-contract-changed'
+                );
+
+            const eventTypeStudentUpdated =
+                document.getElementById(
+                    'event-type-student-updated'
+                );
+
+            const eventLogSearch =
+                document.getElementById(
+                    'event-log-search'
+                );
+
+            const closeEventLogBtn =
+                document.getElementById(
+                    'close-event-log-btn'
+                );
+
+            const closeEventLogBtnBottom =
+                document.getElementById(
+                    'close-event-log-btn-bottom'
+                );
+
+            if (eventPeriodLabel)
+                eventPeriodLabel.textContent =
+                    t('period');
+
+            if (eventSearchLabel)
+                eventSearchLabel.textContent =
+                    t('search');
+
+            if (eventUserLabel)
+                eventUserLabel.textContent =
+                    t('employee');
+
+            if (eventTypeLabel)
+                eventTypeLabel.textContent =
+                    t('event');
+
+            if (eventPeriodAll)
+                eventPeriodAll.textContent =
+                    t('all_records');
+
+            if (eventPeriodToday)
+                eventPeriodToday.textContent =
+                    t('today');
+
+            if (eventPeriod7Days)
+                eventPeriod7Days.textContent =
+                    t('last_7_days');
+
+            if (eventPeriod30Days)
+                eventPeriod30Days.textContent =
+                    t('last_30_days');
+
+            if (eventTypeAll)
+                eventTypeAll.textContent =
+                    t('all_events');
+
+            if (eventTypeStudentCreated)
+                eventTypeStudentCreated.textContent =
+                    t('event_student_created_short');
+
+            if (eventTypePaymentAdded)
+                eventTypePaymentAdded.textContent =
+                    t('event_payment_added_short');
+
+            if (eventTypeStatusChanged)
+                eventTypeStatusChanged.textContent =
+                    t('event_status_changed_short');
+
+            if (eventTypeInstructorChanged)
+                eventTypeInstructorChanged.textContent =
+                    t('event_instructor_changed_short');
+
+            if (eventTypeContractChanged)
+                eventTypeContractChanged.textContent =
+                    t('event_contract_changed_short');
+
+            if (eventTypeStudentUpdated)
+                eventTypeStudentUpdated.textContent =
+                    t('event_student_updated_short');
+
+            if (eventLogSearch)
+                eventLogSearch.placeholder =
+                    t('search_event_placeholder');
+
+            if (closeEventLogBtn)
+                closeEventLogBtn.textContent =
+                    t('close_event_log');
+
+            if (closeEventLogBtnBottom)
+                closeEventLogBtnBottom.textContent =
+                    t('close_event_log');
 
             const studentsPageTitle =
                 document.getElementById(
