@@ -698,7 +698,7 @@
             <p>
                 <b id="modal-instructor-label">Инструктор:</b><br>
                 <select id="modal-instructor">
-                    <option value="">Не назначен</option>
+                    <option value=""></option>
                 </select>
             </p>
             
@@ -1022,7 +1022,7 @@
 
     <script>
 
-        const BUILD_VERSION = '2026-07-22 12:07';
+        const BUILD_VERSION = '2026-07-22 15:07';
 
             // =========================
             // GoDrive CRM constants
@@ -1189,6 +1189,14 @@
                 not_assigned: 'Не назначен',
                 student_id: 'Ученик ID',
                 unknown_user: 'Неизвестный пользователь',
+                event_student_created: '➕ Создан новый ученик',
+                event_payment_added: '💰 Добавлен платёж',
+                event_status_changed: '📘 Изменён статус',
+                event_instructor_changed: '👨‍🏫 Изменён инструктор',
+                event_contract_changed: '📄 Изменён договор',
+                event_student_updated: '📝 Изменены данные',
+                event_student_archived: '📦 Ученик архивирован',
+                event_student_restored: '↩️ Ученик восстановлен',
                 
 
             },
@@ -1311,6 +1319,14 @@
                 not_assigned: 'Nav piešķirts',
                 student_id: 'Audzēkņa ID',
                 unknown_user: 'Nezināms lietotājs',
+                event_student_created: '➕ Izveidots jauns audzēknis',
+                event_payment_added: '💰 Pievienots maksājums',
+                event_status_changed: '📘 Mainīts statuss',
+                event_instructor_changed: '👨‍🏫 Mainīts instruktors',
+                event_contract_changed: '📄 Mainīts līgums',
+                event_student_updated: '📝 Dati atjaunināti',
+                event_student_archived: '📦 Audzēknis arhivēts',
+                event_student_restored: '↩️ Audzēknis atjaunots',
                 
             },
 
@@ -1431,6 +1447,14 @@
                 not_assigned: 'Not assigned',
                 student_id: 'Student ID',
                 unknown_user: 'Unknown user',
+                event_student_created: '➕ New student created',
+                event_payment_added: '💰 Payment added',
+                event_status_changed: '📘 Status changed',
+                event_instructor_changed: '👨‍🏫 Instructor changed',
+                event_contract_changed: '📄 Contract changed',
+                event_student_updated: '📝 Student updated',
+                event_student_archived: '📦 Student archived',
+                event_student_restored: '↩️ Student restored',
 
             },
             
@@ -3475,7 +3499,10 @@
 
                 // Не назначен
                 instructorSelect.add(
-                    new Option('Не назначен', '')
+                    new Option(
+                        t('not_assigned'),
+                        ''
+                    )
                 );
 
                 // Сам инструктор
@@ -5555,8 +5582,11 @@
             const select =
                 document.getElementById('modal-instructor');
 
-            select.innerHTML =
-                '<option value="">Не назначен</option>';
+            select.innerHTML = `
+                <option value="">
+                    ${t('not_assigned')}
+                </option>
+            `;
 
             data.forEach(instr => {
 
@@ -6294,7 +6324,7 @@
         function getInstructorName(id) {
 
             if (!id) {
-                return 'Не назначен';
+                return t('not_assigned');
             }
 
             const instructor = instructors.find(i => i.id === id);
