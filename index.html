@@ -1022,7 +1022,7 @@
 
     <script>
 
-        const BUILD_VERSION = '2026-07-22 09:23';
+        const BUILD_VERSION = '2026-07-22 09:55';
 
             // =========================
             // GoDrive CRM constants
@@ -1464,6 +1464,35 @@
             }
 
         }
+
+            function getStatusText(status) {
+
+                switch (status) {
+
+                    case APP.STATUS.NEW:
+                        return t('status_registration');
+
+                    case APP.STATUS.THEORY:
+                        return t('status_theory');
+
+                    case APP.STATUS.THEORY_PASSED:
+                        return t('status_theory_passed');
+
+                    case APP.STATUS.DRIVING:
+                        return t('status_driving');
+
+                    case APP.STATUS.DRIVING_EXAM:
+                        return t('status_driving_exam');
+
+                    case APP.STATUS.DRIVING_PASSED:
+                        return t('status_driving_passed');
+
+                    default:
+                        return status || '';
+
+                }
+
+            }
 
         function getTrainingDays(student) {
 
@@ -2403,7 +2432,7 @@
                         <td class="s-birth_date">${student.birth_date || ''}</td>
                         <td class="s-status">
                             <span class="${getStatusClass(student.status)}">
-                                ${student.status || ''}
+                                ${getStatusText(student.status)}
                             </span>
                         </td>
                         <td class="s-term">
