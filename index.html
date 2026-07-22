@@ -1022,7 +1022,7 @@
 
     <script>
 
-        const BUILD_VERSION = '2026-07-22 09:55';
+        const BUILD_VERSION = '2026-07-22 12:07';
 
             // =========================
             // GoDrive CRM constants
@@ -1185,6 +1185,10 @@
                 payment_card: 'Карта',
                 payment_transfer: 'Перевод',
                 add_payment: '➕ Добавить платеж',
+                no_events: 'Событий пока нет',
+                not_assigned: 'Не назначен',
+                student_id: 'Ученик ID',
+                unknown_user: 'Неизвестный пользователь',
                 
 
             },
@@ -1303,6 +1307,10 @@
                 payment_card: 'Karte',
                 payment_transfer: 'Pārskaitījums',
                 add_payment: '➕ Pievienot maksājumu',
+                no_events: 'Notikumu vēl nav',
+                not_assigned: 'Nav piešķirts',
+                student_id: 'Audzēkņa ID',
+                unknown_user: 'Nezināms lietotājs',
                 
             },
 
@@ -1419,6 +1427,10 @@
                 payment_card: 'Card',
                 payment_transfer: 'Bank transfer',
                 add_payment: '➕ Add payment',
+                no_events: 'No events yet',
+                not_assigned: 'Not assigned',
+                student_id: 'Student ID',
+                unknown_user: 'Unknown user',
 
             },
             
@@ -1434,6 +1446,18 @@
                 LANG.ru[key] ??
                 key
             );
+
+        }
+
+        function getCurrentLocale() {
+
+            const locales = {
+                ru: 'ru-RU',
+                en: 'en-GB',
+                lv: 'lv-LV'
+            };
+
+            return locales[currentLanguage] || 'ru-RU';
 
         }
 
@@ -5944,7 +5968,7 @@
             if (!events.length) {
 
                 container.innerHTML =
-                    'Событий пока нет';
+                    t('no_events');
 
                 return;
             }
@@ -5981,7 +6005,8 @@
                 if (
                     event.event_type === 'instructor_changed'
                 ) {
-                    return instructorMap[value] || 'Не назначен';
+                    return instructorMap[value] ||
+                        t('not_assigned');
                 }
 
                 return value || '';
@@ -5998,16 +6023,23 @@
 
                     ${students.length ? `
                         <div style="font-size:14px; color:#1f4e79; margin:4px 0;">
-                            👨‍🎓 ${studentMap[event.student_id] || `Ученик ID: ${event.student_id}`}
+                            👨‍🎓 ${
+                                studentMap[event.student_id] ||
+                                `${t('student_id')}: ${event.student_id}`
+                            }
                         </div>
                     ` : ''}
 
                     <div style="font-size:13px; color:#666;">
-                        ${new Date(event.created_at).toLocaleString('ru-RU')}
+                        ${new Date(event.created_at).toLocaleString(getCurrentLocale())}
                     </div>
 
                     <div style="font-size:13px; color:#555;">
-                        👤 ${profileMap[event.user_id] || event.user_id || 'Неизвестный пользователь'}
+                        👤 ${
+                            profileMap[event.user_id] ||
+                            event.user_id ||
+                            t('unknown_user')
+                        }
                     </div>
 
                     <div style="font-size:13px; color:#444;">
