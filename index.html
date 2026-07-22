@@ -590,70 +590,109 @@
         </table>
 
         <div id="global-event-log-block" class="hidden">
-        
+
             <h3 id="global-event-log-title">
                 📜 Журнал событий CRM
             </h3>
 
             <div class="event-log-filters">
-            
-                <label for="event-period-filter">
+
+                <label id="event-period-label" for="event-period-filter">
                     Период:
                 </label>
-            
+
                 <select id="event-period-filter">
-                    <option value="all">Все записи</option>
-                    <option value="today">Сегодня</option>
-                    <option value="7days">Последние 7 дней</option>
-                    <option value="30days">Последние 30 дней</option>
+
+                    <option id="event-period-all" value="all">
+                        Все записи
+                    </option>
+
+                    <option id="event-period-today" value="today">
+                        Сегодня
+                    </option>
+
+                    <option id="event-period-7days" value="7days">
+                        Последние 7 дней
+                    </option>
+
+                    <option id="event-period-30days" value="30days">
+                        Последние 30 дней
+                    </option>
+
                 </select>
-            
+
             </div>
 
-            <label for="event-log-search">
+            <label id="event-search-label" for="event-log-search">
                 Поиск:
             </label>
-            
+
             <input type="text" id="event-log-search" placeholder="Ученик, сотрудник, событие...">
 
-            <label for="event-user-filter">
+            <label id="event-user-label" for="event-user-filter">
                 Сотрудник:
             </label>
-            
+
             <select id="event-user-filter">
-                <option value="">Все сотрудники</option>
+
+                <option value="">
+                    Все сотрудники
+                </option>
+
             </select>
 
-            <label for="event-type-filter">
+            <label id="event-type-label" for="event-type-filter">
                 Событие:
             </label>
-            
+
             <select id="event-type-filter">
-                <option value="">Все события</option>
-                <option value="student_created">Создание ученика</option>
-                <option value="payment_added">Платежи</option>
-                <option value="status_changed">Изменения статуса</option>
-                <option value="instructor_changed">Изменения инструктора</option>
-                <option value="contract_changed">Изменения договора</option>
-                <option value="student_updated">Изменения данных</option>
+
+                <option id="event-type-all" value="">
+                    Все события
+                </option>
+
+                <option id="event-type-student-created" value="student_created">
+                    Создание ученика
+                </option>
+
+                <option id="event-type-payment-added" value="payment_added">
+                    Платежи
+                </option>
+
+                <option id="event-type-status-changed" value="status_changed">
+                    Изменения статуса
+                </option>
+
+                <option id="event-type-instructor-changed" value="instructor_changed">
+                    Изменения инструктора
+                </option>
+
+                <option id="event-type-contract-changed" value="contract_changed">
+                    Изменения договора
+                </option>
+
+                <option id="event-type-student-updated" value="student_updated">
+                    Изменения данных
+                </option>
+
             </select>
-        
-            <button id="close-event-log-btn">
+
+            <button id="close-event-log-btn" type="button">
                 Закрыть журнал
             </button>
-        
+
             <div id="global-event-log-list">
                 Журнал пока не загружен
             </div>
 
             <div class="event-log-footer">
-            
+
                 <button id="close-event-log-btn-bottom" type="button">
                     Закрыть журнал
                 </button>
-            
+
             </div>
-        
+
         </div>
 
     </div>
@@ -1034,7 +1073,7 @@
 
     <script>
 
-        const BUILD_VERSION = '2026-07-22 18:08';
+        const BUILD_VERSION = '2026-07-22 18:43';
 
             // =========================
             // GoDrive CRM constants
