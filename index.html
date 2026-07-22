@@ -1022,7 +1022,7 @@
 
     <script>
 
-        const BUILD_VERSION = '2026-07-21 23:33';
+        const BUILD_VERSION = '2026-07-22 09:23';
 
             // =========================
             // GoDrive CRM constants
@@ -3300,15 +3300,15 @@
 
                     statusSelect.add(
                         new Option(
-                            'Вождение',
+                            t('status_driving'),
                             APP.STATUS.DRIVING
                         )
                     );
 
                     statusSelect.add(
                         new Option(
-                            'Вождение экзамен',
-                            APP.STATUS.DRIVING_EXAM
+                            t('status_driving'),
+                            APP.STATUS.DRIVING
                         )
                     );
 
@@ -3320,14 +3320,14 @@
 
                     statusSelect.add(
                         new Option(
-                            'Вождение экзамен',
+                            t('status_driving_exam'),
                             APP.STATUS.DRIVING_EXAM
                         )
                     );
 
                     statusSelect.add(
                         new Option(
-                            'Вождение сдано',
+                            t('status_driving_passed'),
                             APP.STATUS.DRIVING_PASSED
                         )
                     );
@@ -3335,13 +3335,35 @@
                 }
                 else {
 
+                    const currentStatusTranslations = {
+
+                        [APP.STATUS.NEW]:
+                            t('status_registration'),
+
+                        [APP.STATUS.THEORY]:
+                            t('status_theory'),
+
+                        [APP.STATUS.THEORY_PASSED]:
+                            t('status_theory_passed'),
+
+                        [APP.STATUS.DRIVING]:
+                            t('status_driving'),
+
+                        [APP.STATUS.DRIVING_EXAM]:
+                            t('status_driving_exam'),
+
+                        [APP.STATUS.DRIVING_PASSED]:
+                            t('status_driving_passed')
+
+                    };
+
                     statusSelect.add(
                         new Option(
-                            current.charAt(0).toUpperCase() + current.slice(1),
+                            currentStatusTranslations[current] ||
+                            current,
                             current
                         )
                     );
-
                 }
 
                 statusSelect.value = current;
@@ -3351,21 +3373,33 @@
             else {
 
                 statusSelect.innerHTML = `
-                <option value="${APP.STATUS.NEW}">Оформление</option>
+                    <option value="${APP.STATUS.NEW}">
+                        ${t('status_registration')}
+                    </option>
 
-                <option value="${APP.STATUS.THEORY}">Теория</option>
+                    <option value="${APP.STATUS.THEORY}">
+                        ${t('status_theory')}
+                    </option>
 
-                <option value="${APP.STATUS.THEORY_PASSED}">Теория сдана</option>
+                    <option value="${APP.STATUS.THEORY_PASSED}">
+                        ${t('status_theory_passed')}
+                    </option>
 
-                <option value="${APP.STATUS.DRIVING}">Вождение</option>
+                    <option value="${APP.STATUS.DRIVING}">
+                        ${t('status_driving')}
+                    </option>
 
-                <option value="${APP.STATUS.DRIVING_EXAM}">Вождение экзамен</option>
+                    <option value="${APP.STATUS.DRIVING_EXAM}">
+                        ${t('status_driving_exam')}
+                    </option>
 
-                <option value="${APP.STATUS.DRIVING_PASSED}">Вождение сдано</option>
-`                ;
+                    <option value="${APP.STATUS.DRIVING_PASSED}">
+                        ${t('status_driving_passed')}
+                    </option>
+                `;
 
             }
-
+            
             statusSelect.value =
                 student.status;
 
