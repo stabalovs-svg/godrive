@@ -1073,7 +1073,7 @@
 
     <script>
 
-        const BUILD_VERSION = '2026-07-22 20:08';
+        const BUILD_VERSION = '2026-07-22 19:00';
 
             // =========================
             // GoDrive CRM constants
@@ -6435,22 +6435,63 @@ if (
 
             });
 
-        function formatEventValue(event, value) {
+            function formatEventValue(event, value) {
 
-            if (
-                event.event_type === 'instructor_changed'
-            ) {
-                return instructorMap[value] ||
-                    t('not_assigned');
+                if (
+                    event.event_type === 'instructor_changed'
+                ) {
+                    return instructorMap[value] ||
+                        t('not_assigned');
+                }
+
+                if (
+                    event.event_type === 'status_changed'
+                ) {
+                    return getStatusText(value);
+                }
+
+                return value || '';
+
             }
 
-            if (
-                event.event_type === 'status_changed'
-            ) {
-                return getStatusText(value);
-            }
+            container.innerHTML = events.map(event => `
 
-            return value || '';
+                <div class="event-item event-${event.event_type}">
+
+                    <div>
+                        <b>${getEventTitle(event)}</b>
+                    </div>
+
+                    ${students.length ? `
+                        <div style="font-size:14px; color:#1f4e79; margin:4px 0;">
+                            👨‍🎓 ${
+                                studentMap[event.student_id] ||
+                                `${t('student_id')}: ${event.student_id}`
+                            }
+                        </div>
+                    ` : ''}
+
+                    <div style="font-size:13px; color:#666;">
+                        ${new Date(event.created_at).toLocaleString(getCurrentLocale())}
+                    </div>
+
+                    <div style="font-size:13px; color:#555;">
+                        👤 ${
+                            profileMap[event.user_id] ||
+                            event.user_id ||
+                            t('unknown_user')
+                        }
+                    </div>
+
+                    <div style="font-size:13px; color:#444;">
+                        ${formatEventValue(event, event.old_value)}
+                        ${event.old_value || event.new_value ? '→' : ''}
+                        ${formatEventValue(event, event.new_value)}
+                    </div>
+
+                </div>
+
+            `).join('');
 
         }
 
