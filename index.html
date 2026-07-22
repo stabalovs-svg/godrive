@@ -645,6 +645,14 @@
             <div id="global-event-log-list">
                 Журнал пока не загружен
             </div>
+
+            <div class="event-log-footer">
+            
+                <button id="close-event-log-btn-bottom" type="button">
+                    Закрыть журнал
+                </button>
+            
+            </div>
         
         </div>
 
@@ -1026,7 +1034,7 @@
 
     <script>
 
-        const BUILD_VERSION = '2026-07-22 17:16';
+        const BUILD_VERSION = '2026-07-22 18:08';
 
             // =========================
             // GoDrive CRM constants
@@ -5373,8 +5381,34 @@ if (
             const closeEventLogBtn =
                 document.getElementById('close-event-log-btn');
 
+            const closeEventLogBtnBottom =
+                document.getElementById(
+                    'close-event-log-btn-bottom'
+                );    
+
             const globalEventLogBlock =
                 document.getElementById('global-event-log-block');
+
+            function closeEventLog() {
+
+                console.log('CLOSE EVENT LOG');
+
+                globalEventLogBlock.classList.add(
+                    'hidden'
+                );
+
+                document
+                    .getElementById(
+                        'student-search'
+                    )
+                    ?.scrollIntoView({
+
+                        behavior: 'smooth',
+                        block: 'start'
+
+                    });
+
+            }    
 
             if (showEventLogBtn && globalEventLogBlock) {
 
@@ -5438,15 +5472,24 @@ if (
 
                 closeEventLogBtn.type = 'button';
 
-                closeEventLogBtn.onclick = () => {
-
-                    console.log('CLOSE EVENT LOG CLICK');
-
-                    globalEventLogBlock.classList.add('hidden');
-
-                };
+                closeEventLogBtn.onclick =
+                    closeEventLog;
 
             }
+
+            if (
+                closeEventLogBtnBottom &&
+                globalEventLogBlock
+            ) {
+
+                closeEventLogBtnBottom.type =
+                    'button';
+
+                closeEventLogBtnBottom.onclick =
+                    closeEventLog;
+
+            }
+
         }
 
         
