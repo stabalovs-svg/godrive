@@ -1026,7 +1026,7 @@
 
     <script>
 
-        const BUILD_VERSION = '2026-07-22 16:16';
+        const BUILD_VERSION = '2026-07-22 17:16';
 
             // =========================
             // GoDrive CRM constants
@@ -4620,18 +4620,6 @@
 
         }
 
-        const openGlobalEventLog =
-            document.getElementById(
-                'global-event-log-block'
-            );
-
-        if (
-            openGlobalEventLog &&
-            !openGlobalEventLog.classList.contains('hidden')
-        ) {
-            refreshGlobalEventLog();
-        }
-
         function applyStudentsTableLanguage() {
 
             const studentNameTitle =
@@ -4854,6 +4842,18 @@
             applyMenuLanguage();
 
             applyStudentCardLanguage();
+
+            const openGlobalEventLog =
+    document.getElementById(
+        'global-event-log-block'
+    );
+
+if (
+    openGlobalEventLog &&
+    !openGlobalEventLog.classList.contains('hidden')
+) {
+    refreshGlobalEventLog();
+}
 
             if (
                 typeof loadStudents === 'function' &&
@@ -5399,8 +5399,11 @@
 
                     if (employeeFilter) {
 
-                        employeeFilter.innerHTML =
-                            '<option value="">Все сотрудники</option>';
+                        employeeFilter.innerHTML = `
+                            <option value="">
+                                ${t('all_employees')}
+                            </option>
+                        `;
 
                         eventLogProfiles.forEach(profile => {
 
