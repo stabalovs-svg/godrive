@@ -4037,7 +4037,7 @@
                 
             if (studentEventLogTitle) {
                 studentEventLogTitle.textContent =
-                    '📜 ' + t('event_log');
+                    t('event_log');
             }
 
             if (globalEventLogTitle) {
@@ -4618,6 +4618,18 @@
 
             });
 
+        }
+
+        const openGlobalEventLog =
+            document.getElementById(
+                'global-event-log-block'
+            );
+
+        if (
+            openGlobalEventLog &&
+            !openGlobalEventLog.classList.contains('hidden')
+        ) {
+            refreshGlobalEventLog();
         }
 
         function applyStudentsTableLanguage() {
