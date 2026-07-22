@@ -1073,7 +1073,7 @@
 
     <script>
 
-        const BUILD_VERSION = '2026-07-22 19:00';
+        const BUILD_VERSION = '2026-07-22 21:03';
 
             // =========================
             // GoDrive CRM constants
@@ -1286,8 +1286,22 @@
                     'Закрыть журнал',
                 
                 all_employees:
-                    'Все сотрудники',    
-                
+                    'Все сотрудники',
+
+                archive_reason_manual:
+                    'Ручной архив',
+
+                archive_reason_completed:
+                    'Обучение завершено',
+
+                archive_reason_expired:
+                    'Срок обучения истёк',
+
+                archive_status_archived:
+                    'В архиве',
+
+                archive_status_active:
+                    'Активен',
 
             },
 
@@ -1455,8 +1469,22 @@
                     'Aizvērt žurnālu',
                 
                 all_employees:
-                    'Visi darbinieki',    
-                
+                    'Visi darbinieki',
+
+                archive_reason_manual:
+                    'Manuāla arhivēšana',
+
+                archive_reason_completed:
+                    'Apmācība pabeigta',
+
+                archive_reason_expired:
+                    'Apmācības termiņš beidzies',
+
+                archive_status_archived:
+                    'Arhīvā',
+
+                archive_status_active:
+                    'Aktīvs',
             },
 
             en: {
@@ -1622,7 +1650,22 @@
                     'Close event log',
 
                 all_employees:
-                    'All employees',    
+                    'All employees',
+
+                archive_reason_manual:
+                    'Manual archiving',
+
+                archive_reason_completed:
+                    'Training completed',
+
+                archive_reason_expired:
+                    'Training period expired',
+
+                archive_status_archived:
+                    'Archived',
+
+                archive_status_active:
+                    'Active',
 
             },
             
@@ -6450,7 +6493,28 @@ if (
                     return getStatusText(value);
                 }
 
-                return value || '';
+                const eventValues = {
+
+                    manual:
+                        t('archive_reason_manual'),
+
+                    completed:
+                        t('archive_reason_completed'),
+
+                    expired:
+                        t('archive_reason_expired'),
+
+                    archived:
+                        t('archive_status_archived'),
+
+                    active:
+                        t('archive_status_active')
+
+                };
+
+                return eventValues[value] ||
+                    value ||
+                    '';
 
             }
 
