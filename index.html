@@ -1022,7 +1022,7 @@
 
     <script>
 
-        const BUILD_VERSION = '2026-07-22 15:07';
+        const BUILD_VERSION = '2026-07-22 15:48';
 
             // =========================
             // GoDrive CRM constants
@@ -6271,28 +6271,28 @@
             switch (event.event_type) {
 
                 case 'student_created':
-                    return '➕ Создан новый ученик';
+                    return t('event_student_created');
 
                 case 'payment_added':
-                    return '💰 Добавлен платёж';
+                    return t('event_payment_added');
 
                 case 'status_changed':
-                    return '📘 Изменён статус';
+                    return t('event_status_changed');
 
                 case 'instructor_changed':
-                    return '👨‍🏫 Изменён инструктор';
+                    return t('event_instructor_changed');
 
                 case 'contract_changed':
-                    return '📄 Изменён договор';
+                    return t('event_contract_changed');
 
                 case 'student_updated':
-                    return '📝 Изменены данные';
+                    return t('event_student_updated');
 
                 case 'student_archived':
-                    return '📦 Ученик архивирован';
+                    return t('event_student_archived');
 
                 case 'student_restored':
-                    return '↩️ Ученик восстановлен';    
+                    return t('event_student_restored');
 
                 default:
                     return event.event_type;
