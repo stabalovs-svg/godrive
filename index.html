@@ -591,7 +591,9 @@
 
         <div id="global-event-log-block" class="hidden">
         
-            <h3>📜 Журнал событий CRM</h3>
+            <h3 id="global-event-log-title">
+                📜 Журнал событий CRM
+            </h3>
 
             <div class="event-log-filters">
             
@@ -926,7 +928,9 @@
             
                 <hr>
             
-                <h4>📜 Журнал событий</h4>
+                <h4 id="student-event-log-title">
+                    📜 Журнал событий
+                </h4>
             
                 <div id="event-log-list">
                     Журнал пока не загружен
@@ -1022,7 +1026,7 @@
 
     <script>
 
-        const BUILD_VERSION = '2026-07-22 15:48';
+        const BUILD_VERSION = '2026-07-22 16:16';
 
             // =========================
             // GoDrive CRM constants
@@ -1197,6 +1201,7 @@
                 event_student_updated: '📝 Изменены данные',
                 event_student_archived: '📦 Ученик архивирован',
                 event_student_restored: '↩️ Ученик восстановлен',
+                crm_event_log: 'Журнал событий CRM', 
                 
 
             },
@@ -1327,6 +1332,7 @@
                 event_student_updated: '📝 Dati atjaunināti',
                 event_student_archived: '📦 Audzēknis arhivēts',
                 event_student_restored: '↩️ Audzēknis atjaunots',
+                crm_event_log: 'CRM notikumu žurnāls',
                 
             },
 
@@ -1455,6 +1461,7 @@
                 event_student_updated: '📝 Student updated',
                 event_student_archived: '📦 Student archived',
                 event_student_restored: '↩️ Student restored',
+                crm_event_log: 'CRM Event Log',
 
             },
             
@@ -3983,6 +3990,16 @@
 
         function applyMenuLanguage() {
 
+            const studentEventLogTitle =
+                document.getElementById(
+                    'student-event-log-title'
+                );
+
+            const globalEventLogTitle =
+                document.getElementById(
+                    'global-event-log-title'
+                );
+
             const studentsPageTitle =
                 document.getElementById(
                     'students-page-title'
@@ -4016,7 +4033,17 @@
             const sortBirth =
                 document.getElementById(
                     'sort-birth'
-                );    
+                );
+                
+            if (studentEventLogTitle) {
+                studentEventLogTitle.textContent =
+                    '📜 ' + t('event_log');
+            }
+
+            if (globalEventLogTitle) {
+                globalEventLogTitle.textContent =
+                    '📜 ' + t('crm_event_log');
+            }    
 
             if (studentsPageTitle) {
                 studentsPageTitle.textContent =
