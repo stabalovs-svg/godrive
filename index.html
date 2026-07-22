@@ -1451,13 +1451,18 @@
 
         function getCurrentLocale() {
 
+            const language =
+                document.documentElement.lang || 'ru';
+
             const locales = {
+
                 ru: 'ru-RU',
                 en: 'en-GB',
                 lv: 'lv-LV'
+
             };
 
-            return locales[currentLanguage] || 'ru-RU';
+            return locales[language] || 'ru-RU';
 
         }
 
