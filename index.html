@@ -1073,7 +1073,7 @@
 
     <script>
 
-        const BUILD_VERSION = '2026-07-23 08:46';
+        const BUILD_VERSION = '2026-07-23 20:06';
 
             // =========================
             // GoDrive CRM constants
@@ -1372,7 +1372,37 @@
                     'Найдено кандидатов',
 
                 auto_archive_confirm:
-                    'Архивировать автоматически?',    
+                    'Архивировать автоматически?',
+                    
+                confirm_restore_student:
+                    'Вернуть ученика в активный список?',
+
+                confirm_archive_student:
+                    'Отправить ученика в архив?',
+
+                login_required_add:
+                    'Для добавления ученика необходимо войти.',
+
+                student_add_error:
+                    'Ошибка добавления ученика',
+
+                student_added:
+                    'Ученик добавлен.',
+
+                archive_reason_completed_full:
+                    'Прошло 30 дней после окончания обучения',
+
+                archive_reason_expired_full:
+                    'Истёк срок обучения',
+
+                archive_reason_manual_full:
+                    'Ручной архив',
+
+                field_phone:
+                    'Телефон',
+
+                field_notes:
+                    'Заметка',    
 
             },
 
@@ -1626,7 +1656,37 @@
                     'Atrasti kandidāti',
 
                 auto_archive_confirm:
-                    'Arhivēt automātiski?',    
+                    'Arhivēt automātiski?',
+                    
+                confirm_restore_student:
+                    'Atjaunot skolēnu aktīvajā sarakstā?',
+
+                confirm_archive_student:
+                    'Pārvietot skolēnu uz arhīvu?',
+
+                login_required_add:
+                    'Lai pievienotu skolēnu, nepieciešams autorizēties.',
+
+                student_add_error:
+                    'Skolēna pievienošanas kļūda',
+
+                student_added:
+                    'Skolēns pievienots.',
+
+                archive_reason_completed_full:
+                    'Pagājušas 30 dienas pēc apmācības pabeigšanas',
+
+                archive_reason_expired_full:
+                    'Apmācības termiņš ir beidzies',
+
+                archive_reason_manual_full:
+                    'Manuāla arhivēšana',
+
+                field_phone:
+                    'Tālrunis',
+
+                field_notes:
+                    'Piezīme',    
                     
             },
 
@@ -1879,7 +1939,37 @@
                     'Candidates found',
 
                 auto_archive_confirm:
-                    'Archive automatically?',    
+                    'Archive automatically?',
+                    
+                confirm_restore_student:
+                    'Return the student to the active list?',
+
+                confirm_archive_student:
+                    'Move the student to the archive?',
+
+                login_required_add:
+                    'Please sign in to add a student.',
+
+                student_add_error:
+                    'Error adding student',
+
+                student_added:
+                    'Student added.',
+
+                archive_reason_completed_full:
+                    '30 days have passed since training was completed',
+
+                archive_reason_expired_full:
+                    'The training period has expired',
+
+                archive_reason_manual_full:
+                    'Manual archiving',
+
+                field_phone:
+                    'Phone',
+
+                field_notes:
+                    'Note',    
 
             },
             
@@ -3637,7 +3727,7 @@
 
             if (
                 !confirm(
-                    'Отправить ученика в архив?'
+                    t('confirm_archive_student')
                 )
             ) {
                 return;
@@ -3702,9 +3792,11 @@
 
             if (
                 !confirm(
-                    'Вернуть ученика в активный список?'
+                    t('confirm_restore_student')
                 )
             ) {
+                return;
+            } {
                 return;
             }
 
@@ -5721,7 +5813,12 @@ if (
                 addStudentForm.addEventListener('submit', async (e) => {
                     e.preventDefault();
                     if (!supabaseClient) {
-                        setStatus('Нужно войти для добавления.', true);
+
+                        setStatus(
+                            t('login_required_add'),
+                            true
+                        );
+
                         return;
                     }
                     const full_name = document.getElementById('new-name').value.trim();
@@ -5754,7 +5851,12 @@ if (
                         console.log(error);                           
 
                         if (error) {
-                            setStatus('Ошибка добавления: ' + error.message, true);
+
+                            setStatus(
+                                `${t('student_add_error')}: ${error.message}`,
+                                true
+                            );
+
                             return;
                         }
 
@@ -5780,11 +5882,17 @@ if (
 
                         console.log('EVENT WRITTEN');
 
-                        setStatus('Ученик добавлен.');
+                        setStatus(
+                            t('student_added')
+                        );
                         addStudentForm.reset();
                         await loadStudents();
                     } catch (err) {
-                        setStatus('Ошибка: ' + err.message, true);
+
+                        setStatus(
+                            `${t('error')}: ${err.message}`,
+                            true
+                        );
                     }
                 });
             } else {
@@ -6663,7 +6771,7 @@ if (
             if (error) {
 
                 console.error(
-                    'Ошибка загрузки журнала:',
+                    'Event log loading error:',
                     error
                 );
 
@@ -6687,7 +6795,7 @@ if (
                 if (error) {
 
                     console.error(
-                        'Ошибка загрузки общего журнала:',
+                        'Global event log loading error:',
                         error
                     );
 
@@ -7045,13 +7153,19 @@ if (
             switch (reason) {
 
                 case 'completed':
-                    return 'Прошло 30 дней после окончания обучения';
+                    return t(
+                        'archive_reason_completed_full'
+                    );
 
                 case 'expired':
-                    return 'Истёк срок обучения';
+                    return t(
+                        'archive_reason_expired_full'
+                    );
 
                 case 'manual':
-                    return 'Ручной архив';
+                    return t(
+                        'archive_reason_manual_full'
+                    );
 
                 default:
                     return reason || '';
@@ -7092,7 +7206,9 @@ if (
 
             if (!currentUser) {
 
-                console.error('addEvent: пользователь не авторизован');
+                console.error(
+                    'addEvent: user is not authenticated'
+                );
 
                 return;
 
@@ -7120,7 +7236,10 @@ if (
 
             if (error) {
 
-                console.error('Ошибка записи события:', error);
+                console.error(
+                    'Event recording error:',
+                    error
+                );
 
             }
 
@@ -7133,7 +7252,7 @@ if (
             if (oldStudent.phone !== updateData.phone) {
 
                 changes.push({
-                    field: 'Телефон',
+                    field: 'phone',
                     oldValue: oldStudent.phone,
                     newValue: updateData.phone
                 });
@@ -7143,7 +7262,7 @@ if (
             if (oldStudent.email !== updateData.email) {
 
                 changes.push({
-                    field: 'Email',
+                    field: 'email',
                     oldValue: oldStudent.email,
                     newValue: updateData.email
                 });
@@ -7153,7 +7272,7 @@ if (
             if (oldStudent.notes !== updateData.notes) {
 
                 changes.push({
-                    field: 'Заметка',
+                    field: 'notes',
                     oldValue: oldStudent.notes,
                     newValue: updateData.notes
                 });
