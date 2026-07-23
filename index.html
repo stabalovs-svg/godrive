@@ -6,7 +6,7 @@
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
-    <title>CRM Автошкола</title>
+    <title>AutoSchool CRM</title>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <style>
         body {
@@ -1073,7 +1073,7 @@
 
     <script>
 
-        const BUILD_VERSION = '2026-07-23 20:06';
+        const BUILD_VERSION = '2026-07-23 21:21';
 
             // =========================
             // GoDrive CRM constants
@@ -1402,7 +1402,28 @@
                     'Телефон',
 
                 field_notes:
-                    'Заметка',    
+                    'Заметка',
+                    
+                confirm_delete_record:
+                    'Удалить запись?',
+
+                deleted:
+                    'Удалено.',
+
+                delete_error:
+                    'Ошибка удаления',
+                    
+                saved:
+                    'Сохранено.',
+
+                save_error:
+                    'Ошибка сохранения',
+                    
+                payments_count:
+                    'Платежей',
+                    
+                page_title:
+                    'CRM для автошколы',    
 
             },
 
@@ -1686,8 +1707,29 @@
                     'Tālrunis',
 
                 field_notes:
-                    'Piezīme',    
+                    'Piezīme',
                     
+                confirm_delete_record:
+                    'Dzēst ierakstu?',
+
+                deleted:
+                    'Dzēsts.',
+
+                delete_error:
+                    'Dzēšanas kļūda',
+                    
+                saved:
+                    'Saglabāts.',
+
+                save_error:
+                    'Saglabāšanas kļūda',
+                    
+                payments_count:
+                    'Maksājumu skaits',
+                    
+                page_title:
+                    'Autoskolas CRM',
+
             },
 
             en: {
@@ -1969,7 +2011,28 @@
                     'Phone',
 
                 field_notes:
-                    'Note',    
+                    'Note',
+                    
+                confirm_delete_record:
+                    'Delete this record?',
+
+                deleted:
+                    'Deleted.',
+
+                delete_error:
+                    'Deletion error',
+                    
+                saved:
+                    'Saved.',
+
+                save_error:
+                    'Saving error',
+                    
+                payments_count:
+                    'Payments',
+                    
+                page_title:
+                    'AutoSchool CRM',    
 
             },
             
@@ -4227,12 +4290,30 @@
                     category: tr.querySelector('.edit-category').value,
                 };
                 try {
-                    const { error } = await supabaseClient.from('students').update(updated).eq('id', id);
-                    if (error) throw error;
-                    setStatus('Сохранено.');
+
+                    const { error } =
+                        await supabaseClient
+                            .from('students')
+                            .update(updated)
+                            .eq('id', id);
+
+                    if (error) {
+                        throw error;
+                    }
+
+                    setStatus(
+                        t('saved')
+                    );
+
                     await loadStudents();
+
                 } catch (err) {
-                    setStatus('Ошибка сохранения: ' + err.message, true);
+
+                    setStatus(
+                        `${t('save_error')}: ${err.message}`,
+                        true
+                    );
+
                 }
             };
             actionsTd.querySelector('.cancel-btn').onclick = () => loadStudents();
@@ -4240,16 +4321,42 @@
 
             // Удаляет ученика
         async function onDeleteRow(e) {
-            if (!confirm('Удалить запись?')) return;
+
+            if (
+                !confirm(
+                    t('confirm_delete_record')
+                )
+            ) {
+                return;
+            }
+
             const tr = e.target.closest('tr');
             const id = tr.getAttribute('data-id');
             try {
-                const { error } = await supabaseClient.from('students').delete().eq('id', id);
-                if (error) throw error;
-                setStatus('Удалено.');
+
+                const { error } =
+                    await supabaseClient
+                        .from('students')
+                        .delete()
+                        .eq('id', id);
+
+                if (error) {
+                    throw error;
+                }
+
+                setStatus(
+                    t('deleted')
+                );
+
                 await loadStudents();
+
             } catch (err) {
-                setStatus('Ошибка удаления: ' + err.message, true);
+
+                setStatus(
+                    `${t('delete_error')}: ${err.message}`,
+                    true
+                );
+
             }
         }
 
@@ -4524,6 +4631,9 @@
         }
 
         function applyMenuLanguage() {
+
+            document.title =
+                t('page_title');
 
             const studentEventLogTitle =
                 document.getElementById(
@@ -6753,8 +6863,10 @@ if (
                     </div>
         `        ).join('');
 
-            document.getElementById('payments-count').textContent =
-    `           Платежей: ${data.length}`;
+            document.getElementById(
+                'payments-count'
+            ).textContent =
+                `${t('payments_count')}: ${data.length}`;
 
         }
 
