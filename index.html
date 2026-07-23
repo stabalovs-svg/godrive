@@ -1366,7 +1366,13 @@
                     'Ошибка',
 
                 payment_added:
-                    'Платёж добавлен.',    
+                    'Платёж добавлен.',
+                    
+                auto_archive_candidates:
+                    'Найдено кандидатов',
+
+                auto_archive_confirm:
+                    'Архивировать автоматически?',    
 
             },
 
@@ -1614,7 +1620,13 @@
                     'Kļūda',
 
                 payment_added:
-                    'Maksājums pievienots.',    
+                    'Maksājums pievienots.',
+                    
+                auto_archive_candidates:
+                    'Atrasti kandidāti',
+
+                auto_archive_confirm:
+                    'Arhivēt automātiski?',    
                     
             },
 
@@ -1861,7 +1873,13 @@
                     'Error',
 
                 payment_added:
-                    'Payment added.',    
+                    'Payment added.',
+                    
+                auto_archive_candidates:
+                    'Candidates found',
+
+                auto_archive_confirm:
+                    'Archive automatically?',    
 
             },
             
@@ -2293,7 +2311,7 @@
 
             if (
                 !confirm(
-                    `Найдено кандидатов: ${candidates.length}\n\n${message}\n\nАрхивировать автоматически?`
+                    `${t('auto_archive_candidates')}: ${candidates.length}\n\n${message}\n\n${t('auto_archive_confirm')}`
                 )
             ) {
                 return;
