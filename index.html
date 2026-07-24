@@ -4945,10 +4945,22 @@
                     t('birth_date_sort');
             }
 
-            
+            const employeeFilter =
+                document.getElementById(
+                    'event-user-filter'
+                );
+
+            if (
+                employeeFilter &&
+                employeeFilter.options.length > 0
+            ) {
+
+                employeeFilter.options[0].textContent =
+                    t('all_employees');
+
+            }
 
             
-
         }
 
         function applyStudentCardLanguage() {
